@@ -3,9 +3,9 @@
 [a trivial web page](https://kourier.keybase.pub) built with markdown and css to exercise the features of the
 [Keybase filesystem](https://keybase.io/docs/kbfs)
 
-John, the upstream developer, serves up this nice stylesheet [over
-here](https://github.com/markdowncss/modest) and the rest of this document is
-from him.
+John, the upstream developer of the repository I forked for this, serves up this
+nice stylesheet [over here](https://github.com/markdowncss/modest) and the rest
+of this document is from him.
 
 ****
 
