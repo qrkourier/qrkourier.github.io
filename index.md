@@ -63,8 +63,9 @@ early access invites.
 
 
 
-
-[fork me](https://github.com/qrkourier/keybase-landing)
+<p style="text-align: center;"> 
+[fork me](https://github.com/qrkourier/keybase-landing) 
+</p> 
 
 <!-- 
 <img style="float: right;" src="https://www.gravatar.com/avatar/b5d22dc4919ddfb892d5fbe38d5ca7bb"> 
