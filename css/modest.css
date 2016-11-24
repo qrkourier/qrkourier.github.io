@@ -217,3 +217,8 @@ pre,
 code {
   background-color: #fafafa;
 }
+
+img#avatar {
+  margin:30px; float: right; 
+}
+
