@@ -41,13 +41,13 @@ early access invites.
   connect
 
 - You can send me secrets with [Pretty Good Privacy
-  (PGP)](/kourier-pgp-0xB69403FA957C5E46.asc) identity
+  (PGP)](/blob/kourier-pgp-0xB69403FA957C5E46.asc) identity
 
   ```
   gpg --recv-keys "5489 E13F 8105 64DF 47FB  9841 B694 03FA 957C 5E46"
   ```
 
-- You can grant privileges to my [Secure Shell (SSH)](/kourier-ssh-id_rsa.pub)
+- You can grant privileges to my [Secure Shell (SSH)](/blob/kourier-ssh-id_rsa.pub)
   identity
 
   ```
