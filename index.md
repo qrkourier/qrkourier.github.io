@@ -55,11 +55,9 @@ early access invites.
   ```
 
 - You can send me satoshis at  
-  `17AFN3hAL9vwmjUpKFwRLGxXLQrLjuv2pD`
+  `1H5pZSsrjvUHKRdn2nQKsxE4NXHFXVY4kj`
 
 
-#### Retired:
-- ~~<qrz@kourier.io>~~
 
 
 
