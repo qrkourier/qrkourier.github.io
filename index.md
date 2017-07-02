@@ -54,12 +54,6 @@ early access invites.
   curl -s https://kourier.keybase.pub/kourier-ssh-id_rsa.pub >> .ssh/authorized_keys
   ```
 
-- You can send me satoshis at  
-  `1H5pZSsrjvUHKRdn2nQKsxE4NXHFXVY4kj`
-
-
-
-
 
 <p style="text-align: center;"> 
 [fork me](https://github.com/qrkourier/keybase-landing) 
