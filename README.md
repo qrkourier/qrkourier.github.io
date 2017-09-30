@@ -3,6 +3,14 @@
 [a trivial web page](https://kourier.keybase.pub) built with markdown and css to exercise the features of the
 [Keybase filesystem](https://keybase.io/docs/kbfs)
 
+#### keybase users may wish to fork and use this repository to publish their own verifiable content
+
+1. clone
+2. modify
+3. deploy with `./bin/deploy-to-kbfs.sh KEYBASE_USERNAME --exclude '*.html' --delete-excluded`
+
+The deploy script is a thin wrapper for rsync which duplicates the site to your keybase public folder. Obviously, you must have the keybase standaone app installed and logged in.
+
 John, the upstream developer of the repository I forked for this, serves up this
 nice stylesheet [over here](https://github.com/markdowncss/modest) and the rest
 of this document is from him.
