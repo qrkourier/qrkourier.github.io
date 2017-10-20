@@ -33,8 +33,7 @@ is signed during upload and so is verifiable by running the Keybase app on your
 computer, though it is not obvious in your web browser.
 
 If you install Keybase you'll be able to passively track changes in the web
-of identity with commands like `keybase follow kourier`. I do still have a few
-early access invites.
+of identity with commands like `keybase follow kourier`.
 
 
 - My [Keybase profile](https://keybase.io/kourier) is where the social medias
