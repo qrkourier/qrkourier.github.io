@@ -17,5 +17,4 @@
 
 DST=$1;shift
 
-rsync -ai $@ --exclude .git/ ./ /keybase/public/$DST/
-
+rsync -ai $@ --exclude .git/ ./output/ /keybase/public/$DST/
