@@ -6,7 +6,9 @@ sys.path.append('.')
 
 AUTHOR = ''
 SITENAME = 'Kenneth Bingham'
+TAGLINE = 'DevOps Engineer'
 SITEURL = ''
+CONTACT_URL = '/pages/about.html'
 
 PATH = 'content'
 
@@ -54,5 +56,3 @@ PLUGINS = ['neighbors']
 
 import jinja_filter_sidebar
 JINJA_FILTERS = { 'sidebar': jinja_filter_sidebar.sidebar }
-
-CONTACT_URL = 'https://keybase.io/kourier'
