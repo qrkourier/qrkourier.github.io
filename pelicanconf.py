@@ -6,9 +6,9 @@ sys.path.append('.')
 
 AUTHOR = ''
 SITENAME = 'Kenneth Bingham'
-TAGLINE = 'DevOps Engineer'
+TAGLINE = 'kourier'
 SITEURL = ''
-CONTACT_URL = '/pages/about.html'
+# CONTACT_URL = '/pages/about.html'
 
 PATH = 'content'
 
@@ -56,3 +56,5 @@ PLUGINS = ['neighbors']
 
 import jinja_filter_sidebar
 JINJA_FILTERS = { 'sidebar': jinja_filter_sidebar.sidebar }
+
+DISPLAY_PAGES_ON_MENU = True
