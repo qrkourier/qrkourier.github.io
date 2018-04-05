@@ -5,8 +5,8 @@ import sys
 sys.path.append('.')
 
 AUTHOR = ''
-SITENAME = 'Proverbial Perogi'
-TAGLINE = "a blog about things that are not perogis"
+SITENAME = 'hella labs'
+TAGLINE = 'solutions shared freely'
 SITEURL = ''
 # CONTACT_URL = '/pages/about.html'
 
