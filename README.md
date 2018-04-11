@@ -1,6 +1,6 @@
 ### keybase-landing
 
-[a personal site](https://kourier.keybase.pub)
+[a personal site](https://w.qrk.us)
 
 #### Keybase publishing workflow
 
