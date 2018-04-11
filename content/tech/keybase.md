@@ -18,4 +18,9 @@ though it is not obvious in your web browser.
 If you install Keybase you'll be able to passively track changes in the web of identity
 with commands like `keybase follow kourier`.
 
-<!--  [discussion](https://www.reddit.com/user/bingnet/comments/88ll60/keybase/) -->
+
+---
+
+##Comments
+<blockquote class="reddit-card" data-card-created="1523472433"><a href="https://www.reddit.com/user/bingnet/comments/88ll60/keybase/?ref=share&ref_source=embed">Keybase</a> from <a href="http://www.reddit.com/u/bingnet">u/bingnet</a></blockquote>
+<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
