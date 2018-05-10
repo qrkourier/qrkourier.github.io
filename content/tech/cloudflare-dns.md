@@ -1,6 +1,5 @@
 Title: CloudFlare DNS for Network Manager
 Tags: linux, dns, privacy
-#Status: draft
 
 CloudFlare provides [a performant recursive nameserver](https://developers.cloudflare.com/1.1.1.1/what-is-1.1.1.1/) along with a promise to never surveil their users.
 

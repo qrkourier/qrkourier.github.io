@@ -52,7 +52,10 @@ THEME_STATIC_PATHS = ['static']
 
 
 PLUGIN_PATHS = ["plugins", "../pelican-plugins"]
-PLUGINS = ['neighbors']
+PLUGINS = [
+    'neighbors',
+    'minification',
+]
 
 import jinja_filter_sidebar
 JINJA_FILTERS = { 'sidebar': jinja_filter_sidebar.sidebar }
