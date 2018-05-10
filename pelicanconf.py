@@ -6,7 +6,7 @@ sys.path.append('.')
 
 AUTHOR = ''
 SITENAME = 'hella labs'
-TAGLINE = 'solutions shared freely'
+TAGLINE = 'On the one hand information wants to be expensive, because it\'s so valuable. The right information in the right place just changes your life. On the other hand, information wants to be free, because the cost of getting it out is getting lower and lower all the time. So you have these two fighting against each other. -Stewart Brand of Whole Earth Catalog to Steve Wozniak (1984)'
 SITEURL = ''
 # CONTACT_URL = '/pages/about.html'
 
