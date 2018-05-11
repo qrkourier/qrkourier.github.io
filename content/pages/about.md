@@ -9,11 +9,14 @@ Title: About
   title.style.paddingTop = "2em";
 </script>
 
-### connect
+This is my personal web site where I write about stuff.
+
+### hella
+A "hella" is informally one metric octillion (10<sup>27</sup>) which is what you might call a large number if you're being particularly subtle about it. It was formally rejected by SI, but some AIs; e.g. Google Assistant, Wolfram Alpha; will still convert units to hellas.
+
+### contact
 - Kenneth Bingham <w@qrk.us>
-
 - [Keybase](https://keybase.io/kourier) links to several other verified points of contact
-
 - You can [use this form to encrypt your message](https://keybase.io/encrypt#kourier) or by downloading my [pubkey](/blob/kourier-pgp-0xB69403FA957C5E46.asc) or importing it with GnuPG
 
         :::shell
@@ -26,7 +29,7 @@ Title: About
         curl -s {{ SITEURL }}/blob/kourier-ssh-id_rsa.pub >> .ssh/authorized_keys
 -->
 
-### open source
+### web site source code
 [fork me](https://github.com/qrkourier/keybase-landing) on Github
 
 ### credits
