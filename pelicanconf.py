@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import sys
 sys.path.append('.')
 
-AUTHOR = ''
+AUTHOR = 'Ken'
 SITENAME = 'hella labs'
 TAGLINE = 'yet another thought garden'
 QUOTE = 'Until you make the unconscious conscious, it will direct your life and you will call it fate.'
