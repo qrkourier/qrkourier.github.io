@@ -6,7 +6,7 @@ sys.path.append('.')
 
 AUTHOR = ''
 SITENAME = 'hella labs'
-TAGLINE = 'Until you make the unconscious conscious, it will direct your life and you will call it fate.” ― Carl Gustav Jung'
+TAGLINE = 'Until you make the unconscious conscious, it will direct your life and you will call it fate. ― Carl Gustav Jung'
 SITEURL = ''
 # CONTACT_URL = '/pages/about.html'
 
