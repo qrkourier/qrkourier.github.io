@@ -1,5 +1,6 @@
 Title: Keybase
 Tags: identity
+Icon: key
 
 I first started using [@KeybaseIO](https://www.keybase.io) a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.
 
@@ -16,7 +17,10 @@ signed during upload and so is verifiable by running the Keybase app on your com
 though it is not obvious in your web browser.
 
 If you install Keybase you'll be able to passively track changes in the web of identity
-with commands like `keybase follow kourier`.
+with commands like
+    ```shell
+    keybase follow kourier
+    ```
 
 
 ---
