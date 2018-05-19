@@ -126,7 +126,14 @@ github: publish
 	git push origin $(GITHUB_PAGES_BRANCH)
 
 keybase: publish
-	rsync -P -rvzc --delete $(OUTPUTDIR)/ $(KEYBASE_ROOT)/public/$(KEYBASE_USER)/ --cvs-exclude
+	rsync --recursive \
+	 			--checksum \
+				--itemize-changes \
+				--cvs-exclude \
+				--delete-excluded \
+				--stats \
+				$(OUTPUTDIR)/ \
+				$(KEYBASE_ROOT)/public/$(KEYBASE_USER)/
 
 
 .PHONY: html help clean regenerate serve serve-global devserver stopserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github
