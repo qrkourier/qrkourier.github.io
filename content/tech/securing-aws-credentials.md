@@ -15,16 +15,14 @@ aws_secret_access_key=kyLQmrtPwdXrXdxiAOjS1v0zrR06CiEzKKWXIRum
 
 </br>
 
-If you have this file it is probably so that you can use the credentials with awscli or another command-line utility, or so that you can test a native build of your application that calls AWS in an IDE or with a dedicated build tool like Maven. We'll explore here how this file could be stolen and how you can make that a lot more difficult.
+If you have this file it is probably so that you can use the credentials with awscli or another command-line utility, or so that you can test a native build of your application that calls AWS in an IDE or with a dedicated build tool like Maven. We'll explore here how this file could be stolen and how you can make that difficult.
 
 ### The Problem
 
-Many, if not most, developers and admins that use Amazon Web Services from their workstation have this non-encrypted file in their home directory. If that's you, then you are extremely vulnerable to the theft of your AWS identity if
+Most developers and admins that use Amazon Web Services from their workstation probably have this plaintext file in their home directory. If that's you, then you are vulnerable to the theft and misuse of your AWS identity if
 
-  1. you lose custody of your non-encrypted portable device, or
-  2. a malicious process designed to steal this credential runs on your computer as *you* (without elevated privileges).
-
-This is a critical vulnerability for you because it is very easy to exploit and the potential impact of an undetected, successful attack is enormous i.e. potentially an extinction-level event for your employer or enterprise if you are a sysadmin or developer or both.
+  1. you lose your non-encrypted computer disk where the file is stored, or
+  2. a malicious process designed to steal this credential runs on your computer as *you* because you installed an app, clicked a link, or pasted code in a terminal.
 
 This attack is not all unique to AWS and is not really AWS's problem in the first place. They provide an API that requires a credential, and it's up to you to store that credential securely.
 
@@ -79,7 +77,7 @@ These steps will allow you to continue using the Default Credential Provider cha
 
 </br>
 
-  * Encrypt the credentials file.
+  * Encrypt the credentials file for your user ID (typically the email address you entered when the PGP identity was generated).
 ```shell
 # this command creates a new file with the same filename as the plaintext + suffix ".gpg"
 ❯ gpg -e -{u,r}alice@example.com ~/.aws/credentials
@@ -138,7 +136,7 @@ alias noaws="unset AWS_SECURITY_TOKEN \
 
 ## Related
 
-_There are ready-made utilities that answer the same problem, but that obfuscate the handling of secrets, may place limitations on the way those secrets are used, and are not portable between ubiquitous shell interpreters. The above is a DiY solution that minimizes the need to trust yet another piece of software and introduces no limitations to the `aws` CLI. If you're just looking for a convenient remediation for MacOS, then these may be best for you._
+There are ready-made utilities that answer the same problem, but that obfuscate the handling of secrets, may place limitations on the way those secrets are used, and are not portable between ubiquitous shell interpreters. The above is a DiY solution that minimizes the need to trust yet another piece of software and introduces no limitations to the `aws` CLI. If you're just looking for a convenient remediation for MacOS, then these may be best for you.
 
   * 99Designs has [a utility called aws-vault](https://99designs.com/tech-blog/blog/2015/10/26/aws-vault/) for MacOS
 
