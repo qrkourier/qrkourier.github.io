@@ -14,7 +14,10 @@ aws_secret_access_key=kyLQmrtPwdXrXdxiAOjS1v0zrR06CiEzKKWXIRum
 ```
 
 </br>
-### The Attack
+### The Problem
+
+A single [rogue npm module](https://github.com/joho/aws-pony), Ruby gem, PyPi module, or ill-fated cURL command could expose your (and your employer's) AWS resources to extreme vulnerability.
+
 Many, if not most, developers and admins that use Amazon Web Services from their workstation have this non-encrypted file in their home directory. If that's you, then you are extremely vulnerable to the theft of your AWS identity if
 
   1. you lose custody of your non-encrypted portable device, or
@@ -28,7 +31,7 @@ Suppose your employer requires full-disk encryption for all company-provided equ
 
 Implicitly, you authorize every process running as *you* on your computer to read every file that's readable by *you*. This means all of the above could read and upload your AWS credentials if the upstream source code were maliciously modified to do so. There would be no barrier to that malicious code reading the file, initiating the egressing network connection, nor any tell.
 
-### The Defense
+### A Solution
 
 Security-conscious apps and administrators can solve the problem of storing credentials by storing ciphertext on disk and controlling access to the plaintext in memory.
 
@@ -47,7 +50,7 @@ export AWS_SECRET_ACCESS_KEY=vXHZEOVxrBtqMkmadkJv0mCeEglrlFA5oBEywSFw
 </br>
 ...which makes these values available in the current process environment as well as any child processes' environments. This dramatically reduces the surface area for attack by practically eliminating attack vectors based on filesystem semantics. It is still possible on some operating systems for any process running as *you* to read the environment variable with which future child processes are invoked, but those processes are likely to be short-lived and will have unpredictable process IDs which are needed to address the process environment directly. Basically, this makes lifting the credential from your computer much more difficult.
 
-### Adopting this approach
+### Do it Yourself
 
 Composing your own encrypted credentials file is easy and requires only free, open-source utilities that run on Linux, MacOS, and Windows. I'll assume you are using and recommend that you do install a Bourne-compat shell e.g. BASH, ZSH for tasks like this. You're on your own for API-based OSs like Windows.
 
@@ -113,8 +116,16 @@ If this is the first time you have used your PGP identity you may see a GUI popu
 ```
 </br>
 
+## Related
+
+_There are ready-made utilities that answer the same problem, but that obfuscate the handling of very important secrets and place limitations on the way those secrets are used. This is a DiY solution that minimizes the need to trust yet another piece of software and introduces no limitations to the `aws` CLI. If you're just looking for a convenient remediation, then these may be best for you._
+
+  * 99Designs has [a utility called aws-vault](https://99designs.com/tech-blog/blog/2015/10/26/aws-vault/) for MacOS
+
+  * [aws-keychain](https://github.com/pda/aws-keychain) for MacOS
+
 ---
 
 ##Comments
-<blockquote class="reddit-card" data-card-created="1526756079"><a href="https://www.reddit.com/user/bingnet/comments/8kn9rm/securing_credentials/">Securing Credentials</a> from <a href="http://www.reddit.com/u/bingnet">u/bingnet</a></blockquote>
+<blockquote class="reddit-card" data-card-created="1526756360"><a href="https://www.reddit.com/user/bingnet/comments/8knauq/securing_aws_credentials/">Securing AWS Credentials</a> from <a href="http://www.reddit.com/u/bingnet">u/bingnet</a></blockquote>
 <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
