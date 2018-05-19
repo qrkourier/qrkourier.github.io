@@ -2,7 +2,9 @@ Title: Securing AWS Credentials
 Tags: awscli, sysadmin, Linux, MacOS
 Icon: lock
 
-A single [rogue npm module](https://github.com/joho/aws-pony), Ruby gem, PyPi module, or ill-fated cURL command could expose your (and your employer's) AWS resources to extreme vulnerability.
+A single [rogue npm module](https://github.com/joho/aws-pony), Ruby gem, PyPi module, or ill-fated cURL command could expose you (and your employer) to extreme risk.
+
+[TOC]
 
 ## Is this you?
 
@@ -115,21 +117,85 @@ If this is the first time you have used your PGP identity you may see a GUI popu
 ```
 </br>
 
-## Drop privileges
+## Shortcuts
 
-Let's say you want to nullify any credentials that you have previously decrypted in session. You're safe if you end the process where the credentials were sourced, but if for some reason it is preferable to preserve that process you can explicitly drop the values from memory with a command.
+### Assume Privileges
+
+There's no need to memorize the terminal commands. You can save a shellcode "alias" or create a shellcode function to assume any AWS identity for which you have encrypted credentials.
+
+First, lets look at the most simple case where you have exactly one AWS credential encrypted with the above procedure in *~/.aws/credentials.gpg*.
+
 ```shell
 # save the following alias in your aliases dotfile or shell runcom file e.g. ~/.bashrc
-alias noaws="unset AWS_SECURITY_TOKEN \
-                   AWS_SESSION_TOKEN \
-                   AWS_ACCESS_KEY \
-                   AWS_ACCESS_KEY_ID \
-                   AWS_SECRET_ACCESS_KEY"
+alias onaws="source <(gpg -qd ~/.aws/credentials.gpg)"
 ```
 </br>
 
 ```shell
-# then exec the alias to drop privileges at will
+# alternatively, you could make this default AWS credential available in every new shell
+# environment by including the source command in the shell rc file
+source <(gpg -qd ~/.aws/credentials.gpg)
+```
+</br>
+
+```shell
+# source the shell rc file (this happens automatically for your next terminal session)
+❯ source ~/.bashrc
+
+# then exec the alias to assume the AWS identity
+❯ onaws
+```
+</br>
+
+If instead you have multiple AWS identities you could use a shellcode function and a file naming convention to quickly assume any one identity.
+```shell
+# save the following function in your aliases dotfile or shell runcom file e.g. ~/.bashrc
+onaws(){
+  local CREDFILE=~/.aws/credentials
+  [[ $# -eq 1 ]] && {
+    CREDFILE=${CREDFILE}-${1}.gpg
+  } || {
+    CREDFILE=${CREDFILE}.gpg
+  }
+  [[ -r $CREDFILE && -s $CREDFILE ]] && {
+    source <(gpg -qd $CREDFILE)
+  } || {
+    echo "ERROR: $CREDFILE is not readable, or is nonexistent or empty; bye."
+    return 1
+  }
+}
+```
+</br>
+
+```shell
+# source the shell rc file (this happens automatically for your next terminal session)
+❯ source ~/.bashrc
+
+# then exec the function with a positional parameter matching the filename to assume a particular
+# AWS identity e.g. stored in ~/.aws/credentials-example.com.gpg
+❯ onaws example.com
+```
+</br>
+
+### Drop Privileges
+
+You may wish to immediately nullify any credentials and session tokens in memory. You're relatively safe if you end the process where the credentials were sourced, but if for some reason it is preferable for that process to continue running you can explicitly unset the variables with a command.
+```shell
+# save the following alias in your aliases dotfile or shell runcom file e.g. ~/.bashrc
+alias noaws="unset AWS_ACCESS_KEY \
+                   AWS_ACCESS_KEY_ID \
+                   AWS_SECRET_ACCESS_KEY \
+                   AWS_SECURITY_TOKEN \
+                   AWS_SESSION_TOKEN"
+```
+</br>
+
+```shell
+# source the shell rc file (this happens automatically for your next terminal session)
+❯ source ~/.bashrc
+
+# then exec the alias to drop privileges for which ever identity is currently active as well as any
+# Simple Token Service sessions you might have obtained via `assume-role`
 ❯ noaws
 ```
 </br>
