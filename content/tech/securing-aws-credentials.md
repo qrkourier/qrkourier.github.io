@@ -200,6 +200,11 @@ alias noaws="unset AWS_ACCESS_KEY \
 ```
 </br>
 
+<!--
+### Assume Role
+-->
+
+
 ## Related
 
 There are ready-made utilities that answer the same problem, but that obfuscate the handling of secrets, may place limitations on the way those secrets are used, and are not portable between ubiquitous shell interpreters. The above is a DiY solution that minimizes the need to trust yet another piece of software and introduces no limitations to the `aws` CLI. If you're just looking for a convenient remediation for MacOS, then these may be best for you.
@@ -207,6 +212,8 @@ There are ready-made utilities that answer the same problem, but that obfuscate 
   * 99Designs has [a utility called aws-vault](https://99designs.com/tech-blog/blog/2015/10/26/aws-vault/) for MacOS
 
   * [aws-keychain](https://github.com/pda/aws-keychain) for MacOS
+
+AWS publishes [best practices for identity access management](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html). If you're in a position of some responsibility for defining IAM policies, key management, and user access for AWS then it's definitely worth your time.
 
 ---
 
