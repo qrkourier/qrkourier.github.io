@@ -1,4 +1,4 @@
-Title: Securing Credentials
+Title: Securing AWS Credentials
 Tags: awscli, sysadmin, Linux, MacOS
 Icon: lock
 
@@ -18,7 +18,7 @@ aws_secret_access_key=kyLQmrtPwdXrXdxiAOjS1v0zrR06CiEzKKWXIRum
 Many, if not most, developers and admins that use Amazon Web Services from their workstation have this non-encrypted file in their home directory. If that's you, then you are extremely vulnerable to the theft of your AWS identity if
 
   1. you lose custody of your non-encrypted portable device, or
-  2. any malicious process runs on your computer as *you*.
+  2. a malicious process designed to steal this credential runs on your computer as *you* (without elevated privileges).
 
 This is a critical vulnerability for you because it is very easy to exploit and the potential impact of an undetected, successful attack is enormous i.e. potentially an extinction-level event for your employer or enterprise if you are a sysadmin or developer or both.
 
@@ -61,39 +61,35 @@ These steps will allow you to continue using the Default Credential Provider cha
 
   * Use the `gpg` CLI to create an identity aka PGP private key. Github has [a helpful post](https://help.github.com/articles/generating-a-new-gpg-key/) about this.
 
-  * install the AWS CLI which we'll use to verify these steps work. Amazon covers this [on their web site](https://aws.amazon.com/cli/).
+  * Install the AWS CLI which we'll use to verify these steps work. Amazon covers this [on their web site](https://aws.amazon.com/cli/).
 
-  * if you have more than one credential in `~/.aws/credentials` then copy each to a separate file with a meaningful name e.g. `~/.aws/credentials-example.com` and perform the next step for each file
+  * If you have more than one credential in *~/.aws/credentials* then copy each to a separate file with a meaningful name e.g. *~/.aws/credentials-example.com* and perform the next step for each file.
 
-  * edit the plaintext file `~/.aws/credentials` so that it resembles the example above. You can manually insert the `export` command at the beginning of the two lines and convert the variables names to uppercase or you can run this command which does precisely that in the terminal to prepare the file for encryption.
+  * Edit the plaintext file *~/.aws/credentials* so that it resembles the example above. You can manually insert the `export` command at the beginning of the two lines and convert the variables names to uppercase or you can run this command which does precisely that in the terminal to prepare the file for encryption.
 
 ```shell
 ❯ sed -E -e '/^\[.*\]$/d' \
-         -e 's/^(aws_(secret_)?access_key(_id)?)/export \U&\E/g' \
+         -e 's/^(\s+)?(aws_(secret_)?access_key(_id)?)(\s+)?=(\s+)?/export \U\2=\E/g' \
          -i ~/.aws/credentials
 ```
 
 </br>
 
-  * encrypt the credentials file
+  * Encrypt the credentials file.
 ```shell
 # this command creates a new file with the same filename as the plaintext + suffix ".gpg"
 ❯ gpg -e -{u,r}alice@example.com ~/.aws/credentials
 ```
 </br>
 
-* prove you can decrypt
+* Prove you can decrypt.
 ```shell
 ❯ gpg -qd < ~/.aws/credentials.gpg
-# if this is the first time you have used your PGP identity you may see a GUI popup in your OS
-# prompting for your passphrase. If your OS+GnuPG agent integration allows you may at this time
-# also save the passphrase in your OS keyring. This probably means that your passphrase is chained
-# to your OS login password, and so you should protect that login password with the same measures
-# that are appropriate for your AWS credential.
 ```
 </br>
+If this is the first time you have used your PGP identity you may see a GUI popup in your OS prompting for your passphrase. If your OS+GnuPG agent integration allows you may at this time also save the passphrase in your OS keyring. This probably means that your passphrase is chained to your OS login password, and so you should protect that login password with the same measures that are appropriate for your AWS credential.
 
-* source the plaintext into your shell environment and use the credential to authenticate
+* Source the plaintext into your shell environment and use the credential to authenticate.
 ```shell
 ❯ source $(gpg -qd < ~/.aws/credentials.gpg)
 
@@ -101,13 +97,24 @@ These steps will allow you to continue using the Default Credential Provider cha
 ```
 </br>
 
-* if you will be switching between multiple credentials with this method then simply source the plaintext from separate files.
+* If you will be switching between multiple credentials with this method then simply source the plaintext from separate files.
 ```shell
 ❯ source $(gpg -qd < ~/.aws/credentials-example.com.gpg)
 ❯ source $(gpg -qd < ~/.aws/credentials-example.org.gpg)
 ```
 </br>
 
+* Now you can delete the plaintext file. If you are feeling less than confident about your future ability to decrypt with your PGP identity then, as a fallback option, consider changing the filemode on the plaintext credentials file so that elevated privileges are required to read it.
+```shell
+❯ rm ~/.aws/credentials
+# alternatively, make the file unreadable by unprivileged processes
+❯ sudo chown root ~/.aws/credentials
+❯ sudo chmod 0600 ~/.aws/credentials
+```
+</br>
+
 ---
 
 ##Comments
+<blockquote class="reddit-card" data-card-created="1526756079"><a href="https://www.reddit.com/user/bingnet/comments/8kn9rm/securing_credentials/">Securing Credentials</a> from <a href="http://www.reddit.com/u/bingnet">u/bingnet</a></blockquote>
+<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
