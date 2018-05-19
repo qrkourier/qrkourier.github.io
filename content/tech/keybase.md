@@ -1,5 +1,5 @@
 Title: Keybase
-Tags: identity
+Tags: identity, encryption
 Icon: key
 
 I first started using [@KeybaseIO](https://www.keybase.io) a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.
