@@ -2,7 +2,7 @@ Title: Securing AWS Credentials
 Tags: awscli, sysadmin, Linux, MacOS
 Icon: lock
 
-_This applies to Bourne-compat shells on file-based OSs e.g. BASH and ZSH on MacOS or Linux_
+A single [rogue npm module](https://github.com/joho/aws-pony), Ruby gem, PyPi module, or ill-fated cURL command could expose your (and your employer's) AWS resources to extreme vulnerability.
 
 ## Is this you?
 
@@ -14,9 +14,10 @@ aws_secret_access_key=kyLQmrtPwdXrXdxiAOjS1v0zrR06CiEzKKWXIRum
 ```
 
 </br>
-### The Problem
 
-A single [rogue npm module](https://github.com/joho/aws-pony), Ruby gem, PyPi module, or ill-fated cURL command could expose your (and your employer's) AWS resources to extreme vulnerability.
+If you have this file it is probably so that you can use the credentials with awscli or another command-line utility, or so that you can test a native build of your application that calls AWS in an IDE or with a dedicated build tool like Maven. We'll explore here how this file could be stolen and how you can make that a lot more difficult.
+
+### The Problem
 
 Many, if not most, developers and admins that use Amazon Web Services from their workstation have this non-encrypted file in their home directory. If that's you, then you are extremely vulnerable to the theft of your AWS identity if
 
@@ -33,9 +34,11 @@ Implicitly, you authorize every process running as *you* on your computer to rea
 
 ### A Solution
 
-Security-conscious apps and administrators can solve the problem of storing credentials by storing ciphertext on disk and controlling access to the plaintext in memory.
+You can store ciphertext on disk and control access to the plaintext in memory.
 
-Here's a simple way to do this with PGP that doesn't require you to type a passphrase every time you wish to read the plaintext. With this approach access to the plaintext is controlled by the GnuPG keyring agent.
+Here's a way to do this with PGP that doesn't require you to type a passphrase every time you wish to read the plaintext. With this approach access to the plaintext is controlled by the GnuPG agent and OS login keyring.
+
+_This applies to Bourne-compat shells on file-based OSs e.g. BASH and ZSH on MacOS or Linux_
 
 ```shell
 ❯ source <(gpg -qd ~/.aws/credentials.gpg)
@@ -48,21 +51,19 @@ export AWS_ACCESS_KEY_ID=AKIAJS7UXB9INMRXLOEA
 export AWS_SECRET_ACCESS_KEY=vXHZEOVxrBtqMkmadkJv0mCeEglrlFA5oBEywSFw
 ```
 </br>
-...which makes these values available in the current process environment as well as any child processes' environments. This dramatically reduces the surface area for attack by practically eliminating attack vectors based on filesystem semantics. It is still possible on some operating systems for any process running as *you* to read the environment variable with which future child processes are invoked, but those processes are likely to be short-lived and will have unpredictable process IDs which are needed to address the process environment directly. Basically, this makes lifting the credential from your computer much more difficult.
+...which makes these values available in the current process environment as well as any child processes' environments. This reduces the surface area for attack by eliminating attack vectors based on filesystem semantics. It is still possible on some operating systems for any process running as *you* to read the environment variable with which future child processes are invoked, but those processes are likely to be short-lived and will have unpredictable process IDs which are needed to address the process environment directly. Basically, this makes lifting the credential from your computer difficult.
 
 ### Do it Yourself
 
-Composing your own encrypted credentials file is easy and requires only free, open-source utilities that run on Linux, MacOS, and Windows. I'll assume you are using and recommend that you do install a Bourne-compat shell e.g. BASH, ZSH for tasks like this. You're on your own for API-based OSs like Windows.
+Composing your own encrypted credentials file requires only free, open-source utilities that run on file-based OSs like Linux, MacOS. I'll assume you are using a Bourne-compat shell e.g. BASH, ZSH. You're on your own for API-based OSs like Windows, but I believe this same approach could work there as well. If you get it working and send me the recipe I'll post it here.
 
-These steps will allow you to continue using the Default Credential Provider chain in AWS SDKs, boto3/awscli, etc...; and the Profile Credential Provider is outside the scope of this post.
+These steps will allow you to continue using the Default Credential Provider chain in AWS SDKs, boto3/awscli, etc...
 
-  * Install and configure GnuPG command-line interface (CLI) for your OS. I'll assume this will also provide the GnuPG agent which is typically included with modern, trusted GPG packages.
-
-    [This blog post](http://blog.ghostinthemachines.com/2015/03/01/how-to-use-gpg-command-line/) looks like a good place to start.
+  * Install and configure GnuPG command-line interface (CLI) for your OS. I'll assume this will also provide the GnuPG agent which is typically included with modern, trusted GPG packages. [This blog post](http://blog.ghostinthemachines.com/2015/03/01/how-to-use-gpg-command-line/) looks like a good place to start.
 
     _You will need the user ID (UID) e.g. alice@example.com that you choose in this step in a later step._
 
-  * Use the `gpg` CLI to create an identity aka PGP private key. Github has [a helpful post](https://help.github.com/articles/generating-a-new-gpg-key/) about this.
+  * Use GnuPG CLI `gpg` to create an identity aka PGP private key. Github has [a helpful post](https://help.github.com/articles/generating-a-new-gpg-key/) about this.
 
   * Install the AWS CLI which we'll use to verify these steps work. Amazon covers this [on their web site](https://aws.amazon.com/cli/).
 
@@ -116,9 +117,28 @@ If this is the first time you have used your PGP identity you may see a GUI popu
 ```
 </br>
 
+## Drop privileges
+
+Let's say you want to nullify any credentials that you have previously decrypted in session. You're safe if you end the process where the credentials were sourced, but if for some reason it is preferable to preserve that process you can explicitly drop the values from memory with a command.
+```shell
+# save the following alias in your aliases dotfile or shell runcom file e.g. ~/.bashrc
+alias noaws="unset AWS_SECURITY_TOKEN \
+                   AWS_SESSION_TOKEN \
+                   AWS_ACCESS_KEY \
+                   AWS_ACCESS_KEY_ID \
+                   AWS_SECRET_ACCESS_KEY"
+```
+</br>
+
+```shell
+# then exec the alias to drop privileges at will
+❯ noaws
+```
+</br>
+
 ## Related
 
-_There are ready-made utilities that answer the same problem, but that obfuscate the handling of very important secrets and place limitations on the way those secrets are used. This is a DiY solution that minimizes the need to trust yet another piece of software and introduces no limitations to the `aws` CLI. If you're just looking for a convenient remediation, then these may be best for you._
+_There are ready-made utilities that answer the same problem, but that obfuscate the handling of secrets, may place limitations on the way those secrets are used, and are not portable between ubiquitous shell interpreters. The above is a DiY solution that minimizes the need to trust yet another piece of software and introduces no limitations to the `aws` CLI. If you're just looking for a convenient remediation for MacOS, then these may be best for you._
 
   * 99Designs has [a utility called aws-vault](https://99designs.com/tech-blog/blog/2015/10/26/aws-vault/) for MacOS
 
