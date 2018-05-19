@@ -55,11 +55,24 @@ THEME_STATIC_PATHS = ['static']
 
 PLUGIN_PATHS = ["plugins", "../pelican-plugins"]
 PLUGINS = [
-    'neighbors',
+    'neighbors'
 ]
-#'minification',
+#'minification'
+#'extract_toc'
 
 import jinja_filter_sidebar
 JINJA_FILTERS = { 'sidebar': jinja_filter_sidebar.sidebar }
 
 DISPLAY_PAGES_ON_MENU = True
+
+MARKDOWN = {
+  'extension_configs': {
+    'markdown.extensions.toc': {
+      'title': 'Table of contents:'
+    },
+    'markdown.extensions.codehilite': {'css_class': 'highlight'},
+    'markdown.extensions.extra': {},
+    'markdown.extensions.meta': {},
+  },
+  'output_format': 'html5',
+}
