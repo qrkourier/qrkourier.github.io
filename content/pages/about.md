@@ -3,8 +3,13 @@ Title: About
 <script type="text/javascript">
   badge = document.getElementById("badge");
   badge.innerHTML = '<img height=111 width=111 style="border-radius: 50%;" src=https://graph.facebook.com/748526162/picture?type=large>';
-  badge.style.opacity = "0.8";
-  badge.className = "icon fa-none";
+  badge.className = "fas fa-none";
+
+  icon = document.getElementsByClassName("icon");
+  for (i = 0; i < icon.length; i++) {
+    icon[i].style.opacity = "0.7";
+  }
+
   title = document.getElementById("pageTitle");
   title.style.paddingTop = "2em";
 </script>

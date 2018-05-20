@@ -19,13 +19,13 @@ I have and look forward to participating in future projects with [Tautology](htt
 ## Music
 I am fascinated by FM synthesis and digital signal processing and I occasionally get busy in [Bitwig](https://www.bitwig.com/) to produce original acoustic and electronic music. Even more occasionally I upload finished tracks to [SoundCloud](https://soundcloud.com/qrkourier).
 
-Here's a recent collaboration with Clarknova which was definitely a learning experience.
-<iframe width="80%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/418062580&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+Here's a recent collaboration with Clarknova. My solo stuff is quite a bit less polished, but it's all there on SoundCloud.
+<center><iframe width="80%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/418062580&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe></center>
 
-I also enjoy building playlists and some of these are published on [Spotify](https://open.spotify.com/user/128656604?si=Gihepa1zS9iOx3A2xvSYRg) like this one:
+I have made some playlists for [Spotify](https://open.spotify.com/user/128656604?si=Gihepa1zS9iOx3A2xvSYRg).
 
-<iframe src="https://open.spotify.com/embed/user/128656604/playlist/2DtKbdMMSBD5eEPrCbpLJx" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-
+<center><iframe src="https://open.spotify.com/embed/user/128656604/playlist/2DtKbdMMSBD5eEPrCbpLJx" width="80%" height="400" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></center>
+</br>
 
 ## Miscellaneous
 I frequently contribute to open-source projects and post side projects of my own on [Github](https://github.com/qrkourier).
