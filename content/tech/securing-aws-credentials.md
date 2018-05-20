@@ -1,6 +1,6 @@
 Title: Securing AWS Credentials
 Tags: awscli, sysadmin, Linux, MacOS
-Icon: lock
+Icon: fab fa-aws
 
 A single [rogue npm module](https://github.com/joho/aws-pony), Ruby gem, PyPi module, or ill-fated cURL command could expose you (and your employer) to extreme risk.
 

@@ -1,5 +1,5 @@
 Title: Projects
-Icon: wrench
+Icon: fas fa-wrench
 
 ## [NetFoundry](https://netfoundry.io/)
 

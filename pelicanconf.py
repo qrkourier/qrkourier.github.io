@@ -32,8 +32,12 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
          ('You can modify those links in your config file', '#'),)
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+SOCIAL = (
+('keybase', 'https://keybase.io/kourier'),
+('github', 'https://github.com/qrkourier'),)
+('twitter', 'https://twitter.com/qrkourier'),
+('reddit', 'https://www.reddit.com/user/bingnet')
+,)
 
 DEFAULT_PAGINATION = False
 
