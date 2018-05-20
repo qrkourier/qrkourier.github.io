@@ -119,7 +119,7 @@ If this is the first time you have used your PGP identity you may see a GUI popu
 
 ## Shortcuts
 
-### Assume Privileges
+### Enable Privileges
 
 There's no need to memorize the terminal commands. You can save a shellcode "alias" or create a shellcode function to assume any AWS identity for which you have encrypted credentials.
 
@@ -177,7 +177,7 @@ onaws(){
 ```
 </br>
 
-### Drop Privileges
+### Disable Privileges
 
 You may wish to immediately nullify any credentials and session tokens in memory. You're relatively safe if you end the process where the credentials were sourced, but if for some reason it is preferable for that process to continue running you can explicitly unset the variables with a command.
 ```shell
@@ -200,10 +200,21 @@ alias noaws="unset AWS_ACCESS_KEY \
 ```
 </br>
 
-<!--
 ### Assume Role
--->
 
+This describes another approach to gaining privileges in AWS and requires that an AWS IAM "role" has already been defined to control access to your resources. This is a global entity in your account that couples an IAM policy to any number of IAM users thereby allowing some action on some resource.
+
+This is similar but different from using IAM groups to assign the same privileges to multiple users in that it enables granting privileges that span AWS accounts and provides only time-limited, non-interactive session tokens. This is also contrasting to the cumbersome practice of having many IAM user credentials for many AWS accounts because.
+
+It is ideal to grant minimum privileges to a particular role in your own AWS account, and then grant to humans and robots the ability to assume that role with their own IAM user identity. That way they need only one identity regardless of to which AWS account their IAM user belongs, and you can modify the grants for the role in your own AWS account at any time. This also means you never need to know another user's secret access key, and you can still enforce criteria such as multi-factor authentication.
+
+I've cobbled together [some additional shellcode functions](https://github.com/qrkourier/ansible-credstash/blob/master/aws-assume-role.sh) (originally to allow Ansible playbooks to assume an IAM role) that implement the following workflow:
+  1. source an IAM user identity from an encrypted credentials file
+  2. assume a particular IAM role for the maximum allowed session time (one hour)
+    a. skip assuming role if a session token is already available in a temporary file, and
+    b. prompt for second trust factor (MFA OTP)
+    c. warn if the session token expiry is imminent
+  3. drop privileges
 
 ## Related
 
