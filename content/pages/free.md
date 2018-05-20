@@ -14,4 +14,4 @@ Hide: True
 
 * Matt <s>[Korg Volca Beats Analog Drum Machine](http://a.co/d3f30Nn)</s>
 
-* [Baby Wrap by CuddleBug](http://a.co/fABlxLJ)
+* <s>[Baby Wrap by CuddleBug](http://a.co/fABlxLJ)</s>

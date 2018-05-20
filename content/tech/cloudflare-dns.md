@@ -1,5 +1,5 @@
 Title: CloudFlare DNS for Network Manager
-Tags: Linux, dns, sysadmin, nmcli
+Tags: Linux, dns, sysadmin, network manager
 Icon: fas fa-cloud
 
 CloudFlare provides [a performant recursive nameserver](https://developers.cloudflare.com/1.1.1.1/what-is-1.1.1.1/) along with a promise to never surveil their users.
