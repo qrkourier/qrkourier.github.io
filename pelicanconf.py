@@ -33,11 +33,13 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
 
 # Social widget
 SOCIAL = (
-('keybase', 'https://keybase.io/kourier'),
-('github', 'https://github.com/qrkourier'),)
-('twitter', 'https://twitter.com/qrkourier'),
-('reddit', 'https://www.reddit.com/user/bingnet')
-,)
+    ('keybase', 'https://keybase.io/kourier'),
+    ('github', 'https://github.com/qrkourier'),
+    ('twitter', 'https://twitter.com/qrkourier'),
+    ('reddit', 'https://www.reddit.com/user/bingnet'),
+)
+
+MENUITEMS = ()
 
 DEFAULT_PAGINATION = False
 
