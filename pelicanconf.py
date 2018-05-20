@@ -62,7 +62,8 @@ THEME_STATIC_PATHS = ['static']
 PLUGIN_PATHS = ["plugins", "../pelican-plugins"]
 PLUGINS = [
     'neighbors',
-    'minification'
+    'minification',
+    'assets'
 ]
 #'extract_toc'
 
