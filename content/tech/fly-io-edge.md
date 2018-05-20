@@ -2,7 +2,11 @@ Title: Fly.io Programmable Front-end
 Tags: cdn, sdwan, syseng
 Icon: fab fa-fly
 
-In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations. For example:
+In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations.
+
+[TOC]
+
+For example:
 
   * high availability for a service endpoint (this is automatic);
   * requesting, issuing, binding, and renewing a free TLS server certificate (just verify a domain name);
