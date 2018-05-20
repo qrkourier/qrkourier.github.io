@@ -1,5 +1,5 @@
 Title: Securing AWS Credentials
-Tags: awscli, sysadmin, Linux, MacOS
+Tags: aws, sysadmin, Linux, MacOS, identity, encryption
 Icon: fab fa-aws
 
 A single [rogue npm module](https://github.com/joho/aws-pony), Ruby gem, PyPi module, or ill-fated cURL command could expose you (and your employer) to extreme risk.
@@ -17,24 +17,26 @@ aws_secret_access_key=kyLQmrtPwdXrXdxiAOjS1v0zrR06CiEzKKWXIRum
 
 </br>
 
-If you have this file it is probably so that you can use the credentials with awscli or another command-line utility, or so that you can test a native build of your application that calls AWS in an IDE or with a dedicated build tool like Maven. We'll explore here how this file could be stolen and how you can make that difficult.
+If you have this file it is probably so that you can use the credentials with awscli or another command-line utility, or so that you can test a native build of your application that calls AWS in an IDE or when invoked by a build tool such as Maven. We'll explore a specific case as representative of a broad class of vulnerabilities, specifically how a sensitive file could be stolen and how you can make that prohibitively difficult.
 
 ### The Problem
 
-Most developers and admins that use Amazon Web Services from their workstation probably have this plaintext file in their home directory. If that's you, then you are vulnerable to the theft and misuse of your AWS identity if
+You are vulnerable to the theft and misuse of your AWS identity if:
 
   1. you lose your non-encrypted computer disk where the file is stored, or
-  2. a malicious process designed to steal this credential runs on your computer as *you* because you installed an app, clicked a link, or pasted code in a terminal.
+  2. a malicious process designed to steal this credential runs on your computer.
 
-This attack is not all unique to AWS and is not really AWS's problem in the first place. They provide an API that requires a credential, and it's up to you to store that credential securely.
+This attack is not unique to AWS, of course. Many development and systems administration tools follow the same pattern of issuing an API token as a primary trust factor. Proper handling of these token is too often an afterthought, and we can only surmise that the implications of that carelessness are truly not appreciated by a significant number of software developers. [The discovery that hundreds of mobile apps had hard-coded API keys for the Twilio platform](https://www.cyberscoop.com/twilio-api-eavesdropper-vulnerability/) is evidence of the same.
 
-Suppose your employer requires full-disk encryption for all company-provided equipment, and so loss of custody of your portable development machine is a non-issue. Even then, how many times have your downloaded a utility or app directly from the author or vendor by pasting a `curl` or `wget` command into your terminal or downloaded an executable or package file?
+Suppose your employer requires full-disk encryption for all company-provided equipment. In that case a loss of custody of your portable development machine; while inconvenient and frustrating and definitely a security incident; is not a situation worsened by the further implications of a data leak or identity theft. Even with that considerable degree of protection in place, there is another constellation of attack vectors not at all mitigated by full-disk encryption. How many times have your downloaded a utility or app directly from the author or vendor by pasting a `curl` or `wget` command into your terminal or downloaded an executable or package file? In every case this action implies the delegation of your own privileges on that computer to whomever authored the code that you just executed.
 
-Implicitly, you authorize every process running as *you* on your computer to read every file that's readable by *you*. This means all of the above could read and upload your AWS credentials if the upstream source code were maliciously modified to do so. There would be no barrier to that malicious code reading the file, initiating the egressing network connection, nor any tell.
+Your computer doesn't know the difference between you and your logged-in user, and it's that user that owns all of your files and runs all of your processes. That user mostly runs programs written by people other than you. Those programs, running as your user, could read and upload your AWS credentials or any other file for that matter if the source code were maliciously modified to do so. There would be no barrier to that malicious code reading the file, initiating the egressing network connection, nor any tell.
+
+Importantly, it is possible to dramatically reduce the scope of code that you actually trust in order to operate normally.
 
 ### A Solution
 
-You can store ciphertext on disk and control access to the plaintext in memory.
+You can store secrets safely on disk with encryption, decrypt just-in-time to use them normally, and destroy the plaintext.
 
 Here's a way to do this with PGP that doesn't require you to type a passphrase every time you wish to read the plaintext. With this approach access to the plaintext is controlled by the GnuPG agent and OS login keyring.
 
@@ -209,6 +211,7 @@ This is similar but different from using IAM groups to assign the same privilege
 It is ideal to grant minimum privileges to a particular role in your own AWS account, and then grant to humans and robots the ability to assume that role with their own IAM user identity. That way they need only one identity regardless of to which AWS account their IAM user belongs, and you can modify the grants for the role in your own AWS account at any time. This also means you never need to know another user's secret access key, and you can still enforce criteria such as multi-factor authentication.
 
 I've cobbled together [some additional shellcode functions](https://github.com/qrkourier/ansible-credstash/blob/master/aws-assume-role.sh) (originally to allow Ansible playbooks to assume an IAM role) that implement the following workflow:
+
   1. source an IAM user identity from an encrypted credentials file
   2. assume a particular IAM role for the maximum allowed session time (one hour)
     a. skip assuming role if a session token is already available in a temporary file, and
@@ -218,13 +221,13 @@ I've cobbled together [some additional shellcode functions](https://github.com/q
 
 ## Related
 
-There are ready-made utilities that answer the same problem, but that obfuscate the handling of secrets, may place limitations on the way those secrets are used, and are not portable between ubiquitous shell interpreters. The above is a DiY solution that minimizes the need to trust yet another piece of software and introduces no limitations to the `aws` CLI. If you're just looking for a convenient remediation for MacOS, then these may be best for you.
+There are ready-made utilities that also help with properly handling AWS credentials, but that obfuscate the handling of secrets, may place limitations on the way those secrets are used, and are not portable between ubiquitous shell environments. The above is a DiY solution that minimizes the needful trust of yet another piece of software and introduces no limitations to the `aws` CLI or the default AWS credential discovery chain employed by most other tools. If you're just looking for a convenient remediation for MacOS, then these may be best for you.
 
   * 99Designs has [a utility called aws-vault](https://99designs.com/tech-blog/blog/2015/10/26/aws-vault/) for MacOS
 
   * [aws-keychain](https://github.com/pda/aws-keychain) for MacOS
 
-AWS publishes [best practices for identity access management](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html). If you're in a position of some responsibility for defining IAM policies, key management, and user access for AWS then it's definitely worth your time.
+AWS publishes [best practices for identity access management](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html).
 
 ---
 
