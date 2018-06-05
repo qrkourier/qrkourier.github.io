@@ -1,8 +1,14 @@
 Title: Free Stuff
-Icon: gift
+Icon: fas fa-gift
 Hide: True
 
 <center>[Email me](mailto:w@qrk.us)</center>
+
+* ReadyNAS Duo w/ two 1TiB disks in RAID1 by Netgear running RAIDiator Linux on SPARC
+
+* Dell Latitude 2120 10" lappy running Ubuntu 17.10 server
+
+* Linksys router running DD-WRT w/ 2.4GHz radio
 
 * Hannah <s>[BEHRINGER XENYX X1204USB](http://a.co/9XIinuE) mounted in [OnStage RS7030 Rack Stand](http://a.co/4UDFlm6)</s>
 

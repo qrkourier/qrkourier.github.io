@@ -97,7 +97,7 @@ If this is the first time you have used your PGP identity you may see a GUI popu
 
 * Source the plaintext into your shell environment and use the credential to authenticate.
 ```shell
-❯ source $(gpg -qd < ~/.aws/credentials.gpg)
+❯ source <(gpg -qd < ~/.aws/credentials.gpg)
 
 ❯ aws iam get-user
 ```
@@ -105,8 +105,8 @@ If this is the first time you have used your PGP identity you may see a GUI popu
 
 * If you will be switching between multiple credentials with this method then simply source the plaintext from separate files.
 ```shell
-❯ source $(gpg -qd < ~/.aws/credentials-example.com.gpg)
-❯ source $(gpg -qd < ~/.aws/credentials-example.org.gpg)
+❯ source <(gpg -qd < ~/.aws/credentials-example.com.gpg)
+❯ source <(gpg -qd < ~/.aws/credentials-example.org.gpg)
 ```
 </br>
 
@@ -206,7 +206,7 @@ alias noaws="unset AWS_ACCESS_KEY \
 
 This describes another approach to gaining privileges in AWS and requires that an AWS IAM "role" has already been defined to control access to your resources. This is a global entity in your account that couples an IAM policy to any number of IAM users thereby allowing some action on some resource.
 
-This is similar but different from using IAM groups to assign the same privileges to multiple users in that it enables granting privileges that span AWS accounts and provides only time-limited, non-interactive session tokens. This is also contrasting to the cumbersome practice of having many IAM user credentials for many AWS accounts because.
+This is similar but different from using IAM groups to assign the same privileges to multiple users in that it enables granting privileges that span AWS accounts and provides only time-limited, non-interactive session tokens. This is also contrasting to the cumbersome practice of having many IAM user credentials for many AWS accounts.
 
 It is ideal to grant minimum privileges to a particular role in your own AWS account, and then grant to humans and robots the ability to assume that role with their own IAM user identity. That way they need only one identity regardless of to which AWS account their IAM user belongs, and you can modify the grants for the role in your own AWS account at any time. This also means you never need to know another user's secret access key, and you can still enforce criteria such as multi-factor authentication.
 
@@ -214,14 +214,14 @@ I've cobbled together [some additional shellcode functions](https://github.com/q
 
   1. source an IAM user identity from an encrypted credentials file
   2. assume a particular IAM role for the maximum allowed session time (one hour)
-    a. skip assuming role if a session token is already available in a temporary file, and
-    b. prompt for second trust factor (MFA OTP)
-    c. warn if the session token expiry is imminent
+    * skip assuming role if a session token is already available in a temporary file, and
+    * prompt for second trust factor (MFA OTP)
+    * warn if the session token expiry is imminent
   3. drop privileges
 
 ## Related
 
-There are ready-made utilities that also help with properly handling AWS credentials, but that obfuscate the handling of secrets, may place limitations on the way those secrets are used, and are not portable between ubiquitous shell environments. The above is a DiY solution that minimizes the needful trust of yet another piece of software and introduces no limitations to the `aws` CLI or the default AWS credential discovery chain employed by most other tools. If you're just looking for a convenient remediation for MacOS, then these may be best for you.
+There are ready-made utilities that also help with properly handling AWS credentials, but that obfuscate the handling of secrets, may place limitations on the way those secrets are used, and are not portable between ubiquitous shell environments. The above solution conserves the trust of yet another piece of software and introduces no limitations to the `aws` CLI or the default AWS credential discovery chain employed by most other tools. If you're just looking for a convenient remediation for MacOS, then these others below may be a better fit for you.
 
   * 99Designs has [a utility called aws-vault](https://99designs.com/tech-blog/blog/2015/10/26/aws-vault/) for MacOS
 
