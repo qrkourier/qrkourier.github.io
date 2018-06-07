@@ -4,13 +4,13 @@ Hide: True
 
 <center>[Email me](mailto:w@qrk.us)</center>
 
-* NB (Fedora Table) <s>ReadyNAS Duo w/ two 1TiB disks in RAID1 by Netgear running RAIDiator Linux on SPARC</s>
-
-* Dell Latitude 2120 10" lappy running Ubuntu 17.10 server
+* (3ea) Linksys router running DD-WRT w/ 2.4GHz radio
 
 * Southern_Gentlem <s>Linksys router running DD-WRT w/ 2.4GHz radio</s>
 
-* (3ea) Linksys router running DD-WRT w/ 2.4GHz radio
+* NB (Fedora Table) <s>ReadyNAS Duo w/ two 1TiB disks in RAID1 by Netgear running RAIDiator Linux on SPARC</s>
+
+* JP (Off Axis) <s>Dell Latitude 2120 10" lappy running Ubuntu 17.10 server</s>
 
 * Hannah <s>[BEHRINGER XENYX X1204USB](http://a.co/9XIinuE) mounted in [OnStage RS7030 Rack Stand](http://a.co/4UDFlm6)</s>
 
