@@ -22,7 +22,7 @@ I am fascinated by FM synthesis and digital signal processing and I occasionally
 Here's a recent collaboration with Clarknova. My solo stuff is quite a bit less polished, but it's all there on SoundCloud.
 <center><iframe width="80%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/418062580&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe></center>
 
-I have made some playlists for [Spotify](https://open.spotify.com/user/128656604?si=Gihepa1zS9iOx3A2xvSYRg).
+I have made some playlists for [Spotify](https://open.spotify.com/user/128656604?si=Gihepa1zS9iOx3A2xvSYRg)([Spotify link](spotify:user:128656604)).
 
 <center><iframe src="https://open.spotify.com/embed/user/128656604/playlist/2DtKbdMMSBD5eEPrCbpLJx" width="80%" height="400" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></center>
 </br>

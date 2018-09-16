@@ -7,8 +7,8 @@ sys.path.append('.')
 AUTHOR = 'Ken'
 SITENAME = 'hella labs'
 TAGLINE = 'yet another thought garden'
-QUOTE = 'Until you make the unconscious conscious, it will direct your life and you will call it fate.'
-QUOTED = 'Carl Gustav Jung'
+QUOTE = 'Law #3: Any sufficiently advanced technology is indistinguishable from magic.'
+QUOTED = 'Arthur C. Clarke'
 SITEURL = ''
 # CONTACT_URL = '/pages/about.html'
 
