@@ -7,8 +7,8 @@ sys.path.append('.')
 AUTHOR = 'Ken'
 SITENAME = 'hella labs'
 TAGLINE = 'yet another thought garden'
-QUOTE = 'Law #3: Any sufficiently advanced technology is indistinguishable from magic.'
-QUOTED = 'Arthur C. Clarke'
+QUOTE = 'Reality is that which, when you stop believing in it, doesn\'t go away.'
+QUOTED = 'Philip K. Dick'
 SITEURL = ''
 # CONTACT_URL = '/pages/about.html'
 
