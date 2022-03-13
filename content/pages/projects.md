@@ -3,7 +3,9 @@ Icon: fas fa-wrench
 
 ## [NetFoundry](https://netfoundry.io/)
 
-We're building high-security, high-performance, cloud-agnostic, application-specific, programmable WANs with the [NetFoundry](https://netfoundry.io/) platform.
+We're enabling connectivity-as-code with a best-of-breed orchestration API and programmable mesh overlay in the [NetFoundry](https://netfoundry.io/) platform.
+
+Join [the developer community](https://developer.netfoundry.io/) and see for yourself!
 
 ## Ansible + Stacki
 Stacki is an API for configuring bare-metal hosts. These Ansible roles [configure the Kickstart server](https://galaxy.ansible.com/qrkourier/stacki-frontend/) and [cluster parameters for the newly-provisioned metal](https://galaxy.ansible.com/qrkourier/stacki-backend/).
@@ -17,12 +19,18 @@ Continuously play sound effects separated by a random amount dead air on a Raspb
 I have and look forward to participating in future projects with [Tautology](http://tautology.io/), a playful arts collective focused on interactive installations.
 
 ## Music
-I am fascinated by FM synthesis and digital signal processing and I occasionally get busy in [Bitwig](https://www.bitwig.com/) to produce original acoustic and electronic music. Even more occasionally I upload finished tracks to [SoundCloud](https://soundcloud.com/qrkourier).
+I am fascinated by FM synthesis and digital signal processing and I occasionally get busy in [Bitwig](https://www.bitwig.com/) to produce original acoustic and electronic music. Here's one with Ethereal vocals by Alexandra.
+<center>
+<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/562265640&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+</center>
+</br>
 
-Here's a recent collaboration with Clarknova. My solo stuff is quite a bit less polished, but it's all there on SoundCloud.
-<center><iframe width="80%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/418062580&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe></center>
+Sometimes I [Mixxx](https://www.mixxx.org/) techno.
+<center>
+<iframe width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2Fqrkourier%2Fdance-directive%2F" frameborder="0" ></iframe>
+</center>
 
-I have made some playlists for [Spotify](https://open.spotify.com/user/128656604?si=Gihepa1zS9iOx3A2xvSYRg)([Spotify link](spotify:user:128656604)).
+[Spotify](https://open.spotify.com/user/128656604?si=Gihepa1zS9iOx3A2xvSYRg) ([alt](spotify:user:128656604))
 
 <center><iframe src="https://open.spotify.com/embed/user/128656604/playlist/2DtKbdMMSBD5eEPrCbpLJx" width="80%" height="400" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></center>
 </br>

@@ -14,15 +14,14 @@ Title: About
   title.style.paddingTop = "2em";
 </script>
 
-This is my personal web site where I write about stuff.
-
 ### hella
-A "hella" is informally one metric octillion (10<sup>27</sup>) which is what you might call a large number if you're being particularly subtle about it. It was formally rejected by SI, but some AIs; e.g. Google Assistant, Wolfram Alpha; will still convert units to hellas.
+A "hella" is informally one metric octillion (10<sup>27</sup>) which is what you might call a large number if you're being particularly subtle about it. It was formally rejected by SI, but some non-biological entities like Google Assistant and Wolfram Alpha will convert units to hellas if you ask nicely <i class="fa fa-smile-o"></i>
+.
 
 ### contact
-- Kenneth Bingham <w@qrk.us>
+- Kenneth Bingham <w@qrk.us> is verifiable by Protonmail
 - [Keybase](https://keybase.io/kourier) links to several other verified points of contact
-- You can [use this form to encrypt your message](https://keybase.io/encrypt#kourier) or by downloading my [pubkey](/blob/kourier-pgp-0xB69403FA957C5E46.asc) or importing it with GnuPG
+- You can [use this link to start an encrypted chat with me](https://keybase.io/kourier/chat) or your could encrypt something for my [PGP key](/blob/kourier-pgp-0xB69403FA957C5E46.asc)
 
 ```shell
 ❯ gpg --recv-keys 0xB69403FA957C5E46
