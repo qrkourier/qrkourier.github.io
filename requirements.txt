@@ -1,4 +1,4 @@
 pelican
 pelican-minification
-webassets
+pelican-webassets
 markdown

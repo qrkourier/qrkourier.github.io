@@ -1,6 +1,6 @@
 Title: Free Stuff
 Icon: fas fa-gift
-Hide: True
+Status: hidden
 
 <center>[Email me](mailto:w@qrk.us)</center>
 

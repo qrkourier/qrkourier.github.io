@@ -1,8 +1,8 @@
-Title: How I Moved All My Videos Out of Google Photos
+Title: How I Reclaimed Storage Space in Google Photos By Moving All My Videos
 Tags: python, backup, rclone
-Icon:
+Icon: fas fa-video-slash
 
-There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out.
+There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space.
 
 [TOC]
 
@@ -10,19 +10,20 @@ Google Photos has some unique talents. I find it useful for exploring my own arc
 
 Problem: there's no easy way to do that! Even the API doesn't have a delete operation. I can find them easily enough in the app by searching "videos", and I can painstakingly download them and delete them, but I'd prefer to express this as code, if possible.
 
-## Sync the entire library
+## Sync Photos and Videos
 
 I found `gphotos-sync`, a handy implementation of the Google Photos API that creates a local replica of the entire library with albums and other metadata that I didn't need. Still, supremely useful to make sure I have a copy of all videos.
 
-## Move Videos to a New Folder
+## Move Videos
 
-I wrote a tiny Python program to do this:
+I wrote a tiny Python program to to move my videos out of the gphotos-sync directory.
+
 1. walk the gphotos-sync photos directory
 1. detect if a file is a video MIME type
 1. move the videos to a new folder
 
-```bash
-$ python ./movies.py
+```shell
+❯ python ./move_videos.py
 Moving: ./2017/02/2017-02-15-they-sang.mp4 787.8MiB -> ./Videos/videos_from_gphotos/2017/02/2017-02-15-they-sang.mp4
 Moving: ./2003/04/or-portland-roofing_residence.3gp 849.1KiB -> ./Videos/videos_from_gphotos/2003/04/or-portland-roofing_residence.3gp
 Moving: ./2003/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp 1.0MiB -> ./Videos/videos_from_gphotos/1973/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp
@@ -35,6 +36,8 @@ from os.path import join, getsize, dirname
 from os import walk, chdir
 from shutil import move
 from pathlib import Path
+
+# move_videos.py moves files with a video MIME type to a different top-level directory with the same directory structure
 
 def main():
     # The top argument for walk
@@ -85,3 +88,18 @@ There's a simple trick to do this in a fell swoop.
 1. hold SHIFT and left-click the last result
 1. click the trash button or press `#` to delete
 
+As of this writing the videos would be in Trash for 60 days before they're permanently deleted and the available storage returned to you.
+
+## Replicated Videos to New Storage
+
+I still need to keep a copy of my videos off-site in case something happens to my storage at home or I lose access for some reason. I didn't want to keep track of copying the files so it needs to be an automated sync.
+
+I chose `rclone` which is a versatile sync tool for cloud storage. It works with S3-compliant APIs, and I found STORJ has a very cheap option and as a bonus it is a form decentralized storage with an open-source bent. Cool.
+
+1. I signed up for Storj's free 150GB option and added about 20 USD worth of STORJ tokens to my account to cover future overages. No credit card required. 
+1. I followed [Storj's own guide](https://docs.storj.io/dcs/how-tos/sync-files-with-rclone/rclone-with-native-integration/) for configuring `rclone`.
+1. I added a sync command to my backup script:
+
+    ```shell
+    rclone sync ~/Videos/ storj:videos/
+    ```

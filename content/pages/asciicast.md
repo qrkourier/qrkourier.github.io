@@ -1,6 +1,6 @@
 Title: Ascii Cast
 Icon: fas fa-movie
-Hide: True
+Status: hidden
 
 
 <asciinema-player src="/blob/dockerUp.cast"></asciinema-player>

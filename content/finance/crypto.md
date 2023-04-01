@@ -1,6 +1,7 @@
 Title: My Crypto Strategy
 Tags: crypto, bitcoin, investing, finance, trading
 Icon: fab fa-btc
+Status: hidden
 
 ## What I expect from Bitcoin
 
