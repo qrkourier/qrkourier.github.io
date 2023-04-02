@@ -47,15 +47,19 @@ DEFAULT_PAGINATION = False
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
+PAGE_PATHS = [
+  'pages'
+]
 STATIC_PATHS = [
     'blob'
 ]
+STATIC_EXCLUDE_SOURCES = False
 
 DEFAULT_DATE = 'fs'
 
 DIRECT_TEMPLATES = ['index', 'categories', 'archives']
 
-THEME = '../pelican-themes-frankv-twenty-pelican-html5up'
+THEME = './pelican-themes-frankv-twenty-pelican-html5up'
 THEME_STATIC_DIR = '.'
 THEME_STATIC_PATHS = ['static']
 
