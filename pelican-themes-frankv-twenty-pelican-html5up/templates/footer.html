@@ -1,0 +1,17 @@
+<!-- Footer -->
+<footer id="footer">
+
+    <ul class="icons">
+      {% for title, link in SOCIAL %}
+        <li>
+          <span class="icon circle">
+            <a href="{{ link }}" class="fab fa-{{ title }} fa-2x"><span class="label">{{ title }}</span></a>
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <span class="copyright">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>. <br />
+    Design: <a href="http://html5up.net">HTML5 UP</a>.</span>
+
+</footer>

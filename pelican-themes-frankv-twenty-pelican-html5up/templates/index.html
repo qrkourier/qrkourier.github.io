@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% include 'banner.html' %}
+
+{% block content %}
+<!-- Main -->
+<article id="main">
+
+
+{% if QUOTE %}
+  <!-- One -->
+  <section class="wrapper style2 container special-alt">
+    <div class="row">
+      <div class="11u">
+
+        <header style='text-align: center;' >
+          <h4>{{ QUOTE }}</h4>
+          <p>― {{ QUOTED }}</p>
+        </header>
+
+        <p></p>
+
+        <footer>
+          <!--
+          <ul class="buttons">
+            <li><a href="#" class="button">Find Out More</a></li>
+          </ul>          -->
+
+
+        </footer>
+
+      </div>
+      <!--
+      <div class="4u skel-cell-important">
+      </div>
+      -->
+
+    </div>
+  </section>
+{% endif %}
+
+
+  <!-- Two -->
+  <section class="wrapper style1 container special">
+
+    {% include 'most_recent.html' %}
+
+    {% include 'pagination.html' %}
+
+  </section> <!-- /section -->
+
+</article>
+
+{% endblock content %}

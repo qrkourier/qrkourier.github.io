@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title|striptags|striptags|striptags }} | {{ super() }}{% endblock title %}
+
+{% block content %}
+<!-- Main -->
+<article id="main">
+
+  <header class="special container">
+    <span class="icon">
+      <span class="{{ article.icon|default("fas fa-mobile") }} fa-5x"></span>
+    </span>
+    <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+    <!-- add page sub title here -->
+
+    <p class="tags">
+    {% if article.tags %}
+      {% for tag in article.tags %}
+        <a href="{{ SITEURL }}/{{ tag.url }}">#{{ tag }}&nbsp&nbsp</a>
+      {% endfor %}
+    {% endif %} in <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a></p>
+
+    <p>updated {{ article.locale_date }} by {{ article.author }}</p>
+  </header>
+
+  <!-- One -->
+    <section class="wrapper style4 container">
+      <!-- Content -->
+        <div class="content">
+          <section>
+            <!-- <a href="#" class="image feature"><img src="images/pic04.jpg" alt="" /></a> -->
+            {% if article.toc %}
+                <nav class="toc">
+                {{ article.toc }}
+                </nav>
+            {% endif %}
+
+            <p>{{ article.content }}</p>
+          </section>
+        </div>
+
+    </section>
+
+    <!-- Two -->
+    {% include 'most_recent.html' %}
+
+  </article>
+
+{% if DISQUS_SITENAME %}
+  <div id="comments">
+      <h2 class="space-above">Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+          var disqus_identifier = "{{ article.url }}";
+          (function() {
+              var dsq = document.createElement('script');
+              dsq.type = 'text/javascript';
+              dsq.async = true;
+              dsq.src = 'http://{{ DISQUS_SITENAME }}.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+  </div>
+{% endif %}
+
+{% endblock content %}

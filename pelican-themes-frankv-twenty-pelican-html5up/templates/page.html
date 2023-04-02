@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title|striptags|striptags|striptags }} | {{ super() }}{% endblock title %}
+
+{% block content %}
+<!-- Main -->
+<article id="main">
+
+  <header class="special container">
+    <span class="icon">
+      <span class="{{ page.icon|default("fas fa-mobile") }} fa-5x" id="badge"></span>
+    </span>
+    <h2 id="pageTitle"><a href="{{ page.url }}">{{ page.title }}</a></h2>
+    <p>updated {{ page.locale_date }} by {{ page.author }}</p>
+    <!-- add page sub title here -->
+  </header>
+
+  <!-- One -->
+  <section class="wrapper style4 container">
+
+    <!-- Content -->
+      <div class="content">
+        <section>
+          <!-- <a href="#" class="image feature"><img src="images/pic04.jpg" alt="" /></a> -->
+          <p>{{ page.content }}</p>
+        </section>
+      </div>
+
+  </section>
+
+  <!-- Two -->
+  {% include 'most_recent.html' %}
+
+  </article>
+{% endblock content %}

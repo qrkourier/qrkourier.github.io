@@ -1,0 +1,28 @@
+    <section class="wrapper style1 container special">
+      <!--
+      <h2>recent</h2>
+      -->
+
+        <div class="row">
+          {% for article in articles[:3] %}
+          <div class="4u">
+
+            <section>
+              <span class="icon feature">
+                <span class="{{ article.icon }} fa-5x"></span>
+              </span>
+              <header>
+                <a href="{{ SITEURL }}/{{ article.url }}" rel='bookmark'><h3>{{ article.title }}</h3></a>
+              </header>
+              <p>{{ article.content[:164]|striptags|striptags|striptags }}</p>
+              <footer>
+                  <ul class="buttons">
+                      <li><a href="{{ SITEURL }}/{{ article.url }}" class="button small">Read More</a></li>
+                  </ul>
+              </footer>
+            </section>
+
+          </div>
+          {% endfor %}
+        </div>
+    </section>
