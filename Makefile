@@ -26,6 +26,7 @@ CLOUDFILES_CONTAINER=my_cloudfiles_container
 DROPBOX_DIR=~/Dropbox/Public/
 
 GITHUB_PAGES_BRANCH=gh-pages
+GITHUB_CNAME=qrk.us
 
 KEYBASE_ROOT=/keybase
 KEYBASE_USER=kourier
@@ -123,7 +124,7 @@ cf_upload: publish
 	cd $(OUTPUTDIR) && swift -v -A https://auth.api.rackspacecloud.com/v1.0 -U $(CLOUDFILES_USERNAME) -K $(CLOUDFILES_API_KEY) upload -c $(CLOUDFILES_CONTAINER) .
 
 github: publish
-	ghp-import -m "Generate Pelican site" -b $(GITHUB_PAGES_BRANCH) $(OUTPUTDIR)
+	ghp-import --message "Generate Pelican site" --branch $(GITHUB_PAGES_BRANCH) --cname $(GITHUB_CNAME) $(OUTPUTDIR)
 	git push origin $(GITHUB_PAGES_BRANCH)
 
 keybase: publish
