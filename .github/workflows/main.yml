@@ -15,4 +15,8 @@ jobs:
         uses: BSFishy/pip-action@v1
         with:
           requirements: requirements.txt
+      - name: npm installer
+        uses: bahmutov/npm-install@v1
+      - name: npm install
+        run: npm install -g uglify-js
       - run: make github
