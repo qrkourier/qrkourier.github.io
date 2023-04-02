@@ -28,6 +28,7 @@ DROPBOX_DIR=~/Dropbox/Public/
 GITHUB_PAGES_BRANCH=gh-pages
 GITHUB_CNAME=qrk.us
 GITHUB_PAGES_REMOTE=pages
+GITHUB_SOURCE_BRANCH=main
 
 KEYBASE_ROOT=/keybase
 KEYBASE_USER=kourier
@@ -126,7 +127,7 @@ cf_upload: publish
 
 github: publish
 	ghp-import --message "Generate Pelican site" --branch $(GITHUB_PAGES_BRANCH) --remote $(GITHUB_PAGES_REMOTE) --cname $(GITHUB_CNAME) $(OUTPUTDIR)
-	git push origin $(GITHUB_PAGES_BRANCH)
+	git push origin $(GITHUB_SOURCE_BRANCH)
 
 keybase: publish
 	rsync --recursive \

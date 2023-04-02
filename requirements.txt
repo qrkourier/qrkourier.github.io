@@ -2,3 +2,4 @@ pelican
 pelican-minification
 pelican-webassets
 markdown
+ghp-import
