@@ -1,5 +1,6 @@
 pelican
 pelican-minification
+pelican-neighbors
 pelican-webassets
 markdown
 ghp-import

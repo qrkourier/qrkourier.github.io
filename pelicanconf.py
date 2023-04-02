@@ -64,11 +64,11 @@ THEME_STATIC_DIR = '.'
 THEME_STATIC_PATHS = ['static']
 
 
-PLUGIN_PATHS = ["plugins", "../pelican-plugins"]
+#PLUGIN_PATHS = ["plugins", "../pelican-plugins"]
 PLUGINS = [
     'neighbors',
     'minification',
-    'assets'
+    'webassets'
 ]
 #'extract_toc'
 

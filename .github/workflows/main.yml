@@ -3,8 +3,8 @@ on:
     branches:
       - main
 jobs:
-  my_job:
-    name: deploy to staging
+  deploy:
+    name: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
