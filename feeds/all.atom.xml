@@ -1,5 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>hella labs</title><link href="https://www.qrk.us/" rel="alternate"></link><link href="https://www.qrk.us/feeds/all.atom.xml" rel="self"></link><id>https://www.qrk.us/</id><updated>2023-04-01T09:36:43-04:00</updated><entry><title>Securing AWS Credentials</title><link href="https://www.qrk.us/securing-aws-credentials.html" rel="alternate"></link><published>2023-04-01T09:36:43-04:00</published><updated>2023-04-01T09:36:43-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/securing-aws-credentials.html</id><summary type="html">&lt;p&gt;A single &lt;a href="https://github.com/joho/aws-pony"&gt;rogue npm module&lt;/a&gt;, Ruby gem, PyPi module, or ill-fated cURL command could expose you (and your employer) to extreme risk.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>hella labs</title><link href="https://www.qrk.us/" rel="alternate"></link><link href="https://www.qrk.us/feeds/all.atom.xml" rel="self"></link><id>https://www.qrk.us/</id><updated>2023-04-01T21:58:34-04:00</updated><entry><title>Fly.io Programmable Front-end</title><link href="https://www.qrk.us/flyio-programmable-front-end.html" rel="alternate"></link><published>2023-04-01T21:58:34-04:00</published><updated>2023-04-01T21:58:34-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/flyio-programmable-front-end.html</id><summary type="html">&lt;p&gt;In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations.&lt;/p&gt;
+&lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#example-of-a-multi-cloud-backend-fronted-by-flyio"&gt;Example of a multi-cloud backend fronted by …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations.&lt;/p&gt;
+&lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#example-of-a-multi-cloud-backend-fronted-by-flyio"&gt;Example of a multi-cloud backend fronted by Fly.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#example-of-a-personal-web-site-without-hosting-expenses"&gt;Example of a personal web site without hosting expenses&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#comments"&gt;Comments&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;high availability for a service endpoint (this is automatic);&lt;/li&gt;
+&lt;li&gt;requesting, issuing, binding, and renewing a free TLS server certificate (just verify a domain name);&lt;/li&gt;
+&lt;li&gt;injecting business logic and automation at the application edge e.g. analytics, policies, authentication, caching, redirects, lambda functions, etc... (just click to enable middleware); and&lt;/li&gt;
+&lt;li&gt;allocating workloads to multiple upstreams (backend capacity pools e.g. GCE, ECS, EC2).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="example-of-a-multi-cloud-backend-fronted-by-flyio"&gt;Example of a multi-cloud backend fronted by Fly.io&lt;/h3&gt;
+&lt;p&gt;For one project I created a Fly.io "site" to front an application served up by Kubernetes in Google Compute Engine (GCE) and Elastic Container Service (ECS) simultaneously. Such a multi-cloud architecture is typically possible with any CDN, but here's an overview of the steps to do this with Fly.io.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;docker push&lt;/code&gt; to upload my custom Docker image to the Elastic Container Registry (ECR)&lt;/li&gt;
+&lt;li&gt;configure the Kubernetes cluster to source that container image by registry address, name:tag, and publish the service port on a load balancer&lt;/li&gt;
+&lt;li&gt;configure AWS's ECS Fargate to source the image by name:tag (requires hosting the container image in ECR), and publish the service port on an Elastic Load Balancer (ELB)&lt;/li&gt;
+&lt;li&gt;create the Fly.io site with a backend of the Kubernetes load balancer address:port and ELB address:port&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;A note about TLS (SSL): It's a great idea to require TLS everywhere. This gives greater assurance of data integrity even when confidentiality is a non-issue. Both GCE Kubernetes LBs and ELBs can issue and bind a free TLS server certificate. There's no need to request a certificate common name (CN) or subject alternative name (SAN) matching the domain name your clients/customers will "see". This is because the frontend provided by Fly.io will bind that familiar domain name when you verify the DNS hostname. The CN+SAN in the backend load balancers' server certificates are arbitrary and simply need to match the domain name generated by that platform for the particular service address e.g. example-service-2045107736.us-east-1.elb.amazonaws.com.&lt;/p&gt;
+&lt;h2 id="example-of-a-personal-web-site-without-hosting-expenses"&gt;Example of a personal web site without hosting expenses&lt;/h2&gt;
+&lt;p&gt;I came across Fly.io by way of an email invitation for a free trial and have combined this with &lt;a href="https://www.qrk.us/keybase.html"&gt;the Keybase Filesystem&lt;/a&gt; and the Pelican static HTML generator (described in &lt;a href="https://www.qrk.us/pages/about.html"&gt;About page&lt;/a&gt;) to create this blog site which is highly secure, performant, highly available, and (for now) completely free of operational expenses!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
+&lt;blockquote class="reddit-card" data-card-created="1525987868"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/8iigk1/flyio_programmable_frontend/"&gt;Fly.io Programmable Front-end&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="cdn"></category><category term="devops"></category></entry><entry><title>How I Reclaimed Storage Space in Google Photos By Moving All My Videos</title><link href="https://www.qrk.us/how-i-reclaimed-storage-space-in-google-photos-by-moving-all-my-videos.html" rel="alternate"></link><published>2023-04-01T21:58:34-04:00</published><updated>2023-04-01T21:58:34-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/how-i-reclaimed-storage-space-in-google-photos-by-moving-all-my-videos.html</id><summary type="html">&lt;p&gt;There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space …&lt;/p&gt;</summary><content type="html">&lt;p&gt;There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space.&lt;/p&gt;
+&lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#sync-photos-and-videos"&gt;Sync Photos and Videos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#move-videos"&gt;Move Videos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#delete-all-videos-from-google-photos"&gt;Delete All Videos From Google Photos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#replicated-videos-to-new-storage"&gt;Replicated Videos to New Storage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;p&gt;Google Photos has some unique talents. I find it useful for exploring my own archives with the built-in machine learning features like "pictures from Ashland" or "red car". The balance of value is less favorable for videos, and they were the only reason I was paying for 2TB of cloud storage, so I decided to prune them out of my Google Photos account.&lt;/p&gt;
+&lt;p&gt;Problem: there's no easy way to do that! Even the API doesn't have a delete operation. I can find them easily enough in the app by searching "videos", and I can painstakingly download them and delete them, but I'd prefer to express this as code, if possible.&lt;/p&gt;
+&lt;h2 id="sync-photos-and-videos"&gt;Sync Photos and Videos&lt;/h2&gt;
+&lt;p&gt;I found &lt;code&gt;gphotos-sync&lt;/code&gt;, a handy implementation of the Google Photos API that creates a local replica of the entire library with albums and other metadata that I didn't need. Still, supremely useful to make sure I have a copy of all videos.&lt;/p&gt;
+&lt;h2 id="move-videos"&gt;Move Videos&lt;/h2&gt;
+&lt;p&gt;I wrote a tiny Python program to to move my videos out of the gphotos-sync directory.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;walk the gphotos-sync photos directory&lt;/li&gt;
+&lt;li&gt;detect if a file is a video MIME type&lt;/li&gt;
+&lt;li&gt;move the videos to a new folder&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯ python ./move_videos.py
+Moving: ./2017/02/2017-02-15-they-sang.mp4 &lt;span class="m"&gt;787&lt;/span&gt;.8MiB -&amp;gt; ./Videos/videos_from_gphotos/2017/02/2017-02-15-they-sang.mp4
+Moving: ./2003/04/or-portland-roofing_residence.3gp &lt;span class="m"&gt;849&lt;/span&gt;.1KiB -&amp;gt; ./Videos/videos_from_gphotos/2003/04/or-portland-roofing_residence.3gp
+Moving: ./2003/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp &lt;span class="m"&gt;1&lt;/span&gt;.0MiB -&amp;gt; ./Videos/videos_from_gphotos/1973/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp
+Total: &lt;span class="m"&gt;58&lt;/span&gt;.7GiB
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;filetype&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;os.path&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;getsize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dirname&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;walk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chdir&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;shutil&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;move&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pathlib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;
+
+&lt;span class="c1"&gt;# move_videos.py moves files with a video MIME type to a different top-level directory with the same directory structure&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="c1"&gt;# The top argument for walk&lt;/span&gt;
+    &lt;span class="n"&gt;topdir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;./Downloads/from_gphotos/photos&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;dest_topdir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;./Videos/videos_from_gphotos&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;chdir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;topdir&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;total_bytes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dirs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;files&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;walk&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_symlink&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+                &lt;span class="k"&gt;continue&lt;/span&gt;
+            &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;filetype&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_video&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+                &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getsize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+                &lt;span class="n"&gt;total_bytes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;total_bytes&lt;/span&gt;
+                &lt;span class="n"&gt;dest&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dest_topdir&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;./&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+                &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Moving:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;sizeof_fmt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;-&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="n"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dirname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+                    &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parents&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;exist_ok&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                    &lt;span class="n"&gt;move&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="k"&gt;raise&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="k"&gt;pass&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Total:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sizeof_fmt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;total_bytes&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sizeof_fmt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;suffix&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;B&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;unit&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Ki&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Mi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Gi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Ti&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Pi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Ei&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Zi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="si"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;3.1f&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;unit&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;suffix&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;/=&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="si"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;.1f&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Yi&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;suffix&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="delete-all-videos-from-google-photos"&gt;Delete All Videos From Google Photos&lt;/h2&gt;
+&lt;p&gt;There's a simple trick to do this in a fell swoop.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;search "videos" and make sure the results are all videos&lt;/li&gt;
+&lt;li&gt;tick the select box on the first result&lt;/li&gt;
+&lt;li&gt;scroll down to the bottom of results&lt;/li&gt;
+&lt;li&gt;hold SHIFT and left-click the last result&lt;/li&gt;
+&lt;li&gt;click the trash button or press &lt;code&gt;#&lt;/code&gt; to delete&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;As of this writing the videos would be in Trash for 60 days before they're permanently deleted and the available storage returned to you.&lt;/p&gt;
+&lt;h2 id="replicated-videos-to-new-storage"&gt;Replicated Videos to New Storage&lt;/h2&gt;
+&lt;p&gt;I still need to keep a copy of my videos off-site in case something happens to my storage at home or I lose access for some reason. I didn't want to keep track of copying the files so it needs to be an automated sync.&lt;/p&gt;
+&lt;p&gt;I chose &lt;code&gt;rclone&lt;/code&gt; which is a versatile sync tool for cloud storage. It works with S3-compliant APIs, and I found STORJ has a very cheap option and as a bonus it is a form decentralized storage with an open-source bent. Cool.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;I signed up for Storj's free 150GB option and added about 20 USD worth of STORJ tokens to my account to cover future overages. No credit card required. &lt;/li&gt;
+&lt;li&gt;I followed &lt;a href="https://docs.storj.io/dcs/how-tos/sync-files-with-rclone/rclone-with-native-integration/"&gt;Storj's own guide&lt;/a&gt; for configuring &lt;code&gt;rclone&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I added a sync command to my backup script:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;shell
+rclone sync ~/Videos/ storj:videos/&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</content><category term="tech"></category><category term="python"></category><category term="backup"></category><category term="rclone"></category></entry><entry><title>Keybase</title><link href="https://www.qrk.us/keybase.html" rel="alternate"></link><published>2023-04-01T21:58:34-04:00</published><updated>2023-04-01T21:58:34-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/keybase.html</id><summary type="html">&lt;p&gt;I first started using &lt;a href="https://www.keybase.io"&gt;@KeybaseIO&lt;/a&gt; a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.&lt;/p&gt;
+&lt;p&gt;A web of accounts could, for example, enable me to …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I first started using &lt;a href="https://www.keybase.io"&gt;@KeybaseIO&lt;/a&gt; a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.&lt;/p&gt;
+&lt;p&gt;A web of accounts could, for example, enable me to trust your email signature when I only know you through Twitter.&lt;/p&gt;
+&lt;p&gt;The Keybase filesystem is one of the newer tools and has a lot of promise. It is a global
+namespace with public and private trees. The private tree allows any two parties have a
+truly confidential exchange of data just by reading and writing in the special folders on
+their computer. You can look over here for &lt;a href="https://keybase.io/docs/kbfs"&gt;more info about
+it&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This web page is actually hosted in the kbfs at &lt;code&gt;/keybase/public/kourier&lt;/code&gt;. The content is
+signed during upload and so is verifiable by running the Keybase app on your computer,
+though it is not obvious in your web browser.&lt;/p&gt;
+&lt;p&gt;If you install Keybase you'll be able to passively track changes in the web of identity
+with commands like
+    &lt;code&gt;shell
+    keybase follow kourier&lt;/code&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
+&lt;blockquote class="reddit-card" data-card-created="1523472433"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/88ll60/keybase/?ref=share&amp;ref_source=embed"&gt;Keybase&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="identity"></category><category term="encryption"></category></entry><entry><title>Securing AWS Credentials</title><link href="https://www.qrk.us/securing-aws-credentials.html" rel="alternate"></link><published>2023-04-01T21:58:34-04:00</published><updated>2023-04-01T21:58:34-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/securing-aws-credentials.html</id><summary type="html">&lt;p&gt;A single &lt;a href="https://github.com/joho/aws-pony"&gt;rogue npm module&lt;/a&gt;, Ruby gem, PyPi module, or ill-fated cURL command could expose you (and your employer) to extreme risk.&lt;/p&gt;
 &lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#is-this-you"&gt;Is this you?&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#the-problem"&gt;The Problem&lt;/a&gt;&lt;/li&gt;
@@ -241,7 +383,7 @@ onaws&lt;span class="o"&gt;(){&lt;/span&gt;
 &lt;hr&gt;
 &lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
 &lt;blockquote class="reddit-card" data-card-created="1526756360"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/8knauq/securing_aws_credentials/"&gt;Securing AWS Credentials&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="aws"></category><category term="sysadmin"></category><category term="identity"></category><category term="encryption"></category></entry><entry><title>Virtual Machines as Code</title><link href="https://www.qrk.us/virtual-machines-as-code.html" rel="alternate"></link><published>2023-04-01T09:36:43-04:00</published><updated>2023-04-01T09:36:43-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/virtual-machines-as-code.html</id><summary type="html">&lt;p&gt;Optimizing for determinism in virtual machines. This approach can be used to vend the same virtual machine image version in many formats e.g. VHD for Azure, Stack, and Hyper-V; OVA for VMware, VirtualBox; QCOW2 for KVM, and of course RAW.&lt;/p&gt;
+&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="aws"></category><category term="sysadmin"></category><category term="identity"></category><category term="encryption"></category></entry><entry><title>Virtual Machines as Code</title><link href="https://www.qrk.us/virtual-machines-as-code.html" rel="alternate"></link><published>2023-04-01T21:58:34-04:00</published><updated>2023-04-01T21:58:34-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/virtual-machines-as-code.html</id><summary type="html">&lt;p&gt;Optimizing for determinism in virtual machines. This approach can be used to vend the same virtual machine image version in many formats e.g. VHD for Azure, Stack, and Hyper-V; OVA for VMware, VirtualBox; QCOW2 for KVM, and of course RAW.&lt;/p&gt;
 &lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#tldr"&gt;TL;DR&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#cloning-vs-code"&gt;Cloning vs Code&lt;/a&gt;&lt;/li&gt;
@@ -299,131 +441,7 @@ onaws&lt;span class="o"&gt;(){&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="upgrading-virtual-machines"&gt;Upgrading Virtual Machines&lt;/h2&gt;
-&lt;p&gt;You’ll have to judge whether your application is best served by an in-place upgrade or turn-and-burn. The advantages of latter are enabled by a stack architecture that abstracts away persistence from the purview of the VM. If you can see a path forward to that end, then “Go West”. If you are forced to manage in-place upgrades then an aggressive always-latest-stable kind of strategy works best, and tools like Salt Stack are your friends.&lt;/p&gt;</content><category term="tech"></category><category term="packer"></category><category term="ansible"></category><category term="terraform"></category><category term="devops"></category><category term="iaas"></category></entry><entry><title>Fly.io Programmable Front-end</title><link href="https://www.qrk.us/flyio-programmable-front-end.html" rel="alternate"></link><published>2023-04-01T09:36:43-04:00</published><updated>2023-04-01T09:36:43-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/flyio-programmable-front-end.html</id><summary type="html">&lt;p&gt;In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations.&lt;/p&gt;
-&lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#example-of-a-multi-cloud-backend-fronted-by-flyio"&gt;Example of a multi-cloud backend fronted by …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations.&lt;/p&gt;
-&lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#example-of-a-multi-cloud-backend-fronted-by-flyio"&gt;Example of a multi-cloud backend fronted by Fly.io&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#example-of-a-personal-web-site-without-hosting-expenses"&gt;Example of a personal web site without hosting expenses&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#comments"&gt;Comments&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;p&gt;For example:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;high availability for a service endpoint (this is automatic);&lt;/li&gt;
-&lt;li&gt;requesting, issuing, binding, and renewing a free TLS server certificate (just verify a domain name);&lt;/li&gt;
-&lt;li&gt;injecting business logic and automation at the application edge e.g. analytics, policies, authentication, caching, redirects, lambda functions, etc... (just click to enable middleware); and&lt;/li&gt;
-&lt;li&gt;allocating workloads to multiple upstreams (backend capacity pools e.g. GCE, ECS, EC2).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="example-of-a-multi-cloud-backend-fronted-by-flyio"&gt;Example of a multi-cloud backend fronted by Fly.io&lt;/h3&gt;
-&lt;p&gt;For one project I created a Fly.io "site" to front an application served up by Kubernetes in Google Compute Engine (GCE) and Elastic Container Service (ECS) simultaneously. Such a multi-cloud architecture is typically possible with any CDN, but here's an overview of the steps to do this with Fly.io.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;docker push&lt;/code&gt; to upload my custom Docker image to the Elastic Container Registry (ECR)&lt;/li&gt;
-&lt;li&gt;configure the Kubernetes cluster to source that container image by registry address, name:tag, and publish the service port on a load balancer&lt;/li&gt;
-&lt;li&gt;configure AWS's ECS Fargate to source the image by name:tag (requires hosting the container image in ECR), and publish the service port on an Elastic Load Balancer (ELB)&lt;/li&gt;
-&lt;li&gt;create the Fly.io site with a backend of the Kubernetes load balancer address:port and ELB address:port&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;A note about TLS (SSL): It's a great idea to require TLS everywhere. This gives greater assurance of data integrity even when confidentiality is a non-issue. Both GCE Kubernetes LBs and ELBs can issue and bind a free TLS server certificate. There's no need to request a certificate common name (CN) or subject alternative name (SAN) matching the domain name your clients/customers will "see". This is because the frontend provided by Fly.io will bind that familiar domain name when you verify the DNS hostname. The CN+SAN in the backend load balancers' server certificates are arbitrary and simply need to match the domain name generated by that platform for the particular service address e.g. example-service-2045107736.us-east-1.elb.amazonaws.com.&lt;/p&gt;
-&lt;h2 id="example-of-a-personal-web-site-without-hosting-expenses"&gt;Example of a personal web site without hosting expenses&lt;/h2&gt;
-&lt;p&gt;I came across Fly.io by way of an email invitation for a free trial and have combined this with &lt;a href="https://www.qrk.us/keybase.html"&gt;the Keybase Filesystem&lt;/a&gt; and the Pelican static HTML generator (described in &lt;a href="https://www.qrk.us/pages/about.html"&gt;About page&lt;/a&gt;) to create this blog site which is highly secure, performant, highly available, and (for now) completely free of operational expenses!&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
-&lt;blockquote class="reddit-card" data-card-created="1525987868"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/8iigk1/flyio_programmable_frontend/"&gt;Fly.io Programmable Front-end&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="cdn"></category><category term="devops"></category></entry><entry><title>How I Reclaimed Storage Space in Google Photos By Moving All My Videos</title><link href="https://www.qrk.us/how-i-reclaimed-storage-space-in-google-photos-by-moving-all-my-videos.html" rel="alternate"></link><published>2023-04-01T09:36:43-04:00</published><updated>2023-04-01T09:36:43-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/how-i-reclaimed-storage-space-in-google-photos-by-moving-all-my-videos.html</id><summary type="html">&lt;p&gt;There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space …&lt;/p&gt;</summary><content type="html">&lt;p&gt;There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space.&lt;/p&gt;
-&lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#sync-photos-and-videos"&gt;Sync Photos and Videos&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#move-videos"&gt;Move Videos&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#delete-all-videos-from-google-photos"&gt;Delete All Videos From Google Photos&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#replicated-videos-to-new-storage"&gt;Replicated Videos to New Storage&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;p&gt;Google Photos has some unique talents. I find it useful for exploring my own archives with the built-in machine learning features like "pictures from Ashland" or "red car". The balance of value is less favorable for videos, and they were the only reason I was paying for 2TB of cloud storage, so I decided to prune them out of my Google Photos account.&lt;/p&gt;
-&lt;p&gt;Problem: there's no easy way to do that! Even the API doesn't have a delete operation. I can find them easily enough in the app by searching "videos", and I can painstakingly download them and delete them, but I'd prefer to express this as code, if possible.&lt;/p&gt;
-&lt;h2 id="sync-photos-and-videos"&gt;Sync Photos and Videos&lt;/h2&gt;
-&lt;p&gt;I found &lt;code&gt;gphotos-sync&lt;/code&gt;, a handy implementation of the Google Photos API that creates a local replica of the entire library with albums and other metadata that I didn't need. Still, supremely useful to make sure I have a copy of all videos.&lt;/p&gt;
-&lt;h2 id="move-videos"&gt;Move Videos&lt;/h2&gt;
-&lt;p&gt;I wrote a tiny Python program to to move my videos out of the gphotos-sync directory.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;walk the gphotos-sync photos directory&lt;/li&gt;
-&lt;li&gt;detect if a file is a video MIME type&lt;/li&gt;
-&lt;li&gt;move the videos to a new folder&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯ python ./move_videos.py
-Moving: ./2017/02/2017-02-15-they-sang.mp4 &lt;span class="m"&gt;787&lt;/span&gt;.8MiB -&amp;gt; ./Videos/videos_from_gphotos/2017/02/2017-02-15-they-sang.mp4
-Moving: ./2003/04/or-portland-roofing_residence.3gp &lt;span class="m"&gt;849&lt;/span&gt;.1KiB -&amp;gt; ./Videos/videos_from_gphotos/2003/04/or-portland-roofing_residence.3gp
-Moving: ./2003/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp &lt;span class="m"&gt;1&lt;/span&gt;.0MiB -&amp;gt; ./Videos/videos_from_gphotos/1973/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp
-Total: &lt;span class="m"&gt;58&lt;/span&gt;.7GiB
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;filetype&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;os.path&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;getsize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dirname&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;walk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chdir&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;shutil&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;move&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pathlib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;
-
-&lt;span class="c1"&gt;# move_videos.py moves files with a video MIME type to a different top-level directory with the same directory structure&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-    &lt;span class="c1"&gt;# The top argument for walk&lt;/span&gt;
-    &lt;span class="n"&gt;topdir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;./Downloads/from_gphotos/photos&amp;#39;&lt;/span&gt;
-    &lt;span class="n"&gt;dest_topdir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;./Videos/videos_from_gphotos&amp;#39;&lt;/span&gt;
-    &lt;span class="n"&gt;chdir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;topdir&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="n"&gt;total_bytes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dirs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;files&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;walk&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_symlink&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-                &lt;span class="k"&gt;continue&lt;/span&gt;
-            &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;filetype&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_video&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
-                &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getsize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-                &lt;span class="n"&gt;total_bytes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;total_bytes&lt;/span&gt;
-                &lt;span class="n"&gt;dest&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dest_topdir&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;./&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-                &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Moving:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;sizeof_fmt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;-&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-                    &lt;span class="n"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dirname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-                    &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parents&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;exist_ok&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                    &lt;span class="n"&gt;move&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-                    &lt;span class="k"&gt;raise&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-                &lt;span class="k"&gt;pass&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Total:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sizeof_fmt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;total_bytes&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sizeof_fmt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;suffix&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;B&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;unit&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Ki&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Mi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Gi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Ti&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Pi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Ei&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Zi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="si"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;3.1f&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;unit&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;suffix&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-        &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;/=&lt;/span&gt; &lt;span class="mf"&gt;1024.0&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="si"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;.1f&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;Yi&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;suffix&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-
-
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id="delete-all-videos-from-google-photos"&gt;Delete All Videos From Google Photos&lt;/h2&gt;
-&lt;p&gt;There's a simple trick to do this in a fell swoop.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;search "videos" and make sure the results are all videos&lt;/li&gt;
-&lt;li&gt;tick the select box on the first result&lt;/li&gt;
-&lt;li&gt;scroll down to the bottom of results&lt;/li&gt;
-&lt;li&gt;hold SHIFT and left-click the last result&lt;/li&gt;
-&lt;li&gt;click the trash button or press &lt;code&gt;#&lt;/code&gt; to delete&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;As of this writing the videos would be in Trash for 60 days before they're permanently deleted and the available storage returned to you.&lt;/p&gt;
-&lt;h2 id="replicated-videos-to-new-storage"&gt;Replicated Videos to New Storage&lt;/h2&gt;
-&lt;p&gt;I still need to keep a copy of my videos off-site in case something happens to my storage at home or I lose access for some reason. I didn't want to keep track of copying the files so it needs to be an automated sync.&lt;/p&gt;
-&lt;p&gt;I chose &lt;code&gt;rclone&lt;/code&gt; which is a versatile sync tool for cloud storage. It works with S3-compliant APIs, and I found STORJ has a very cheap option and as a bonus it is a form decentralized storage with an open-source bent. Cool.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;I signed up for Storj's free 150GB option and added about 20 USD worth of STORJ tokens to my account to cover future overages. No credit card required. &lt;/li&gt;
-&lt;li&gt;I followed &lt;a href="https://docs.storj.io/dcs/how-tos/sync-files-with-rclone/rclone-with-native-integration/"&gt;Storj's own guide&lt;/a&gt; for configuring &lt;code&gt;rclone&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;I added a sync command to my backup script:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;shell
-rclone sync ~/Videos/ storj:videos/&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;</content><category term="tech"></category><category term="python"></category><category term="backup"></category><category term="rclone"></category></entry><entry><title>CloudFlare DNS for Network Manager</title><link href="https://www.qrk.us/cloudflare-dns-for-network-manager.html" rel="alternate"></link><published>2022-03-13T16:58:12-04:00</published><updated>2022-03-13T16:58:12-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2022-03-13:/cloudflare-dns-for-network-manager.html</id><summary type="html">&lt;p&gt;CloudFlare provides &lt;a href="https://developers.cloudflare.com/1.1.1.1/what-is-1.1.1.1/"&gt;a performant recursive nameserver&lt;/a&gt; along with a promise to never surveil their users.&lt;/p&gt;
+&lt;p&gt;You’ll have to judge whether your application is best served by an in-place upgrade or turn-and-burn. The advantages of latter are enabled by a stack architecture that abstracts away persistence from the purview of the VM. If you can see a path forward to that end, then “Go West”. If you are forced to manage in-place upgrades then an aggressive always-latest-stable kind of strategy works best, and tools like Salt Stack are your friends.&lt;/p&gt;</content><category term="tech"></category><category term="packer"></category><category term="ansible"></category><category term="terraform"></category><category term="devops"></category><category term="iaas"></category></entry><entry><title>CloudFlare DNS for Network Manager</title><link href="https://www.qrk.us/cloudflare-dns-for-network-manager.html" rel="alternate"></link><published>2023-04-01T21:58:34-04:00</published><updated>2023-04-01T21:58:34-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-01:/cloudflare-dns-for-network-manager.html</id><summary type="html">&lt;p&gt;CloudFlare provides &lt;a href="https://developers.cloudflare.com/1.1.1.1/what-is-1.1.1.1/"&gt;a performant recursive nameserver&lt;/a&gt; along with a promise to never surveil their users.&lt;/p&gt;
 &lt;p&gt;Their Linux quickstart involves modifying the standard C library's resolver (i.e. /etc/resolv.conf) which is a terrible idea if you are using most of the popular flavors of Linux as a daily driver …&lt;/p&gt;</summary><content type="html">&lt;p&gt;CloudFlare provides &lt;a href="https://developers.cloudflare.com/1.1.1.1/what-is-1.1.1.1/"&gt;a performant recursive nameserver&lt;/a&gt; along with a promise to never surveil their users.&lt;/p&gt;
 &lt;p&gt;Their Linux quickstart involves modifying the standard C library's resolver (i.e. /etc/resolv.conf) which is a terrible idea if you are using most of the popular flavors of Linux as a daily driver desktop OS because they're likely using &lt;code&gt;dnsmasq&lt;/code&gt; or &lt;code&gt;resolvconf&lt;/code&gt; or both to declare the contents of that file.&lt;/p&gt;
 &lt;p&gt;For what it's worth, here's shellcode to quickly reconfigure an existing Network Manager saved connection with &lt;code&gt;nmcli&lt;/code&gt;.&lt;/p&gt;
@@ -450,22 +468,4 @@ nmcli connection modify &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span c
 &lt;hr&gt;
 &lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
 &lt;blockquote class="reddit-card" data-card-created="1523472389"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/8bjhvg/cloudflare_dns_for_network_manager/?ref=share&amp;ref_source=embed"&gt;CloudFlare DNS for Network Manager&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="Linux"></category><category term="dns"></category><category term="sysadmin"></category><category term="network manager"></category></entry><entry><title>Keybase</title><link href="https://www.qrk.us/keybase.html" rel="alternate"></link><published>2022-03-13T16:58:12-04:00</published><updated>2022-03-13T16:58:12-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2022-03-13:/keybase.html</id><summary type="html">&lt;p&gt;I first started using &lt;a href="https://www.keybase.io"&gt;@KeybaseIO&lt;/a&gt; a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.&lt;/p&gt;
-&lt;p&gt;A web of accounts could, for example, enable me to …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I first started using &lt;a href="https://www.keybase.io"&gt;@KeybaseIO&lt;/a&gt; a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.&lt;/p&gt;
-&lt;p&gt;A web of accounts could, for example, enable me to trust your email signature when I only know you through Twitter.&lt;/p&gt;
-&lt;p&gt;The Keybase filesystem is one of the newer tools and has a lot of promise. It is a global
-namespace with public and private trees. The private tree allows any two parties have a
-truly confidential exchange of data just by reading and writing in the special folders on
-their computer. You can look over here for &lt;a href="https://keybase.io/docs/kbfs"&gt;more info about
-it&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This web page is actually hosted in the kbfs at &lt;code&gt;/keybase/public/kourier&lt;/code&gt;. The content is
-signed during upload and so is verifiable by running the Keybase app on your computer,
-though it is not obvious in your web browser.&lt;/p&gt;
-&lt;p&gt;If you install Keybase you'll be able to passively track changes in the web of identity
-with commands like
-    &lt;code&gt;shell
-    keybase follow kourier&lt;/code&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
-&lt;blockquote class="reddit-card" data-card-created="1523472433"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/88ll60/keybase/?ref=share&amp;ref_source=embed"&gt;Keybase&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="identity"></category><category term="encryption"></category></entry></feed>
+&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="Linux"></category><category term="dns"></category><category term="sysadmin"></category><category term="network manager"></category></entry></feed>
