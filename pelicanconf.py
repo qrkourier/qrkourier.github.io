@@ -47,14 +47,9 @@ DEFAULT_PAGINATION = False
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
-PAGE_PATHS = [
-  'pages',
-  'blob'
-]
 STATIC_PATHS = [
     'blob'
 ]
-STATIC_EXCLUDE_SOURCES = False
 
 DEFAULT_DATE = 'fs'
 
