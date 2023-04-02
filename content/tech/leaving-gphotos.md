@@ -100,6 +100,6 @@ I chose `rclone` which is a versatile sync tool for cloud storage. It works with
 1. I followed [Storj's own guide](https://docs.storj.io/dcs/how-tos/sync-files-with-rclone/rclone-with-native-integration/) for configuring `rclone`.
 1. I added a sync command to my backup script:
 
-    ```shell
-    rclone sync ~/Videos/ storj:videos/
-    ```
+```bash
+rclone sync ~/Videos/ storj:videos/
+```

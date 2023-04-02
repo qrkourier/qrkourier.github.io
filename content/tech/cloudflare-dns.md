@@ -30,9 +30,3 @@ nmcli connection modify "$CONN" \
     ipv4.ignore-auto-dns no
 
 ```
-
----
-
-##Comments
-<blockquote class="reddit-card" data-card-created="1523472389"><a href="https://www.reddit.com/user/bingnet/comments/8bjhvg/cloudflare_dns_for_network_manager/?ref=share&ref_source=embed">CloudFlare DNS for Network Manager</a> from <a href="http://www.reddit.com/u/bingnet">u/bingnet</a></blockquote>
-<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>

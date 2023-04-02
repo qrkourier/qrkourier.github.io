@@ -45,9 +45,11 @@ _This applies to Bourne-compat shells on file-based OSs e.g. BASH and ZSH on Mac
 ```shell
 ❯ source <(gpg -qd ~/.aws/credentials.gpg)
 ```
+
 </br>
 
 The plaintext of this file is shellcode like...
+
 ```shell
 export AWS_ACCESS_KEY_ID=AKIAJS7UXB9INMRXLOEA
 export AWS_SECRET_ACCESS_KEY=vXHZEOVxrBtqMkmadkJv0mCeEglrlFA5oBEywSFw
@@ -61,17 +63,17 @@ Composing your own encrypted credentials file requires only free, open-source ut
 
 These steps will allow you to continue using the Default Credential Provider chain in AWS SDKs, boto3/awscli, etc...
 
-  * Install and configure GnuPG command-line interface (CLI) for your OS. I'll assume this will also provide the GnuPG agent which is typically included with modern, trusted GPG packages. [This blog post](http://blog.ghostinthemachines.com/2015/03/01/how-to-use-gpg-command-line/) looks like a good place to start.
+* Install and configure GnuPG command-line interface (CLI) for your OS. I'll assume this will also provide the GnuPG agent which is typically included with modern, trusted GPG packages. [This blog post](http://blog.ghostinthemachines.com/2015/03/01/how-to-use-gpg-command-line/) looks like a good place to start.
 
-    _You will need the user ID (UID) e.g. alice@example.com that you choose in this step in a later step._
+  _You will need the user ID (UID) e.g. alice@example.com that you choose in this step in a later step._
 
-  * Use GnuPG CLI `gpg` to create an identity aka PGP private key. Github has [a helpful post](https://help.github.com/articles/generating-a-new-gpg-key/) about this.
+* Use GnuPG CLI `gpg` to create an identity aka PGP private key. Github has [a helpful post](https://help.github.com/articles/generating-a-new-gpg-key/) about this.
 
-  * Install the AWS CLI which we'll use to verify these steps work. Amazon covers this [on their web site](https://aws.amazon.com/cli/).
+* Install the AWS CLI which we'll use to verify these steps work. Amazon covers this [on their web site](https://aws.amazon.com/cli/).
 
-  * If you have more than one credential in *~/.aws/credentials* then copy each to a separate file with a meaningful name e.g. *~/.aws/credentials-example.com* and perform the next step for each file.
+* If you have more than one credential in *~/.aws/credentials* then copy each to a separate file with a meaningful name e.g. *~/.aws/credentials-example.com* and perform the next step for each file.
 
-  * Edit the plaintext file *~/.aws/credentials* so that it resembles the example above. You can manually insert the `export` command at the beginning of the two lines and convert the variables names to uppercase or you can run this command which does precisely that in the terminal to prepare the file for encryption.
+* Edit the plaintext file *~/.aws/credentials* so that it resembles the example above. You can manually insert the `export` command at the beginning of the two lines and convert the variables names to uppercase or you can run this command which does precisely that in the terminal to prepare the file for encryption.
 
 ```shell
 ❯ sed -E -e '/^\[.*\]$/d' \
@@ -81,42 +83,52 @@ These steps will allow you to continue using the Default Credential Provider cha
 
 </br>
 
-  * Encrypt the credentials file for your user ID (typically the email address you entered when the PGP identity was generated).
+* Encrypt the credentials file for your user ID (typically the email address you entered when the PGP identity was generated).
+
 ```shell
 # this command creates a new file with the same filename as the plaintext + suffix ".gpg"
 ❯ gpg -e -{u,r}alice@example.com ~/.aws/credentials
 ```
+
 </br>
 
 * Prove you can decrypt.
+
 ```shell
 ❯ gpg -qd < ~/.aws/credentials.gpg
 ```
+
 </br>
 If this is the first time you have used your PGP identity you may see a GUI popup in your OS prompting for your passphrase. If your OS+GnuPG agent integration allows you may at this time also save the passphrase in your OS keyring. This probably means that your passphrase is chained to your OS login password, and so you should protect that login password with the same measures that are appropriate for your AWS credential.
 
 * Source the plaintext into your shell environment and use the credential to authenticate.
+
 ```shell
 ❯ source <(gpg -qd < ~/.aws/credentials.gpg)
 
 ❯ aws iam get-user
 ```
+
 </br>
 
 * If you will be switching between multiple credentials with this method then simply source the plaintext from separate files.
+
 ```shell
 ❯ source <(gpg -qd < ~/.aws/credentials-example.com.gpg)
 ❯ source <(gpg -qd < ~/.aws/credentials-example.org.gpg)
 ```
+
 </br>
 
 * Now you can delete the plaintext file. If you are feeling less than confident about your future ability to decrypt with your PGP identity then, as a fallback option, consider changing the filemode on the plaintext credentials file so that elevated privileges are required to read it.
+
 ```shell
 ❯ rm ~/.aws/credentials
 # alternatively, make the file unreadable by unprivileged processes
 ❯ sudo chown root ~/.aws/credentials
 ❯ sudo chmod 0600 ~/.aws/credentials
 ```
+
 </br>
 
 ## Shortcuts
@@ -131,6 +143,7 @@ First, lets look at the most simple case where you have exactly one AWS credenti
 # save the following alias in your aliases dotfile or shell runcom file e.g. ~/.bashrc
 alias onaws="source <(gpg -qd ~/.aws/credentials.gpg)"
 ```
+
 </br>
 
 ```shell
@@ -138,6 +151,7 @@ alias onaws="source <(gpg -qd ~/.aws/credentials.gpg)"
 # environment by including the source command in the shell rc file
 source <(gpg -qd ~/.aws/credentials.gpg)
 ```
+
 </br>
 
 ```shell
@@ -147,9 +161,11 @@ source <(gpg -qd ~/.aws/credentials.gpg)
 # then exec the alias to assume the AWS identity
 ❯ onaws
 ```
+
 </br>
 
 If instead you have multiple AWS identities you could use a shellcode function and a file naming convention to quickly assume any one identity.
+
 ```shell
 # save the following function in your aliases dotfile or shell runcom file e.g. ~/.bashrc
 onaws(){
@@ -167,6 +183,7 @@ onaws(){
   }
 }
 ```
+
 </br>
 
 ```shell
@@ -177,11 +194,13 @@ onaws(){
 # AWS identity e.g. stored in ~/.aws/credentials-example.com.gpg
 ❯ onaws example.com
 ```
+
 </br>
 
 ### Disable Privileges
 
 You may wish to immediately nullify any credentials and session tokens in memory. You're relatively safe if you end the process where the credentials were sourced, but if for some reason it is preferable for that process to continue running you can explicitly unset the variables with a command.
+
 ```shell
 # save the following alias in your aliases dotfile or shell runcom file e.g. ~/.bashrc
 alias noaws="unset AWS_ACCESS_KEY \
@@ -190,6 +209,7 @@ alias noaws="unset AWS_ACCESS_KEY \
                    AWS_SECURITY_TOKEN \
                    AWS_SESSION_TOKEN"
 ```
+
 </br>
 
 ```shell
@@ -200,6 +220,7 @@ alias noaws="unset AWS_ACCESS_KEY \
 # Simple Token Service sessions you might have obtained via `assume-role`
 ❯ noaws
 ```
+
 </br>
 
 ### Assume Role
@@ -223,14 +244,10 @@ I've cobbled together [some additional shellcode functions](https://github.com/q
 
 There are ready-made utilities that also help with properly handling AWS credentials, but that obfuscate the handling of secrets, may place limitations on the way those secrets are used, and are not portable between ubiquitous shell environments. The above solution conserves the trust of yet another piece of software and introduces no limitations to the `aws` CLI or the default AWS credential discovery chain employed by most other tools. If you're just looking for a convenient remediation for MacOS, then these others below may be a better fit for you.
 
-  * 99Designs has [a utility called aws-vault](https://99designs.com/tech-blog/blog/2015/10/26/aws-vault/) for MacOS
+* 99Designs has [a utility called aws-vault](https://99designs.com/tech-blog/blog/2015/10/26/aws-vault/) for MacOS
 
-  * [aws-keychain](https://github.com/pda/aws-keychain) for MacOS
+* [aws-keychain](https://github.com/pda/aws-keychain) for MacOS
 
 AWS publishes [best practices for identity access management](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html).
 
 ---
-
-##Comments
-<blockquote class="reddit-card" data-card-created="1526756360"><a href="https://www.reddit.com/user/bingnet/comments/8knauq/securing_aws_credentials/">Securing AWS Credentials</a> from <a href="http://www.reddit.com/u/bingnet">u/bingnet</a></blockquote>
-<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
