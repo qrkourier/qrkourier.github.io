@@ -1,0 +1,4 @@
+pelican
+pelican-minification
+pelican-webassets
+markdown
