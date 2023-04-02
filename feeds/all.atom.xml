@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>hella labs</title><link href="https://www.qrk.us/" rel="alternate"></link><link href="https://www.qrk.us/feeds/all.atom.xml" rel="self"></link><id>https://www.qrk.us/</id><updated>2023-04-02T10:01:16-04:00</updated><entry><title>CloudFlare DNS for Network Manager</title><link href="https://www.qrk.us/cloudflare-dns-for-network-manager.html" rel="alternate"></link><published>2023-04-02T10:01:16-04:00</published><updated>2023-04-02T10:01:16-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/cloudflare-dns-for-network-manager.html</id><summary type="html">&lt;p&gt;CloudFlare provides &lt;a href="https://developers.cloudflare.com/1.1.1.1/what-is-1.1.1.1/"&gt;a performant recursive nameserver&lt;/a&gt; along with a promise to never surveil their users.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>hella labs</title><link href="https://www.qrk.us/" rel="alternate"></link><link href="https://www.qrk.us/feeds/all.atom.xml" rel="self"></link><id>https://www.qrk.us/</id><updated>2023-04-02T15:26:01-04:00</updated><entry><title>CloudFlare DNS for Network Manager</title><link href="https://www.qrk.us/cloudflare-dns-for-network-manager.html" rel="alternate"></link><published>2023-04-02T15:26:01-04:00</published><updated>2023-04-02T15:26:01-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/cloudflare-dns-for-network-manager.html</id><summary type="html">&lt;p&gt;CloudFlare provides &lt;a href="https://developers.cloudflare.com/1.1.1.1/what-is-1.1.1.1/"&gt;a performant recursive nameserver&lt;/a&gt; along with a promise to never surveil their users.&lt;/p&gt;
 &lt;p&gt;Their Linux quickstart involves modifying the standard C library's resolver (i.e. /etc/resolv.conf) which is a terrible idea if you are using most of the popular flavors of Linux as a daily driver …&lt;/p&gt;</summary><content type="html">&lt;p&gt;CloudFlare provides &lt;a href="https://developers.cloudflare.com/1.1.1.1/what-is-1.1.1.1/"&gt;a performant recursive nameserver&lt;/a&gt; along with a promise to never surveil their users.&lt;/p&gt;
 &lt;p&gt;Their Linux quickstart involves modifying the standard C library's resolver (i.e. /etc/resolv.conf) which is a terrible idea if you are using most of the popular flavors of Linux as a daily driver desktop OS because they're likely using &lt;code&gt;dnsmasq&lt;/code&gt; or &lt;code&gt;resolvconf&lt;/code&gt; or both to declare the contents of that file.&lt;/p&gt;
 &lt;p&gt;For what it's worth, here's shellcode to quickly reconfigure an existing Network Manager saved connection with &lt;code&gt;nmcli&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# make a note of the name of the connection you wish to configure e.g. &amp;quot;WiFi Secure&amp;quot;&lt;/span&gt;
-nmcli connection show
+nmcli&lt;span class="w"&gt; &lt;/span&gt;connection&lt;span class="w"&gt; &lt;/span&gt;show
 
 &lt;span class="c1"&gt;# save the name of the connection in a variable&lt;/span&gt;
-&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;CONN&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;WiFi Secure&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;CONN&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;WiFi Secure&amp;quot;&lt;/span&gt;
 
 &lt;span class="c1"&gt;# paste the following in your terminal to reconfigure DNS&lt;/span&gt;
-nmcli connection modify &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$CONN&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-    ipv4.ignore-auto-dns yes &lt;span class="se"&gt;\&lt;/span&gt;
-    ipv4.never-default no &lt;span class="se"&gt;\&lt;/span&gt;
-    ipv4.dns &lt;span class="s2"&gt;&amp;quot;1.1.1.1&amp;quot;&lt;/span&gt;
+nmcli&lt;span class="w"&gt; &lt;/span&gt;connection&lt;span class="w"&gt; &lt;/span&gt;modify&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$CONN&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;ipv4.ignore-auto-dns&lt;span class="w"&gt; &lt;/span&gt;yes&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;ipv4.never-default&lt;span class="w"&gt; &lt;/span&gt;no&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;ipv4.dns&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;1.1.1.1&amp;quot;&lt;/span&gt;
 
 &lt;span class="c1"&gt;# reactivate the saved connection&lt;/span&gt;
-nmcli connection up &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$CONN&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+nmcli&lt;span class="w"&gt; &lt;/span&gt;connection&lt;span class="w"&gt; &lt;/span&gt;up&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$CONN&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 
 &lt;span class="c1"&gt;# optionally restore default DNS (DHCP)&lt;/span&gt;
-nmcli connection modify &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$CONN&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-    ipv4.ignore-auto-dns no
+nmcli&lt;span class="w"&gt; &lt;/span&gt;connection&lt;span class="w"&gt; &lt;/span&gt;modify&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$CONN&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;ipv4.ignore-auto-dns&lt;span class="w"&gt; &lt;/span&gt;no
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;hr&gt;
 &lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
 &lt;blockquote class="reddit-card" data-card-created="1523472389"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/8bjhvg/cloudflare_dns_for_network_manager/?ref=share&amp;ref_source=embed"&gt;CloudFlare DNS for Network Manager&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="Linux"></category><category term="dns"></category><category term="sysadmin"></category><category term="network manager"></category></entry><entry><title>Fly.io Programmable Front-end</title><link href="https://www.qrk.us/flyio-programmable-front-end.html" rel="alternate"></link><published>2023-04-02T10:01:16-04:00</published><updated>2023-04-02T10:01:16-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/flyio-programmable-front-end.html</id><summary type="html">&lt;p&gt;In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations.&lt;/p&gt;
+&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="Linux"></category><category term="dns"></category><category term="sysadmin"></category><category term="network manager"></category></entry><entry><title>Fly.io Programmable Front-end</title><link href="https://www.qrk.us/flyio-programmable-front-end.html" rel="alternate"></link><published>2023-04-02T15:26:01-04:00</published><updated>2023-04-02T15:26:01-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/flyio-programmable-front-end.html</id><summary type="html">&lt;p&gt;In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations.&lt;/p&gt;
 &lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#example-of-a-multi-cloud-backend-fronted-by-flyio"&gt;Example of a multi-cloud backend fronted by …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations.&lt;/p&gt;
 &lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
@@ -56,7 +56,7 @@ nmcli connection modify &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span c
 &lt;hr&gt;
 &lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
 &lt;blockquote class="reddit-card" data-card-created="1525987868"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/8iigk1/flyio_programmable_frontend/"&gt;Fly.io Programmable Front-end&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="cdn"></category><category term="devops"></category></entry><entry><title>How I Reclaimed Storage Space in Google Photos By Moving All My Videos</title><link href="https://www.qrk.us/how-i-reclaimed-storage-space-in-google-photos-by-moving-all-my-videos.html" rel="alternate"></link><published>2023-04-02T10:01:16-04:00</published><updated>2023-04-02T10:01:16-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/how-i-reclaimed-storage-space-in-google-photos-by-moving-all-my-videos.html</id><summary type="html">&lt;p&gt;There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space …&lt;/p&gt;</summary><content type="html">&lt;p&gt;There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space.&lt;/p&gt;
+&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="cdn"></category><category term="devops"></category></entry><entry><title>How I Reclaimed Storage Space in Google Photos By Moving All My Videos</title><link href="https://www.qrk.us/how-i-reclaimed-storage-space-in-google-photos-by-moving-all-my-videos.html" rel="alternate"></link><published>2023-04-02T15:26:01-04:00</published><updated>2023-04-02T15:26:01-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/how-i-reclaimed-storage-space-in-google-photos-by-moving-all-my-videos.html</id><summary type="html">&lt;p&gt;There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space …&lt;/p&gt;</summary><content type="html">&lt;p&gt;There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space.&lt;/p&gt;
 &lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#sync-photos-and-videos"&gt;Sync Photos and Videos&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#move-videos"&gt;Move Videos&lt;/a&gt;&lt;/li&gt;
@@ -75,11 +75,11 @@ nmcli connection modify &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span c
 &lt;li&gt;detect if a file is a video MIME type&lt;/li&gt;
 &lt;li&gt;move the videos to a new folder&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯ python ./move_videos.py
-Moving: ./2017/02/2017-02-15-they-sang.mp4 &lt;span class="m"&gt;787&lt;/span&gt;.8MiB -&amp;gt; ./Videos/videos_from_gphotos/2017/02/2017-02-15-they-sang.mp4
-Moving: ./2003/04/or-portland-roofing_residence.3gp &lt;span class="m"&gt;849&lt;/span&gt;.1KiB -&amp;gt; ./Videos/videos_from_gphotos/2003/04/or-portland-roofing_residence.3gp
-Moving: ./2003/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp &lt;span class="m"&gt;1&lt;/span&gt;.0MiB -&amp;gt; ./Videos/videos_from_gphotos/1973/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp
-Total: &lt;span class="m"&gt;58&lt;/span&gt;.7GiB
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;./move_videos.py
+Moving:&lt;span class="w"&gt; &lt;/span&gt;./2017/02/2017-02-15-they-sang.mp4&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;787&lt;/span&gt;.8MiB&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;./Videos/videos_from_gphotos/2017/02/2017-02-15-they-sang.mp4
+Moving:&lt;span class="w"&gt; &lt;/span&gt;./2003/04/or-portland-roofing_residence.3gp&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;849&lt;/span&gt;.1KiB&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;./Videos/videos_from_gphotos/2003/04/or-portland-roofing_residence.3gp
+Moving:&lt;span class="w"&gt; &lt;/span&gt;./2003/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;.0MiB&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;./Videos/videos_from_gphotos/1973/02/or-ashland-alex_and_ax_blowin_in_the_wind.3gp
+Total:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;58&lt;/span&gt;.7GiB
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;filetype&lt;/span&gt;
@@ -150,7 +150,7 @@ Total: &lt;span class="m"&gt;58&lt;/span&gt;.7GiB
 &lt;p&gt;&lt;code&gt;shell
 rclone sync ~/Videos/ storj:videos/&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</content><category term="tech"></category><category term="python"></category><category term="backup"></category><category term="rclone"></category></entry><entry><title>Keybase</title><link href="https://www.qrk.us/keybase.html" rel="alternate"></link><published>2023-04-02T10:01:16-04:00</published><updated>2023-04-02T10:01:16-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/keybase.html</id><summary type="html">&lt;p&gt;I first started using &lt;a href="https://www.keybase.io"&gt;@KeybaseIO&lt;/a&gt; a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.&lt;/p&gt;
+&lt;/ol&gt;</content><category term="tech"></category><category term="python"></category><category term="backup"></category><category term="rclone"></category></entry><entry><title>Keybase</title><link href="https://www.qrk.us/keybase.html" rel="alternate"></link><published>2023-04-02T15:26:01-04:00</published><updated>2023-04-02T15:26:01-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/keybase.html</id><summary type="html">&lt;p&gt;I first started using &lt;a href="https://www.keybase.io"&gt;@KeybaseIO&lt;/a&gt; a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.&lt;/p&gt;
 &lt;p&gt;A web of accounts could, for example, enable me to …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I first started using &lt;a href="https://www.keybase.io"&gt;@KeybaseIO&lt;/a&gt; a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.&lt;/p&gt;
 &lt;p&gt;A web of accounts could, for example, enable me to trust your email signature when I only know you through Twitter.&lt;/p&gt;
 &lt;p&gt;The Keybase filesystem is one of the newer tools and has a lot of promise. It is a global
@@ -168,7 +168,7 @@ with commands like
 &lt;hr&gt;
 &lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
 &lt;blockquote class="reddit-card" data-card-created="1523472433"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/88ll60/keybase/?ref=share&amp;ref_source=embed"&gt;Keybase&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="identity"></category><category term="encryption"></category></entry><entry><title>Securing AWS Credentials</title><link href="https://www.qrk.us/securing-aws-credentials.html" rel="alternate"></link><published>2023-04-02T10:01:16-04:00</published><updated>2023-04-02T10:01:16-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/securing-aws-credentials.html</id><summary type="html">&lt;p&gt;A single &lt;a href="https://github.com/joho/aws-pony"&gt;rogue npm module&lt;/a&gt;, Ruby gem, PyPi module, or ill-fated cURL command could expose you (and your employer) to extreme risk.&lt;/p&gt;
+&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="identity"></category><category term="encryption"></category></entry><entry><title>Securing AWS Credentials</title><link href="https://www.qrk.us/securing-aws-credentials.html" rel="alternate"></link><published>2023-04-02T15:26:01-04:00</published><updated>2023-04-02T15:26:01-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/securing-aws-credentials.html</id><summary type="html">&lt;p&gt;A single &lt;a href="https://github.com/joho/aws-pony"&gt;rogue npm module&lt;/a&gt;, Ruby gem, PyPi module, or ill-fated cURL command could expose you (and your employer) to extreme risk.&lt;/p&gt;
 &lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#is-this-you"&gt;Is this you?&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#the-problem"&gt;The Problem&lt;/a&gt;&lt;/li&gt;
@@ -187,7 +187,7 @@ with commands like
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;h2 id="is-this-you"&gt;Is this you?&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# ~/.aws/credentials&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# ~/.aws/credentials&lt;/span&gt;
 &lt;span class="k"&gt;[default …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;A single &lt;a href="https://github.com/joho/aws-pony"&gt;rogue npm module&lt;/a&gt;, Ruby gem, PyPi module, or ill-fated cURL command could expose you (and your employer) to extreme risk.&lt;/p&gt;
 &lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#is-this-you"&gt;Is this you?&lt;/a&gt;&lt;ul&gt;
@@ -207,10 +207,10 @@ with commands like
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;h2 id="is-this-you"&gt;Is this you?&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# ~/.aws/credentials&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="k"&gt;[default]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;aws_access_key_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;AKIAIH7UMBRMK5L7GT2Q&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;aws_secret_access_key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;kyLQmrtPwdXrXdxiAOjS1v0zrR06CiEzKKWXIRum&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# ~/.aws/credentials&lt;/span&gt;
+&lt;span class="k"&gt;[default]&lt;/span&gt;
+&lt;span class="na"&gt;aws_access_key_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;AKIAIH7UMBRMK5L7GT2Q&lt;/span&gt;
+&lt;span class="na"&gt;aws_secret_access_key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;kyLQmrtPwdXrXdxiAOjS1v0zrR06CiEzKKWXIRum&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
@@ -229,13 +229,13 @@ with commands like
 &lt;p&gt;You can store secrets safely on disk with encryption, decrypt just-in-time to use them normally, and destroy the plaintext.&lt;/p&gt;
 &lt;p&gt;Here's a way to do this with PGP that doesn't require you to type a passphrase every time you wish to read the plaintext. With this approach access to the plaintext is controlled by the GnuPG agent and OS login keyring.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;This applies to Bourne-compat shells on file-based OSs e.g. BASH and ZSH on MacOS or Linux&lt;/em&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯ &lt;span class="nb"&gt;source&lt;/span&gt; &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg -qd ~/.aws/credentials.gpg&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-qd&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials.gpg&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;p&gt;The plaintext of this file is shellcode like...&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;AWS_ACCESS_KEY_ID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;AKIAJS7UXB9INMRXLOEA
-&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;AWS_SECRET_ACCESS_KEY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;vXHZEOVxrBtqMkmadkJv0mCeEglrlFA5oBEywSFw
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;AWS_ACCESS_KEY_ID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;AKIAJS7UXB9INMRXLOEA
+&lt;span class="nb"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;AWS_SECRET_ACCESS_KEY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;vXHZEOVxrBtqMkmadkJv0mCeEglrlFA5oBEywSFw
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;
@@ -261,9 +261,9 @@ with commands like
 &lt;p&gt;Edit the plaintext file &lt;em&gt;~/.aws/credentials&lt;/em&gt; so that it resembles the example above. You can manually insert the &lt;code&gt;export&lt;/code&gt; command at the beginning of the two lines and convert the variables names to uppercase or you can run this command which does precisely that in the terminal to prepare the file for encryption.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯ sed -E -e &lt;span class="s1"&gt;&amp;#39;/^\[.*\]$/d&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-         -e &lt;span class="s1"&gt;&amp;#39;s/^(\s+)?(aws_(secret_)?access_key(_id)?)(\s+)?=(\s+)?/export \U\2=\E/g&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-         -i ~/.aws/credentials
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯&lt;span class="w"&gt; &lt;/span&gt;sed&lt;span class="w"&gt; &lt;/span&gt;-E&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/^\[.*\]$/d&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;s/^(\s+)?(aws_(secret_)?access_key(_id)?)(\s+)?=(\s+)?/export \U\2=\E/g&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;-i&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
@@ -271,14 +271,14 @@ with commands like
 &lt;li&gt;Encrypt the credentials file for your user ID (typically the email address you entered when the PGP identity was generated).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# this command creates a new file with the same filename as the plaintext + suffix &amp;quot;.gpg&amp;quot;&lt;/span&gt;
-❯ gpg -e -&lt;span class="o"&gt;{&lt;/span&gt;u,r&lt;span class="o"&gt;}&lt;/span&gt;alice@example.com ~/.aws/credentials
+❯&lt;span class="w"&gt; &lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="o"&gt;{&lt;/span&gt;u,r&lt;span class="o"&gt;}&lt;/span&gt;alice@example.com&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prove you can decrypt.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯ gpg -qd &amp;lt; ~/.aws/credentials.gpg
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯&lt;span class="w"&gt; &lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-qd&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials.gpg
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;
@@ -286,27 +286,27 @@ If this is the first time you have used your PGP identity you may see a GUI popu
 &lt;ul&gt;
 &lt;li&gt;Source the plaintext into your shell environment and use the credential to authenticate.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯ &lt;span class="nb"&gt;source&lt;/span&gt; &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg -qd &amp;lt; ~/.aws/credentials.gpg&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-qd&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials.gpg&lt;span class="o"&gt;)&lt;/span&gt;
 
-❯ aws iam get-user
+❯&lt;span class="w"&gt; &lt;/span&gt;aws&lt;span class="w"&gt; &lt;/span&gt;iam&lt;span class="w"&gt; &lt;/span&gt;get-user
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;If you will be switching between multiple credentials with this method then simply source the plaintext from separate files.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯ &lt;span class="nb"&gt;source&lt;/span&gt; &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg -qd &amp;lt; ~/.aws/credentials-example.com.gpg&lt;span class="o"&gt;)&lt;/span&gt;
-❯ &lt;span class="nb"&gt;source&lt;/span&gt; &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg -qd &amp;lt; ~/.aws/credentials-example.org.gpg&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-qd&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials-example.com.gpg&lt;span class="o"&gt;)&lt;/span&gt;
+❯&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-qd&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials-example.org.gpg&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Now you can delete the plaintext file. If you are feeling less than confident about your future ability to decrypt with your PGP identity then, as a fallback option, consider changing the filemode on the plaintext credentials file so that elevated privileges are required to read it.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯ rm ~/.aws/credentials
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;❯&lt;span class="w"&gt; &lt;/span&gt;rm&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials
 &lt;span class="c1"&gt;# alternatively, make the file unreadable by unprivileged processes&lt;/span&gt;
-❯ sudo chown root ~/.aws/credentials
-❯ sudo chmod &lt;span class="m"&gt;0600&lt;/span&gt; ~/.aws/credentials
+❯&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;chown&lt;span class="w"&gt; &lt;/span&gt;root&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials
+❯&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;chmod&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0600&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
@@ -315,56 +315,56 @@ If this is the first time you have used your PGP identity you may see a GUI popu
 &lt;p&gt;There's no need to memorize the terminal commands. You can save a shellcode "alias" or create a shellcode function to assume any AWS identity for which you have encrypted credentials.&lt;/p&gt;
 &lt;p&gt;First, lets look at the most simple case where you have exactly one AWS credential encrypted with the above procedure in &lt;em&gt;~/.aws/credentials.gpg&lt;/em&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# save the following alias in your aliases dotfile or shell runcom file e.g. ~/.bashrc&lt;/span&gt;
-&lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;onaws&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;source &amp;lt;(gpg -qd ~/.aws/credentials.gpg)&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;alias&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;onaws&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;source &amp;lt;(gpg -qd ~/.aws/credentials.gpg)&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# alternatively, you could make this default AWS credential available in every new shell&lt;/span&gt;
 &lt;span class="c1"&gt;# environment by including the source command in the shell rc file&lt;/span&gt;
-&lt;span class="nb"&gt;source&lt;/span&gt; &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg -qd ~/.aws/credentials.gpg&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-qd&lt;span class="w"&gt; &lt;/span&gt;~/.aws/credentials.gpg&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# source the shell rc file (this happens automatically for your next terminal session)&lt;/span&gt;
-❯ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
+❯&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc
 
 &lt;span class="c1"&gt;# then exec the alias to assume the AWS identity&lt;/span&gt;
-❯ onaws
+❯&lt;span class="w"&gt; &lt;/span&gt;onaws
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;p&gt;If instead you have multiple AWS identities you could use a shellcode function and a file naming convention to quickly assume any one identity.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# save the following function in your aliases dotfile or shell runcom file e.g. ~/.bashrc&lt;/span&gt;
 onaws&lt;span class="o"&gt;(){&lt;/span&gt;
-  &lt;span class="nb"&gt;local&lt;/span&gt; &lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/.aws/credentials
-  &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$#&lt;/span&gt; -eq &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;-&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.gpg
-  &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.gpg
-  &lt;span class="o"&gt;}&lt;/span&gt;
-  &lt;span class="o"&gt;[[&lt;/span&gt; -r &lt;span class="nv"&gt;$CREDFILE&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; -s &lt;span class="nv"&gt;$CREDFILE&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nb"&gt;source&lt;/span&gt; &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg -qd &lt;span class="nv"&gt;$CREDFILE&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-  &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ERROR: &lt;/span&gt;&lt;span class="nv"&gt;$CREDFILE&lt;/span&gt;&lt;span class="s2"&gt; is not readable, or is nonexistent or empty; bye.&amp;quot;&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
-  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/.aws/credentials
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;[[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-eq&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;-&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.gpg
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;CREDFILE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.gpg
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;[[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$CREDFILE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$CREDFILE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-qd&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$CREDFILE&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ERROR: &lt;/span&gt;&lt;span class="nv"&gt;$CREDFILE&lt;/span&gt;&lt;span class="s2"&gt; is not readable, or is nonexistent or empty; bye.&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# source the shell rc file (this happens automatically for your next terminal session)&lt;/span&gt;
-❯ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
+❯&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc
 
 &lt;span class="c1"&gt;# then exec the function with a positional parameter matching the filename to assume a particular&lt;/span&gt;
 &lt;span class="c1"&gt;# AWS identity e.g. stored in ~/.aws/credentials-example.com.gpg&lt;/span&gt;
-❯ onaws example.com
+❯&lt;span class="w"&gt; &lt;/span&gt;onaws&lt;span class="w"&gt; &lt;/span&gt;example.com
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;h3 id="disable-privileges"&gt;Disable Privileges&lt;/h3&gt;
 &lt;p&gt;You may wish to immediately nullify any credentials and session tokens in memory. You're relatively safe if you end the process where the credentials were sourced, but if for some reason it is preferable for that process to continue running you can explicitly unset the variables with a command.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# save the following alias in your aliases dotfile or shell runcom file e.g. ~/.bashrc&lt;/span&gt;
-&lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;noaws&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;unset AWS_ACCESS_KEY \&lt;/span&gt;
+&lt;span class="nb"&gt;alias&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;noaws&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;unset AWS_ACCESS_KEY \&lt;/span&gt;
 &lt;span class="s2"&gt;                   AWS_ACCESS_KEY_ID \&lt;/span&gt;
 &lt;span class="s2"&gt;                   AWS_SECRET_ACCESS_KEY \&lt;/span&gt;
 &lt;span class="s2"&gt;                   AWS_SECURITY_TOKEN \&lt;/span&gt;
@@ -373,11 +373,11 @@ onaws&lt;span class="o"&gt;(){&lt;/span&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# source the shell rc file (this happens automatically for your next terminal session)&lt;/span&gt;
-❯ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
+❯&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc
 
 &lt;span class="c1"&gt;# then exec the alias to drop privileges for which ever identity is currently active as well as any&lt;/span&gt;
 &lt;span class="c1"&gt;# Simple Token Service sessions you might have obtained via `assume-role`&lt;/span&gt;
-❯ noaws
+❯&lt;span class="w"&gt; &lt;/span&gt;noaws
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
@@ -410,7 +410,7 @@ onaws&lt;span class="o"&gt;(){&lt;/span&gt;
 &lt;hr&gt;
 &lt;h2 id="comments"&gt;Comments&lt;/h2&gt;
 &lt;blockquote class="reddit-card" data-card-created="1526756360"&gt;&lt;a href="https://www.reddit.com/user/bingnet/comments/8knauq/securing_aws_credentials/"&gt;Securing AWS Credentials&lt;/a&gt; from &lt;a href="http://www.reddit.com/u/bingnet"&gt;u/bingnet&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="aws"></category><category term="sysadmin"></category><category term="identity"></category><category term="encryption"></category></entry><entry><title>Virtual Machines as Code</title><link href="https://www.qrk.us/virtual-machines-as-code.html" rel="alternate"></link><published>2023-04-02T10:01:16-04:00</published><updated>2023-04-02T10:01:16-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/virtual-machines-as-code.html</id><summary type="html">&lt;p&gt;Optimizing for determinism in virtual machines. This approach can be used to vend the same virtual machine image version in many formats e.g. VHD for Azure, Stack, and Hyper-V; OVA for VMware, VirtualBox; QCOW2 for KVM, and of course RAW.&lt;/p&gt;
+&lt;script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"&gt;&lt;/script&gt;</content><category term="tech"></category><category term="aws"></category><category term="sysadmin"></category><category term="identity"></category><category term="encryption"></category></entry><entry><title>Virtual Machines as Code</title><link href="https://www.qrk.us/virtual-machines-as-code.html" rel="alternate"></link><published>2023-04-02T15:26:01-04:00</published><updated>2023-04-02T15:26:01-04:00</updated><author><name>Ken</name></author><id>tag:www.qrk.us,2023-04-02:/virtual-machines-as-code.html</id><summary type="html">&lt;p&gt;Optimizing for determinism in virtual machines. This approach can be used to vend the same virtual machine image version in many formats e.g. VHD for Azure, Stack, and Hyper-V; OVA for VMware, VirtualBox; QCOW2 for KVM, and of course RAW.&lt;/p&gt;
 &lt;div class="toc"&gt;&lt;span class="toctitle"&gt;Table of contents:&lt;/span&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#tldr"&gt;TL;DR&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#cloning-vs-code"&gt;Cloning vs Code&lt;/a&gt;&lt;/li&gt;
@@ -462,9 +462,9 @@ onaws&lt;span class="o"&gt;(){&lt;/span&gt;
 &lt;p&gt;Most likely, this OS image you’re releasing will eventually become part of a release kit of many versioned components that together compose the full application stack. Importantly, releases are always immutable, and it is at this point that the OS image is “released” to and consumed by the stack. Any further features and fixes will be new release versions. Likewise, you’ll always be able to build an OS image with the current version by checking out the SCM tag on which it was originally built e.g. &lt;code&gt;git checkout release-0.1.0&lt;/code&gt;.&lt;/p&gt;
 &lt;h2 id="launching-from-the-image"&gt;Launching from the Image&lt;/h2&gt;
 &lt;p&gt;The new OS image should be referenced by its version string when launched by the application or a infrastructure-as-code provisioning tool like Terraform. This probably means some kind of lookup table that resolves the version string to the image ID. For example, if you used Packer’s “amazon-ebs” provisioner to assign an AMI tag “ImageVersion=release-0.1.0”, then you could find the AMI with that tag in a particular region with aws CLI.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;aws ec2 describe-images &lt;span class="se"&gt;\&lt;/span&gt;
-   –filters &lt;span class="nv"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;owner-id,Values&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$AWS_ACCOUNT_ID&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-   –filters &lt;span class="nv"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;tag:ImageVersion,Values&lt;span class="o"&gt;=&lt;/span&gt;release-0.1.0
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;aws&lt;span class="w"&gt; &lt;/span&gt;ec2&lt;span class="w"&gt; &lt;/span&gt;describe-images&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;   &lt;/span&gt;–filters&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;owner-id,Values&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$AWS_ACCOUNT_ID&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;   &lt;/span&gt;–filters&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;tag:ImageVersion,Values&lt;span class="o"&gt;=&lt;/span&gt;release-0.1.0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="upgrading-virtual-machines"&gt;Upgrading Virtual Machines&lt;/h2&gt;
