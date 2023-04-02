@@ -39,7 +39,7 @@ A "hella" is informally one metric octillion (10<sup>27</sup>) which is what you
 
 ### web site source code
 
-- [fork me](https://github.com/qrkourier/keybase-landing) on Github
+- [fork me](https://github.com/qrkourier/qrkourier.github.io) on Github
 - [theme](https://github.com/qrkourier/twenty-pelican-html5up)
 
 ### credits

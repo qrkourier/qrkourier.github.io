@@ -1,6 +1,10 @@
 Title: Projects
 Icon: fas fa-wrench
 
+## GitHub
+
+I've pinned a few repositories to my [GitHub profile](https://github.com/qrkourier).
+
 ## [OpenZiti](https://openziti.io/)
 
 OpenZiti enables connectivity-as-code with edge networking SDKs and tunnelers, adaptive mesh fabric, and a programmable control plane with attribute-based access control policies.

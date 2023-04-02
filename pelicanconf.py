@@ -64,16 +64,17 @@ THEME_STATIC_DIR = '.'
 THEME_STATIC_PATHS = ['static']
 
 
-#PLUGIN_PATHS = ["plugins", "../pelican-plugins"]
 PLUGINS = [
     'neighbors',
     'minification',
-    'webassets'
+    'webassets',
 ]
-#'extract_toc'
+
+# 'extract_toc'
 
 import jinja_filter_sidebar
-JINJA_FILTERS = { 'sidebar': jinja_filter_sidebar.sidebar }
+
+JINJA_FILTERS = {'sidebar': jinja_filter_sidebar.sidebar}
 
 DISPLAY_PAGES_ON_MENU = True
 

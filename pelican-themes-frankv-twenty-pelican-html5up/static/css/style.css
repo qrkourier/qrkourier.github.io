@@ -1025,9 +1025,19 @@ div.pagination-right {
 	float: right;
 }
 
+/* inline code */
+code {
+	font-family: "monospace";
+	color: white;
+	border: 1px solid #ccc;
+	background-color: #3d2d2d;
+	padding: 0px 3px;
+	display: inline-block;
+	margin: 0px;
+}
 
 /* Syntax Highlighting */
-	.highlight {
+.highlight {
 	font-family: 'Anonymous Pro';
 	font-style: normal;
 	font-weight: 400;
@@ -1058,13 +1068,3 @@ div.pagination-right {
 	top:-10px;/*adjust thickness*/
 	border-top-color:#fff;/*Match background colour*/
 }
-
-/* preformated code */
-	code {
-		font-family: "monospace";
-	  border: 1px solid #ccc;
-	  background-color: #3d2d2d;
-	  padding: 0px 3px;
-	  display: inline-block;
-	  margin: 0px;
-	}
