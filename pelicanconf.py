@@ -32,12 +32,12 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
          ('You can modify those links in your config file', '#'),)
 
 # Social widget
-SOCIAL = (
-    ('github', 'https://github.com/qrkourier'),
-    ('mastodon', 'https://mastodon.online/@qrkourier'),
-    ('linktree', 'https://linktr.ee/qrkourier'),
-    ('keybase', 'https://keybase.io/kourier'),
-)
+SOCIAL = ()
+#    ('github', 'https://github.com/qrkourier'),
+#    ('mastodon', 'https://mastodon.online/@qrkourier'),
+#    ('linktree', 'https://linktr.ee/qrkourier'),
+#    ('keybase', 'https://keybase.io/kourier'),
+#)
 
 MENUITEMS = ()
 
