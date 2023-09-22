@@ -20,7 +20,7 @@ A "hella" is informally one metric octillion (10<sup>27</sup>) which is what you
 
 ### contact
 
-- [LinkTree](https://linktr.ee/qrkourier)
+- [Linktree](https://linktr.ee/qrkourier)
 - Kenneth Bingham <w@qrk.us> is verifiable by Protonmail
 - [Keybase](https://keybase.io/kourier) links to several other verified points of contact
 - You can [use this link to start an encrypted chat with me](https://keybase.io/kourier/chat) or your could encrypt something for my [PGP key](/blob/kourier-pgp-0xB69403FA957C5E46.asc)
