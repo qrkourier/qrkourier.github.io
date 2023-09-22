@@ -35,8 +35,7 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
 SOCIAL = (
     ('github', 'https://github.com/qrkourier'),
     ('mastodon', 'https://mastodon.online/@qrkourier'),
-    ('twitter', 'https://twitter.com/qrkourier'),
-    ('reddit', 'https://www.reddit.com/user/bingnet'),
+    ('linktree', 'https://linktr.ee/qrkourier'),
     ('keybase', 'https://keybase.io/kourier'),
 )
 
