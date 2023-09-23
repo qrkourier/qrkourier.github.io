@@ -50,7 +50,8 @@ PAGE_PATHS = [
   'pages'
 ]
 STATIC_PATHS = [
-    'blob'
+    'blob',
+    '.well-known'
 ]
 STATIC_EXCLUDE_SOURCES = False
 
