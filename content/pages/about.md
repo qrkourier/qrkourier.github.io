@@ -38,7 +38,7 @@ A "hella" is informally one metric octillion (10<sup>27</sup>) which is what you
         curl -s {{ SITEURL }}/blob/kourier-ssh-id_rsa.pub >> .ssh/authorized_keys
 -->
 
-### web site source code
+<!-- ### web site source code
 
 - [fork me](https://github.com/qrkourier/qrkourier.github.io) on Github
 - [theme](https://github.com/qrkourier/twenty-pelican-html5up)
@@ -54,4 +54,4 @@ A "hella" is informally one metric octillion (10<sup>27</sup>) which is what you
   - [background-size polyfill](https://github.com/louisremi/background-size-polyfill)
   - [Misc jQuery plugins](n33.co)
   - [skel](n33.co)
-  - html5shiv.js (@afarkas @jdalton @jon_neal @rem)
+  - html5shiv.js (@afarkas @jdalton @jon_neal @rem) -->

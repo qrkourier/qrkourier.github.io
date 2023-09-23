@@ -10,7 +10,8 @@ TAGLINE = 'yet another thought garden'
 QUOTE = 'Reality is that which, when you stop believing in it, doesn\'t go away.'
 QUOTED = 'Philip K. Dick'
 SITEURL = ''
-# CONTACT_URL = '/pages/about.html'
+FOOTNOTE = ''
+CONTACT_URL = '/pages/about.html'
 
 PATH = 'content'
 
@@ -26,10 +27,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),
-         ('You can modify those links in your config file', '#'),)
+LINKS = ()
 
 # Social widget
 SOCIAL = ()
@@ -49,17 +47,23 @@ RELATIVE_URLS = True
 PAGE_PATHS = [
   'pages'
 ]
+
 STATIC_PATHS = [
     'blob',
     'keybase.txt'
 ]
+
+USE_FOLDER_AS_CATEGORY = False
+DEFAULT_CATEGORY = 'Tech'
+
 STATIC_EXCLUDE_SOURCES = False
 
 DEFAULT_DATE = 'fs'
 
 DIRECT_TEMPLATES = ['index', 'categories', 'archives']
 
-THEME = './pelican-themes-frankv-twenty-pelican-html5up'
+# THEME = './pelican-themes-frankv-twenty-pelican-html5up'
+THEME = './notmyidea-tld'
 THEME_STATIC_DIR = '.'
 THEME_STATIC_PATHS = ['static']
 
