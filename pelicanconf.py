@@ -51,7 +51,7 @@ PAGE_PATHS = [
 ]
 STATIC_PATHS = [
     'blob',
-    '.well-known'
+    'keybase.txt'
 ]
 STATIC_EXCLUDE_SOURCES = False
 
