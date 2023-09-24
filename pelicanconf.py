@@ -48,6 +48,8 @@ DEFAULT_PAGINATION = False
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
 
+PAGE_ORDER_BY = 'basename'
+
 PAGE_PATHS = [
   'pages'
 ]
