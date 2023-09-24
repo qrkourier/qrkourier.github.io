@@ -9,7 +9,7 @@ I've pinned a few repositories to my [GitHub profile](https://github.com/qrkouri
 
 [OpenZiti](https://openziti.io/) enables connectivity-as-code with edge networking SDKs and tunnelers, adaptive mesh fabric, and a programmable control plane with attribute-based access control policies.
 
-I've worn a few hats for this project and these days I'm focused on the developer experience and deployability (e.g., Kubernetes).
+These days, I'm focused on the developer experience and the operational platform and tool chain, esp. Kubernetes and Terraform.
 
 You can connect with [the OpenZiti community forum](https://openziti.discourse.group/) and [on GitHub](https://github.com/openziti/ziti).
 
