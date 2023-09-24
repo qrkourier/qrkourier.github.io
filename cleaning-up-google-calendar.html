@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Cleaning up Google Calendar</title><link rel="stylesheet" href="././css/main.css"><link href="https://www.qrk.us/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="hella labs Atom Feed"></head><body id="index" class="home"><header id="banner" class="body"><h1><a href="./">hella labs </a></h1><nav><ul><li><a href="./pages/about.html">About</a></li><li><a href="./pages/projects.html">Projects</a></li><li class="active"><a href="./category/tech.html">Tech</a></li></ul></nav></header><section id="content" class="body"><article><header><h1 class="entry-title"><a href="./cleaning-up-google-calendar.html" rel="bookmark" title="Permalink to Cleaning up Google Calendar">Cleaning up Google Calendar</a></h1></header><div class="entry-content"><footer class="post-info"><abbr class="published" title="2023-09-24T15:36:04.979187-04:00"> Published: Sun 24 September 2023 </abbr><br><abbr class="modified" title="2023-09-24T15:36:04.979187-04:00"> Updated: Sun 24 September 2023 </abbr><address class="vcard author"> By <a class="url fn" href="./author/ken.html">Ken</a></address><p>tags: <a href="./tag/python.html">python</a> <a href="./tag/googlecalendar.html">googlecalendar</a> <a href="./tag/googleapis.html">googleapis</a> </p></footer> <p>I stopped using Google Calendar as a primary calendar a few years ago, but I still had a lot of old events in there far into the future. I must have imported the lunar cycle at some point because most of them are named like "New moon" or "Full moon." I wanted to clean them out so I don't see duplicates in my main calendar when I'm subscribed to the Google Calendar for the sake of events that can only be shared there, but there's no way to do bulk operations with the app or website, so I modified the Google API Python quickstart for Calendar to do it for me.</p><p>The quickstart starts out by listing the next ten events, and authorizes the readonly scope for calendar events. I changed it to authorize the read/write scope, and to find a larger number events, filter for certain titles, and delete them.</p><h3 id="the-steps-i-took">The Steps I took</h3><ol><li>Completed the <a href="https://developers.google.com/calendar/quickstart/python">Python Quickstart</a> for the Google Calendar API, and saved the Python program so I could modify it.</li><li>In the Python program, changed the scope to <code>https://www.googleapis.com/auth/calendar.events</code> so I could delete events.</li><li>Downloaded the JSON credentials file and named it <code>credentials.json</code> in the same directory as the Python program.</li><li>Ran the Python program, which opened a browser window to authorize the app to access my calendar.</li></ol><h3 id="a-simple-python-program-to-delete-events-by-title">A Simple Python Program to Delete Events by Title</h3><div class="highlight"><pre><span></span><code><span class="c1"># Copyright 2018 Google LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="c1"># [START calendar_quickstart]</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="kn">from</span> <span class="nn">google.auth.transport.requests</span> <span class="kn">import</span> <span class="n">Request</span>
+<span class="kn">from</span> <span class="nn">google.oauth2.credentials</span> <span class="kn">import</span> <span class="n">Credentials</span>
+<span class="kn">from</span> <span class="nn">google_auth_oauthlib.flow</span> <span class="kn">import</span> <span class="n">InstalledAppFlow</span>
+<span class="kn">from</span> <span class="nn">googleapiclient.discovery</span> <span class="kn">import</span> <span class="n">build</span>
+<span class="kn">from</span> <span class="nn">googleapiclient.errors</span> <span class="kn">import</span> <span class="n">HttpError</span>
+
+<span class="c1"># If modifying these scopes, delete the file token.json.</span>
+<span class="n">SCOPES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://www.googleapis.com/auth/calendar.events&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shows basic usage of the Google Calendar API.</span>
+<span class="sd">    Prints the start and name of the next 10 events on the user&#39;s calendar.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">creds</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># The file token.json stores the user&#39;s access and refresh tokens, and is</span>
+    <span class="c1"># created automatically when the authorization flow completes for the first</span>
+    <span class="c1"># time.</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;token.json&#39;</span><span class="p">):</span>
+        <span class="n">creds</span> <span class="o">=</span> <span class="n">Credentials</span><span class="o">.</span><span class="n">from_authorized_user_file</span><span class="p">(</span><span class="s1">&#39;token.json&#39;</span><span class="p">,</span> <span class="n">SCOPES</span><span class="p">)</span>
+    <span class="c1"># If there are no (valid) credentials available, let the user log in.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">creds</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">creds</span><span class="o">.</span><span class="n">valid</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">creds</span> <span class="ow">and</span> <span class="n">creds</span><span class="o">.</span><span class="n">expired</span> <span class="ow">and</span> <span class="n">creds</span><span class="o">.</span><span class="n">refresh_token</span><span class="p">:</span>
+            <span class="n">creds</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">Request</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">flow</span> <span class="o">=</span> <span class="n">InstalledAppFlow</span><span class="o">.</span><span class="n">from_client_secrets_file</span><span class="p">(</span>
+                <span class="s1">&#39;credentials.json&#39;</span><span class="p">,</span> <span class="n">SCOPES</span><span class="p">)</span>
+            <span class="n">creds</span> <span class="o">=</span> <span class="n">flow</span><span class="o">.</span><span class="n">run_local_server</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># Save the credentials for the next run</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;token.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">token</span><span class="p">:</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">creds</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="s1">&#39;calendar&#39;</span><span class="p">,</span> <span class="s1">&#39;v3&#39;</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="n">creds</span><span class="p">)</span>
+
+        <span class="c1"># Call the Calendar API</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;Z&#39;</span>  <span class="c1"># &#39;Z&#39; indicates UTC time</span>
+        <span class="c1"># now = &#39;2035-12-29T00:00:00Z&#39;  # &#39;Z&#39; indicates UTC time</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Getting events named like &quot;moon&quot; from </span><span class="si">{</span><span class="n">now</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">events_result</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">events</span><span class="p">()</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">calendarId</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">timeMin</span><span class="o">=</span><span class="n">now</span><span class="p">,</span>
+                                              <span class="n">maxResults</span><span class="o">=</span><span class="mi">999</span><span class="p">,</span> <span class="n">singleEvents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                              <span class="n">orderBy</span><span class="o">=</span><span class="s1">&#39;startTime&#39;</span><span class="p">,</span> <span class="n">showDeleted</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="n">events_result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">events</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No upcoming events found.&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Prints the start and name of the next 10 events</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;summary&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">title</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;New moon&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">title</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Full moon&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">title</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Blue moon&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleting </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">) with status </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dateTime&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">delete_result</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">events</span><span class="p">()</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">calendarId</span><span class="o">=</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="n">eventId</span><span class="o">=</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ignoring </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+    <span class="k">except</span> <span class="n">HttpError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;An error occurred: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">error</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+<span class="c1"># [END calendar_quickstart]</span>
+</code></pre></div></div></article></section><section id="extras" class="body"><div class="social"><h2>social</h2><ul><li><a href="https://www.qrk.us/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li></ul></div></section></body></html>
