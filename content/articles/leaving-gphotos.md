@@ -1,5 +1,5 @@
 Title: How I Reclaimed Storage Space in Google Photos By Moving All My Videos
-Tags: python, backup, rclone
+Tags: python, backup, rclone, googlephototos, googleapis
 Icon: fas fa-video-slash
 
 There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space.

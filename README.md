@@ -8,7 +8,7 @@
 2. clone this repo and `cd ./keybase-landing`
 3. customize `pelicanconf.py`
 4. create Markdown files in ./content
-5. `make keybase`
+5. `make github`
 
 ### credits
 
