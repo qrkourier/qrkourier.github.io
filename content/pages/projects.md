@@ -1,7 +1,7 @@
 title: Projects
 icon: fas fa-wrench
 
-I am interested in collaborating with musicians and film makers on set and in the studio as a drummer, recordist, sound designer, or photographer. I'm not looking for employment or contract opportunities at the moment.
+I am looking for opportunities to collaborate with musicians and film makers on set and in the studio as a drummer, recordist, sound designer, or photographer. I'm not looking for employment or contract opportunities at the moment.
 
 ## Open Source Software
 
@@ -12,8 +12,6 @@ I've pinned a few repositories that I worked on [in GitHub](https://github.com/q
 [OpenZiti](https://openziti.io/) enables connectivity-as-code with edge networking SDKs and tunnelers, adaptive mesh fabric, and a programmable control plane. I'm working on the developer and operator experiences, e.g., Kubernetes, packaging, docs and samples.
 
 ## Art
-
-I'm looking for opportunities to collaborate with musicians and film makers on set and in the studio as a drummer, recordist, or sound designer.
 
 ### Audio
 
