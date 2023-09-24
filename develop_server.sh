@@ -4,7 +4,7 @@
 ##
 PY=${PY:-python3}
 PELICAN=${PELICAN:-pelican}
-PELICANOPTS=
+PELICANOPTS="--delete-output-directory"
 
 BASEDIR=$(pwd)
 INPUTDIR=$BASEDIR/content
@@ -32,19 +32,6 @@ function alive() {
 }
 
 function shut_down(){
-  PID=$(cat $SRV_PID)
-  if [[ $? -eq 0 ]]; then
-    if alive $PID; then
-      echo "Stopping HTTP server"
-      kill $PID
-    else
-      echo "Stale PID, deleting"
-    fi
-    rm $SRV_PID
-  else
-    echo "HTTP server PIDFile not found"
-  fi
-
   PID=$(cat $PELICAN_PID)
   if [[ $? -eq 0 ]]; then
     if alive $PID; then
@@ -63,23 +50,23 @@ function start_up(){
   local port=$1
   echo "Starting up Pelican and HTTP server"
   shift
-  $PELICAN --debug --autoreload -r $INPUTDIR -o $OUTPUTDIR -s $CONFFILE $PELICANOPTS &
+  $PELICAN \
+    --debug \
+    --autoreload \
+    --output $OUTPUTDIR \
+    --settings $CONFFILE \
+    --listen \
+    --port $port \
+    $PELICANOPTS \
+    $INPUTDIR &
   pelican_pid=$!
   echo $pelican_pid > $PELICAN_PID
-  mkdir -p $OUTPUTDIR && cd $OUTPUTDIR
-  $PY -m pelican.server $port &
-  srv_pid=$!
-  echo $srv_pid > $SRV_PID
-  cd $BASEDIR
   sleep 1
   if ! alive $pelican_pid ; then
-    echo "Pelican didn't start. Is the Pelican package installed?"
-    return 1
-  elif ! alive $srv_pid ; then
-    echo "The HTTP server didn't start. Is there another service using port" $port "?"
+    echo "Pelican didn't start. Is the Pelican package installed? Is there another service using port ${port}?"
     return 1
   fi
-  echo 'Pelican and HTTP server processes now running in background.'
+  echo 'Pelican HTTP server process now running in background.'
 }
 
 ###
@@ -87,7 +74,7 @@ function start_up(){
 ###
 [[ ($# -eq 0) || ($# -gt 2) ]] && usage
 port=''
-[[ $# -eq 2 ]] && port=$2
+[[ $# -eq 2 ]] && port=$2 || port=8000
 
 if [[ $1 == "stop" ]]; then
   shut_down

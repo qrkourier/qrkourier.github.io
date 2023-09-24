@@ -1,21 +1,23 @@
-Title: Projects
-Icon: fas fa-wrench
+title: Projects
+icon: fas fa-wrench
 
-## GitHub
+I am interested in collaborating with musicians and film makers on set and in the studio as a drummer, recordist, sound designer, or photographer. I'm not looking for employment or contract opportunities at the moment.
 
-I've pinned a few repositories to my [GitHub profile](https://github.com/qrkourier).
+## Open Source Software
 
-## OpenZiti
+I've pinned a few repositories that I worked on [in GitHub](https://github.com/qrkourier).
 
-[OpenZiti](https://openziti.io/) enables connectivity-as-code with edge networking SDKs and tunnelers, adaptive mesh fabric, and a programmable control plane with attribute-based access control policies.
+### OpenZiti
 
-These days, I'm focused on the developer experience and the operational platform and tool chain, esp. Kubernetes and Terraform.
+[OpenZiti](https://openziti.io/) enables connectivity-as-code with edge networking SDKs and tunnelers, adaptive mesh fabric, and a programmable control plane. I'm working on the developer and operator experiences, e.g., Kubernetes, packaging, docs and samples.
 
-You can connect with [the OpenZiti community forum](https://openziti.discourse.group/) and [on GitHub](https://github.com/openziti/ziti).
+## Art
 
-## Music
+I'm looking for opportunities to collaborate with musicians and film makers on set and in the studio as a drummer, recordist, or sound designer.
 
-I am fascinated by FM synthesis and digital signal processing and I occasionally get busy in [Bitwig](https://www.bitwig.com/) to produce original acoustic and electronic music. Here's one with Ethereal vocals by Alexandra.
+### Audio
+
+I am fascinated by noise, synthesizers, and digital signal processing. I record audio for films. I use [Bitwig](https://www.bitwig.com/) to produce original music. Here's one with vocals by Alexandra.
 
 <center>
 <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/562265640&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>

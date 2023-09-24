@@ -1,6 +1,7 @@
 pelican
 pelican-minification
-pelican-neighbors
+# pelican-neighbors
 pelican-webassets
+# pelican-sitemap
 markdown
 ghp-import

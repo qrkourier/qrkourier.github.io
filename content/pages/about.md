@@ -1,6 +1,23 @@
-Title: About
+title: Contact
+save_as: index.html
+url:
 
-<script type="text/javascript">
+## Kenneth Bingham
+
+_he/him_
+
+- <w@qrk.us>
+- My [Linktree](https://linktr.ee/qrkourier) points to various platforms where I am present. Lately, I've been posting to [Substack](https://substack.com/@kourier) and [Mastodon](https://mastodon.online/@qrkourier) more than others.
+- My [Keybase](https://keybase.io/kourier) links to a few cryptographically-verified points of contact.
+- You can encrypt something for my [PGP key](/blob/kourier-pgp-0xB69403FA957C5E46.asc)
+
+<!-- ### Hella
+
+A "hella" is informally one metric octillion (10<sup>27</sup>) which is what you might call a large number if you're being particularly subtle about it. It was formally rejected by SI, but some non-biological entities, like Wolfram Alpha, will convert units to hellas if you ask nicely <i class="fa fa-smile-o"></i>.
+
+</br> -->
+
+<!-- <script type="text/javascript">
   badge = document.getElementById("badge");
   badge.innerHTML = '<img height=111 width=111 style="border-radius: 50%;" src=https://graph.facebook.com/748526162/picture?type=large>';
   badge.className = "fas fa-none";
@@ -12,24 +29,7 @@ Title: About
 
   title = document.getElementById("pageTitle");
   title.style.paddingTop = "2em";
-</script>
-
-### hella
-
-A "hella" is informally one metric octillion (10<sup>27</sup>) which is what you might call a large number if you're being particularly subtle about it. It was formally rejected by SI, but some non-biological entities like Google Assistant and Wolfram Alpha will convert units to hellas if you ask nicely <i class="fa fa-smile-o"></i>.
-
-### contact
-
-- [Linktree](https://linktr.ee/qrkourier)
-- Kenneth Bingham <w@qrk.us> is verifiable by Protonmail
-- [Keybase](https://keybase.io/kourier) links to several other verified points of contact
-- You can [use this link to start an encrypted chat with me](https://keybase.io/kourier/chat) or your could encrypt something for my [PGP key](/blob/kourier-pgp-0xB69403FA957C5E46.asc)
-
-```shell
-❯ gpg --recv-keys 0xB69403FA957C5E46
-```
-
-</br>
+</script> -->
 
 <!--
 - You can grant privileges to my [Secure Shell (SSH)](/blob/kourier-ssh-id_rsa.pub) identity
