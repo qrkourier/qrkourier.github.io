@@ -14,6 +14,8 @@ SITEURL = ''
 FOOTNOTE = ''
 CONTACT_URL = '/pages/about.html'
 
+MASTODON_SITE_VERIFICATION = 'https://mastodon.online/@qrkourier'
+
 PATH = 'content'
 
 #TIMEZONE = 'America/New_York'
