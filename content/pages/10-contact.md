@@ -4,11 +4,11 @@ url:
 
 ## Kenneth Bingham
 
-_he/him_
+_he/him/his_
 
 - <w@qrk.us>
-- My [Linktree](https://linktr.ee/qrkourier) points to various platforms where I am present. Lately, I've been posting to [Substack](https://substack.com/@kourier) and [Mastodon](https://mastodon.online/@qrkourier) more than others.
-- My [Keybase](https://keybase.io/kourier) links to a few cryptographically-verified points of contact.
+- My [Linktree](https://linktr.ee/qrkourier) links. That is what it do.
+- My [Keybase](https://keybase.io/kourier) cryptographically-verifies a few points of contact.
 - You can encrypt something for my [PGP key](/blob/kourier-pgp-0xB69403FA957C5E46.asc)
 
 <!-- ### Hella
