@@ -1,18 +1,18 @@
-Title: How I Reclaimed Storage Space in Google Photos By Moving All My Videos
+Title: Separating Videos from Google Photos
 Tags: python, backup, rclone, googlephototos, googleapis
 Icon: fas fa-video-slash
 
-There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to reclaim storage space.
+Storage is cheap, but it's not free and 4K home movies use a lot of storage. There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to cheaper storage so I could reclaim storage space in my Google account.
 
 [TOC]
 
 Google Photos has some unique talents. I find it useful for exploring my own archives with the built-in machine learning features like "pictures from Ashland" or "red car". The balance of value is less favorable for videos, and they were the only reason I was paying for 2TB of cloud storage, so I decided to prune them out of my Google Photos account.
 
-Problem: there's no easy way to do that! Even the API doesn't have a delete operation. I can find them easily enough in the app by searching "videos", and I can painstakingly download them and delete them, but I'd prefer to express this as code, if possible.
+Problem: there's no easy way to do that! Even the API doesn't have a delete operation. I can find them easily enough in the app by searching "videos", and I can painstakingly download them and delete them, but let's do this as code so that you can replay the solution and I can remember how it works.
 
 ## Sync Photos and Videos
 
-I found `gphotos-sync`, a handy implementation of the Google Photos API that creates a local replica of the entire library with albums and other metadata that I didn't need. Still, supremely useful to make sure I have a copy of all videos.
+I found `gphotos-sync` which uses the Google Photos API to download all photos and videos from the account.
 
 ## Move Videos
 
@@ -96,7 +96,7 @@ I still need to keep a copy of my videos off-site in case something happens to m
 
 I chose `rclone` which is a versatile sync tool for cloud storage. It works with S3-compliant APIs, and I found STORJ has a very cheap option and as a bonus it is a form decentralized storage with an open-source bent. Cool.
 
-1. I signed up for Storj's free 150GB option and added about 20 USD worth of STORJ tokens to my account to cover future overages. No credit card required. 
+1. I signed up for Storj's free 150GB option and added about 20 USD worth of STORJ tokens to my account to cover future overages. No credit card required.
 1. I followed [Storj's own guide](https://docs.storj.io/dcs/how-tos/sync-files-with-rclone/rclone-with-native-integration/) for configuring `rclone`.
 1. I added a sync command to my backup script:
 
