@@ -7,9 +7,38 @@ I am looking for opportunities to collaborate with musicians and film makers on 
 
 I've pinned a few repositories that I worked on [in GitHub](https://github.com/qrkourier).
 
+### zrok
+
+[zrok](https://zrok.io) is an open-source, self-hostable file and service sharing platform built on the firm foundation of OpenZiti. Here's [a post I wrote about running my own zrok in Docker](https://blog.openziti.io/limitless-zrok-with-docker).
+
 ### OpenZiti
 
-[OpenZiti](https://openziti.io/) enables connectivity-as-code with edge networking SDKs and tunnelers, adaptive mesh fabric, and a programmable control plane. I'm working on the developer and operator experiences, e.g., Kubernetes, packaging, docs and samples.
+[OpenZiti](https://openziti.io/) is better than a VPN because it has less surface area for attack and starts with a restrictive policy (no implicit trust). It is a pure software overlay that is not based on and does not collide with traditional IP address-based routes and rules.
+
+The idea is to grow meaningful policies for labeled entities as application needs change, not convoluted ACLs based on IP addressing.
+
+This way, there's no looming reckoning because every entity is known and every flow is authorized. Bonus: no proliferation of permissive VPNs to create new segments because you can just add a policy to the existing network.
+
+Here's [a post I wrote about deploying OpenZiti in Kubernetes](https://blog.openziti.io/deploy-openziti-in-kubernetes-with-ease-using-k3d).
+
+## Decks
+
+### Patch v. Proxy
+
+*Southeast Linuxfest 2024 in Charlotte, NC*
+
+This one's for self-hosters navigating public ingress alternatives. We'll survey the gratis proxy providers and a libre entrant. We'll wrap up with some relevant examples for choosing between running a tunneling agent vs. going agent-less by patching the source to leverage a tunneling library.
+
+Pairing a public reverse proxy with a reverse tunnel can be a better option for public ingress than port forwarding or a public VPS.
+
+Until recently, the only way to achieve this was to run an agent to keep the tunnel to the public proxy open. That's still a fine choice and there are a few, interesting libraries that can make the tunneling functionality part of the application, eliminating the need for a separate agent, and allowing the app to have public ingress as long as it has public egress to create the reverse tunnel.
+
+We'll touch on using systemd or Docker to run an agent, and Go and Python tunneling library examples.
+
+<iframe src="https://qrk.us/decks/patch-v-proxy/" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+
+- [view slide deck](https://qrk.us/decks/patch-v-proxy/)
+- [slide sources in GitHub](https://github.com/qrkourier/decks/tree/main/source/patch-v-proxy)
 
 ## Art
 
