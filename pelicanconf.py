@@ -125,6 +125,10 @@ PLUGINS = [
   'sitemap',
 ]
 
+SITEMAP = {
+  'format': 'xml',
+}
+
 SHOW_ARTICLE_MODIFIED_TIME = False
 SHOW_AUTHOR_BIO_IN_ARTICLE = True
 SHOW_CATEGORIES_ON_MENU = True

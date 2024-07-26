@@ -26,6 +26,6 @@ A note about TLS (SSL): It's a great idea to require TLS everywhere. This gives 
 
 ## Example of a personal web site without hosting expenses
 
-I came across Fly.io by way of an email invitation for a free trial and have combined this with [the Keybase Filesystem]({filename}keybase.md) and the Pelican static HTML generator (described in [About page]({filename}/pages/about.md)) to create this blog site which is highly secure, performant, highly available, and (for now) completely free of operational expenses!
+I came across Fly.io by way of an email invitation for a free trial and have combined this with [the Keybase Filesystem]({filename}keybase.md) and the Pelican static HTML generator (described in [About page]({filename}/pages/60-about.md)) to create this blog site which is highly secure, performant, highly available, and (for now) completely free of operational expenses!
 
 ---

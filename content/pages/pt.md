@@ -1,7 +1,6 @@
-
-Title: PT w/ Bob
-Icon: fas fa-dumbbell
-Status: hidden
+title: PT with Bob
+icon: fas fa-dumbbell
+status: hidden
 
 | date     | description         | balance |
 | -------- | ------------------- | ------- |
