@@ -16,11 +16,11 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v3.1.3
       - name: Pip Installer
-        uses: BSFishy/pip-action@v1
+        uses: insightsengineering/pip-action@v2
         with:
           requirements: requirements.txt
       - name: npm setup
-        uses: ng-easy/npm-setup@v1
+        uses: ng-easy/npm-setup@v4
       - name: install uglify-js
         run: npm install -g uglify-js
       - run: make github
