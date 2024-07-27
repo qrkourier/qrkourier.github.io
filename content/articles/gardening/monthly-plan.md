@@ -5,6 +5,8 @@ category: Gardening
 tags: planning
 ---
 
+![the plot](https://github.com/user-attachments/assets/41ff140f-d3be-435f-98ca-478fdfe234f1)
+
 ## July 2024
 
 - **Select the Plot**
