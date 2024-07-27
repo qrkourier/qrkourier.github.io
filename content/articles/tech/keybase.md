@@ -1,6 +1,10 @@
-Title: Keybase
-Tags: identity, encryption
-Icon: fab fa-keybase
+---
+title: Keybase
+tags: identity, encryption
+icon: fab fa-keybase
+category: Tech
+date: 2018-03-21
+---
 
 I first started using [@KeybaseIO](https://www.keybase.io) a few years ago to link together my social accounts. This creates a web of accounts which is dramatically more difficult to impersonate than any single account. So, it's an exercise in impeding identity theft.
 

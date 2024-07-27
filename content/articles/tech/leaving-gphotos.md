@@ -1,6 +1,10 @@
-Title: Separating Videos from Google Photos
-Tags: python, backup, rclone, googlephototos, googleapis
-Icon: fas fa-video-slash
+---
+title: Separating Videos from Google Photos
+tags: python, backup, rclone, googlephototos, googleapis
+icon: fas fa-video-slash
+category: Tech
+date: 2022-03-13
+---
 
 Storage is cheap, but it's not free and 4K home movies use a lot of storage. There's no easy way to find and delete a particular file or type of file in Google Photos, and there's no way to bulk delete with a tool or even the API. Here's a simple tool chain that answered my need to move all videos out to cheaper storage so I could reclaim storage space in my Google account.
 

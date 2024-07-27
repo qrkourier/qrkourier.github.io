@@ -18,7 +18,7 @@ MASTODON_SITE_VERIFICATION = 'https://mastodon.online/@qrkourier'
 
 PATH = 'content'
 
-#TIMEZONE = 'America/New_York'
+# TIMEZONE = 'America/New_York'
 TIMEZONE = 'GMT'
 
 DEFAULT_LANG = 'en'
@@ -91,18 +91,23 @@ CATEGORY_META = {
   'tech': {
     'cover': 'https://github.com/qrkourier/qrkourier.github.io/assets/1434400/2dc392fc-9fc5-4b12-a22d-2633a958c53c',
     'description': 'solutions and musings',
-  }
-}
-TAG_META = {
-  'food': {
-    'cover': '/images/food.png',
-    'description': 'Examples ipsum dolor sit amet. Topping'
   },
-  'drinks': {
-    'cover': '/images/orange-juice.png',
-    'description': 'Examples ipsum dolor sit amet. Juice'
+  'gardening': {
+      'cover': 'https://github.com/user-attachments/assets/e6351774-83d2-457e-8987-55e949914afe',
+      'description': 'my backyard vegetable garden',
   }
 }
+
+# TAG_META = {
+#   'food': {
+#     'cover': '/images/food.png',
+#     'description': 'Examples ipsum dolor sit amet. Topping'
+#   },
+#   'drinks': {
+#     'cover': '/images/orange-juice.png',
+#     'description': 'Examples ipsum dolor sit amet. Juice'
+#   }
+# }
 
 AUTHOR_META = {
   "kenneth": {
@@ -110,7 +115,7 @@ AUTHOR_META = {
     "image": "https://github.com/qrkourier/qrkourier.github.io/assets/1434400/a8155877-b78a-4ba0-895f-9396777f8b82",
     "website": "https://linktr.ee/qrkourier",
     "location": "United States",
-    "bio": "An American computer engineer living in the United States. ",
+    "bio": "",
   }
 }
 

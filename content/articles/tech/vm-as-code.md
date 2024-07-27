@@ -1,6 +1,10 @@
-Title: Virtual Machines as Code
-Tags: packer, ansible, terraform, devops, iaas
-Icon: fas fa-code
+---
+title: Virtual Machines as Code
+tags: packer, ansible, terraform, devops, iaas
+icon: fas fa-code
+category: Tech
+date: 2022-03-13
+---
 
 Optimizing for determinism in virtual machines. This approach can be used to vend the same virtual machine image version in many formats e.g. VHD for Azure, Stack, and Hyper-V; OVA for VMware, VirtualBox; QCOW2 for KVM, and of course RAW.
 

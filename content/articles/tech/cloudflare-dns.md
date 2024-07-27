@@ -1,6 +1,10 @@
-Title: CloudFlare DNS for Network Manager
-Tags: Linux, dns, sysadmin, network manager
-Icon: fas fa-cloud
+---
+title: CloudFlare DNS for Network Manager
+tags: Linux, dns, sysadmin, network manager
+icon: fas fa-cloud
+category: Tech
+date: 2018-04-11
+---
 
 CloudFlare provides [a performant recursive nameserver](https://developers.cloudflare.com/1.1.1.1/what-is-1.1.1.1/) along with a promise to never surveil their users.
 

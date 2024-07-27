@@ -1,6 +1,10 @@
-Title: Fly.io Programmable Front-end
-Tags: cdn, devops
-Icon: fab fa-fly
+---
+title: Fly.io Programmable Front-end
+tags: cdn, devops
+icon: fab fa-fly
+category: Tech
+date: 2018-05-10
+---
 
 In short, a programmable cloud delivery network (CDN) aka front-end like Fly.io is an API by which to configure the logical edge of an application stack. Fly.io also provides an intuitive web UI which simplifies common administrative operations.
 

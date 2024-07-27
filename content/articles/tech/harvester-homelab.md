@@ -1,8 +1,10 @@
 ---
-Title: Harvester Homelab
-Tags: Rancher, Harvester, LongHorn, OpenSUSE
-Icon: fas fa-flask-vial
-Status: hidden
+title: Harvester Homelab
+tags: Rancher, Harvester, LongHorn, OpenSUSE
+icon: fas fa-flask-vial
+status: hidden
+category: Tech
+date: 2023-04-02
 ---
 
 ## I Bit the Bullet

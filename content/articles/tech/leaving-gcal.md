@@ -1,5 +1,9 @@
-Title: Cleaning up Google Calendar
-Tags: python, googlecalendar, googleapis
+---
+title: Cleaning up Google Calendar
+tags: python, googlecalendar, googleapis
+category: Tech
+date: 2023-09-24
+---
 
 I stopped using Google Calendar as a primary calendar a few years ago, but I still had a lot of old events in there far into the future. I must have imported the lunar cycle at some point because most of them are named like "New moon" or "Full moon." I wanted to clean them out so I don't see duplicates in my main calendar when I'm subscribed to the Google Calendar for the sake of events that can only be shared there, but there's no way to do bulk operations with the app or website, so I modified the Google API Python quickstart for Calendar to do it for me.
 
