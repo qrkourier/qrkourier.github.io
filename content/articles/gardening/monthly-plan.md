@@ -27,11 +27,19 @@ tags: planning
 
 - **Clearing the Grass:**
     - Add a layer of compost or mulch to begin enriching the soil.
+ 
+- **Planting Cool-Season Crops:**
+    - Direct sow seeds for lettuce, spinach, kale, Swiss chard, arugula, radishes, carrots, beets, turnips, broccoli, cauliflower, Brussels sprouts, or cabbage.
+    - Plant peas and garlic for a fall and winter harvest.
 
 ## October 2024
 
 - **Soil Amendments:**
     - Begin adding organic soil amendments based on soil test results (e.g., lime to adjust pH, compost for nutrients).
+ 
+- **Maintaining Cool-Season Crops:**
+    - Water regularly and ensure proper spacing for optimal growth.
+    - Mulch around plants to retain moisture and suppress weeds.
 
 ## November 2024
 
@@ -39,12 +47,17 @@ tags: planning
     - Continue adding compost to the plot to improve soil structure and fertility.
     - Turn the soil gently if needed to incorporate organic material.
 
+- **Harvesting Early Crops:**
+    - Begin harvesting fast-growing crops like radishes and lettuce.
+
 ## December 2024
 
 - **Resting the Soil:**
     - Allow the soil to rest and continue to break down organic matter.
     - Plan any irrigation systems needed for the garden.
 
+- **Continued Harvest:**
+    - Continue harvesting leafy greens and root vegetables as they mature.
 ## January 2025
 
 - **Tilling and Aerating:**
