@@ -21,22 +21,22 @@ tags: planning
 - **Planning and Preparation:**
     - Finalize layout, mark boundaries, install corner posts for trellis wires.
     - Finalize vegetables to grow and their planting schedule.
-    - Order seeds and start acquiring plants.
-
-## September 2024
+    - Start acquiring cool-season plants: peas, garlic, etc.
 
 - **Clearing the Grass:**
     - Add a layer of compost or mulch to begin enriching the soil.
- 
+
+## September 2024
+
 - **Planting Cool-Season Crops:**
-    - Direct sow seeds for lettuce, spinach, kale, Swiss chard, arugula, radishes, carrots, beets, turnips, broccoli, cauliflower, Brussels sprouts, or cabbage.
-    - Plant peas and garlic for a fall and winter harvest.
+    - Direct sow seeds for lettuce, spinach, arugula, radishes, carrots, beets, turnips, broccoli, or cabbage.
+    - Plant peas and garlic.
 
 ## October 2024
 
 - **Soil Amendments:**
     - Begin adding organic soil amendments based on soil test results (e.g., lime to adjust pH, compost for nutrients).
- 
+
 - **Maintaining Cool-Season Crops:**
     - Water regularly and ensure proper spacing for optimal growth.
     - Mulch around plants to retain moisture and suppress weeds.
@@ -58,6 +58,7 @@ tags: planning
 
 - **Continued Harvest:**
     - Continue harvesting leafy greens and root vegetables as they mature.
+
 ## January 2025
 
 - **Tilling and Aerating:**
@@ -103,3 +104,7 @@ tags: planning
     - Monitor for pests and diseases, and manage them organically as needed.
 - **Wildlife Deterrents:**
     - Consider wrapping the corner posts with hardware cloth or chicken wire as a wildlife barrier.
+
+## Resources
+
+- [NCSU Extension - North Carolina Vegetable Planting Guide](https://github.com/user-attachments/files/16404902/NC-Vegetable-Planting-Guide.pdf) ([source](https://extensiongardener.ces.ncsu.edu/wp-content/uploads/2016/07/NC-Vegetable-Planting-Guide.pdf?fwd=no)) (Thanks, Matthew!)
