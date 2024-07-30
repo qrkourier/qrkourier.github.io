@@ -16,6 +16,27 @@ tags: planning
     - Take soil samples and send them for analysis to understand nutrient levels and pH.
     - Review results to determine any necessary amendments.
 
+I ordered some heirloom seeds from Missouri ([rareseeds.com](https://www.rareseeds.com/)).
+
+| Seeds                                                                     |
+| ------------------------------------------------------------------------- |
+| Carrot Seeds, Oxheart<br><br>SKU: CR126                                   |
+| Arugula Seeds, Common<br><br>SKU: OG106                                   |
+| Pea Seeds, Sugar Bon Snap<br><br>SKU: SN115                               |
+| Beet Seeds, Bull's Blood<br><br>SKU: BT101                                |
+| Broccoli Seeds, Waltham 29<br><br>SKU: BR105                              |
+| Cabbage Seeds, Golden Acre<br><br>SKU: CB122                              |
+| Cilantro Seeds, Slo-Bolt<br><br>SKU: HB143                                |
+| Cucumber Seeds, Aonaga Jibai<br><br>SKU: CU120                            |
+| Dill Seeds, Elephant<br><br>SKU: HB180                                    |
+| Lettuce Seeds, May Queen<br><br>SKU: LT118                                |
+| Okra Seeds, Heavy Hitter<br><br>SKU: OK114                                |
+| Onion Seeds, Yellow Sweet Spanish<br><br>SKU: ON135                       |
+| Onion Seeds, Ishikura Bunching<br><br>SKU: ON125                          |
+| Sweet Pepper Seeds, California Wonder<br><br>SKU: PP106                   |
+| Spinach Seeds, Merlo Nero<br><br>SKU: SP105                               |
+| Tomato Seeds, Cherokee Purple<br><br>SKU: TP101                           |
+
 ## August 2024
 
 - **Planning and Preparation:**
