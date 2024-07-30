@@ -15,9 +15,6 @@ CONFFILE=$BASEDIR/pelicanconf.py
 # Don't change stuff below here unless you are sure
 ###
 
-SRV_PID=$BASEDIR/srv.pid
-PELICAN_PID=$BASEDIR/pelican.pid
-
 function usage(){
   echo "usage: $0 (stop) (start) (restart) [port]"
   echo "This starts Pelican in debug and reload mode and then launches"
@@ -32,18 +29,7 @@ function alive() {
 }
 
 function shut_down(){
-  PID=$(cat $PELICAN_PID)
-  if [[ $? -eq 0 ]]; then
-    if alive $PID; then
-      echo "Killing Pelican"
-      kill $PID
-    else
-      echo "Stale PID, deleting"
-    fi
-    rm $PELICAN_PID
-  else
-    echo "Pelican PIDFile not found"
-  fi
+  pkill -f 'pelican .*pelicanconf\.py'
 }
 
 function start_up(){
@@ -58,15 +44,7 @@ function start_up(){
     --listen \
     --port $port \
     $PELICANOPTS \
-    $INPUTDIR &
-  pelican_pid=$!
-  echo $pelican_pid > $PELICAN_PID
-  sleep 1
-  if ! alive $pelican_pid ; then
-    echo "Pelican didn't start. Is the Pelican package installed? Is there another service using port ${port}?"
-    return 1
-  fi
-  echo 'Pelican HTTP server process now running in background.'
+    $INPUTDIR 
 }
 
 ###
