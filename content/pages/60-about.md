@@ -6,8 +6,6 @@ Kenneth is a security-oriented systems and software developer with a deep-rooted
 
 Kenneth is a proud maintainer for the OpenZiti project, a renowned software framework for distributed overlay networking. His active engagement with the OpenZiti community is evident through platforms like GitHub, Discourse, and YouTube.
 
-Beyond his professional realm, Kenneth is an aficionado of sound art, sound design for film, and music production.
-
 Driven by the expressive power of software, Kenneth is dedicated to minimizing barriers to entry into the tech field. He achieves this through effective communication and mentorship, fostering a welcoming community of learning and growth. 
 
 Looking ahead, Kenneth is inspired by Kubernetes and the cloud-native ecosystem. He firmly believes that the cloud-native tool chain represents the future of software-based systems, and he is ardently adopting and mastering these tools, both personally and professionally.
