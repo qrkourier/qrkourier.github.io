@@ -7,7 +7,7 @@ url:
 _he/him/his_
 
 - <w@qrk.us>
-- My [Linktree](https://linktr.ee/qrkourier) links. That is what it do.
+- My [Linktree](https://linktr.ee/qrkourier). It links.
 - My [Keybase](https://keybase.io/kourier) cryptographically-verifies a few points of contact.
 - You can encrypt something for my [PGP key](/blob/kourier-pgp-0xB69403FA957C5E46.asc)
 
