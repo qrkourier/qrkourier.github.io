@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 import sys
+import datetime
 
 sys.path.append('.')
 
@@ -13,6 +14,9 @@ QUOTED = 'Philip K. Dick'
 SITEURL = ''
 FOOTNOTE = ''
 CONTACT_URL = '/pages/about.html'
+
+# Current year for copyright
+COPYRIGHT_YEAR = datetime.datetime.now().year
 
 MASTODON_SITE_VERIFICATION = 'https://mastodon.online/@qrkourier'
 
