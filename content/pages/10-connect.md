@@ -1,15 +1,18 @@
-title: Contact
+title: Connect
 save_as: index.html
 url:
 
 ## Kenneth Bingham
 
-_he/him/his_
+### Contact
 
-- <w@qrk.us>
-- My [Linktree](https://linktr.ee/qrkourier). It links.
-- My [Keybase](https://keybase.io/kourier) cryptographically-verifies a few points of contact.
-- You can encrypt something for my [PGP key](/blob/kourier-pgp-0xB69403FA957C5E46.asc)
+- <w@qrk.us> ([PGP key](/blob/w@qrk.us-ed25519-0xAE37A768B18BC4C6.asc))
+- [Signal](https://signal.me/#eu/UP1u1pqJKrQzMRvWAkZq60fvVNMEXtgb6jEMt4sbqfS8FHO5wB1CK61WoU5nEfpT)
+
+### Social, etc.
+
+- [My Linktree](https://linktr.ee/qrkourier). It links.
+- [My Keybase profile](https://keybase.io/kourier) attests a few more points of contact.
 
 <!-- ### Hella
 
