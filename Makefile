@@ -92,16 +92,50 @@ else
 endif
 
 
-devserver:
-ifdef PORT
-	$(BASEDIR)/develop_server.sh restart $(PORT)
-else
-	$(BASEDIR)/develop_server.sh restart
-endif
+SERVER_PID = $(BASEDIR)/pelican.pid
+SERVER_LOG = $(BASEDIR)/pelican.log
+
+startserver: stopserver
+	@echo "Starting Pelican server..."
+	set -m; \
+	$(PELICAN) \
+		--debug \
+		--autoreload \
+		--output $(OUTPUTDIR) \
+		--settings $(CONFFILE) \
+		--listen \
+		--port $(or $(PORT),8000) \
+		$(PELICANOPTS) \
+		$(INPUTDIR) > "$(SERVER_LOG)" 2>&1 & \
+	echo $$! > "$(SERVER_PID)"
+	@echo "Pelican server started (PID: $$(cat $(SERVER_PID)))"
+	@( xdg-open http://localhost:$(or $(PORT),8000) 2>/dev/null || \
+	   open http://localhost:$(or $(PORT),8000) 2>/dev/null || \
+	   echo "Open http://localhost:$(or $(PORT),8000) in your browser" ) &
+
+# Alias for backward compatibility
+devserver: startserver
 
 stopserver:
-	$(BASEDIR)/develop_server.sh stop
-	@echo 'Stopped Pelican and SimpleHTTPServer processes running in background.'
+	@if [ -f "$(SERVER_PID)" ]; then \
+		PID=$$(cat "$(SERVER_PID)"); \
+		if ps -p $$PID >/dev/null 2>&1; then \
+			echo "Stopping Pelican server (PID: $$PID)"; \
+			pkill -P $$PID 2>/dev/null || true; \
+			kill $$PID 2>/dev/null || true; \
+			while ps -p $$PID >/dev/null 2>&1; do \
+				sleep 0.5; \
+			done; \
+			echo 'Pelican server stopped.'; \
+		else \
+			echo 'Pelican server was not running (stale PID file).'; \
+		fi; \
+		rm -f "$(SERVER_PID)" "$(SERVER_LOG)"; \
+	else \
+		echo 'No Pelican server is currently running (no PID file).'; \
+	fi;
+	# Additional cleanup in case of any remaining processes
+	pkill -f "pelican.*pelicanconf\.py" 2>/dev/null || true
 
 publish:
 	pip install --upgrade --requirement $(BASEDIR)/requirements.txt
