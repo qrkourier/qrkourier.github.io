@@ -158,6 +158,9 @@ SHOW_FULL_ARTICLE_IN_SUMMARY = False
 SHOW_SITESUBTITLE_IN_HTML_TITLE = True
 SHOW_TAGS_IN_ARTICLE_SUMMARY = False
 
+# Categories to exclude from navigation menu
+CATEGORIES_EXCLUDE_FROM_MENU = ['family']
+
 # 'extract_toc'
 
 # import jinja_filter_sidebar

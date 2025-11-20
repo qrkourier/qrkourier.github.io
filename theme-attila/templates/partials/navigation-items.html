@@ -11,7 +11,9 @@
   {% endif %}
   {% if SHOW_CATEGORIES_ON_MENU | default(False) %}
     {% for cat, null in categories %}
+      {% if cat|string|lower not in (CATEGORIES_EXCLUDE_FROM_MENU | default([]) | map('lower') | list) %}
       <li{% if cat == category %} class="nav-{{cat.slug}} active"{% endif %} role="presentation"><a href="{{ SITEURL }}/{{ cat.url }}"><span>{{ cat }}</span></a></li>
+      {% endif %}
     {% endfor %}
   {% endif %}
 </ul>
