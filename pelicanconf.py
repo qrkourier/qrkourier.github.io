@@ -99,7 +99,11 @@ CATEGORY_META = {
   'gardening': {
       'cover': 'https://github.com/user-attachments/assets/e6351774-83d2-457e-8987-55e949914afe',
       'description': 'my backyard vegetable garden',
-  }
+  },
+  'family': {
+    'cover': '',
+    'description': 'family history',
+  },
 }
 
 # TAG_META = {
@@ -120,6 +124,12 @@ AUTHOR_META = {
     "website": "https://linktr.ee/qrkourier",
     "location": "United States",
     "bio": "",
+  },
+  "iris jean yandle beatty": {
+    "name": "Iris Jean Yandle Beatty",
+    "image": "https://github.com/user-attachments/assets/d7411c92-d9a5-4522-9ef0-9adae5ade318",
+    "location": "Charlotte, North Carolina",
+    "bio": "Born in 1931, Iris Jean Yandle Beatty lived through the Great Depression, World War II, and witnessed the transformation of the 20th century. She wrote her memoirs at age 75 to preserve family history for future generations.",
   }
 }
 
