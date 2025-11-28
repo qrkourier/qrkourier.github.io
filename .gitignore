@@ -4,3 +4,4 @@ nohup.out
 
 /*.pid
 *.pyc
+pelican.log

@@ -12,6 +12,8 @@ I am truly an elderly lady, and at the age of seventy-five, I decided to do some
 
 Most folks would mark me as a silly old woman, as I am a very ordinary and average person. I have never been mentioned in print except for a small paragraph in *The Charlotte Observer* when I performed a dance in a kindergarten presentation at the age of five, and again in 1954, when I sent a picture of myself in my wedding gown to the paper. That has been the extent of the publicity about my life. But I hope my children, grandchildren, and great-grandchildren might one day want to know more about the past and our family than history books can tell them.
 
+
+
 ## Roots and Ancestry
 
 My forebears were, most certainly, brave. A large number of my ancestors came to the United States from England in the mid-1800s, crossing the Atlantic in small sailing ships. There were two prominent families: the Yandles and the Johnstons. They intermarried frequently—Johnstons marrying Yandles and Yandles marrying Johnstons—and settled in the Carolinas, mostly around Pineville and Fort Mill, or across the Catawba River near Mount Holly.
@@ -95,3 +97,17 @@ Bobby had grown up in Charlotte, too. His grandfather had been a policeman who d
 I am now seventy-five years old. My husband is eighty. We have lived through horse-and-buggy days to see men walk on the moon. We have seen the discovery of penicillin, the end of polio, and the invention of television and computers. Life has been full of changes, some sad, some wonderful. I have tried to put down these memories so that my children, Louise and Fred, and my grandchildren will know where they came from.
 
 *Iris Jean Yandle Beatty*
+
+## A Note from Ken
+
+I recovered these fragments of Mimi's memoir from her old computer, preserving them alongside audio recordings from my time at her home on Autumnvale Drive, circa 2008. It is a privilege to share these memories with those who knew her. She loved me dearly, as I did her, and I miss her deeply.
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000;">
+    <iframe 
+        src="https://www.youtube.com/embed/AM_2mmyq3wI" 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen 
+        title="Iris Jean Yandle Beatty Memoir">
+    </iframe>
+</div>
