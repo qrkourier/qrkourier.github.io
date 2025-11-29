@@ -3,7 +3,7 @@ title: A Life in the Twentieth Century: The Memoir of Iris Jean Yandle Beatty
 tags: memoir, family, history, Charlotte
 category: Family
 author: Iris Jean Yandle Beatty
-date: 2012-12-1
+date: 2006-12-8
 ---
 
 ## Introduction
@@ -19,6 +19,10 @@ Most folks would mark me as a silly old woman, as I am a very ordinary and avera
 My forebears were, most certainly, brave. A large number of my ancestors came to the United States from England in the mid-1800s, crossing the Atlantic in small sailing ships. There were two prominent families: the Yandles and the Johnstons. They intermarried frequently—Johnstons marrying Yandles and Yandles marrying Johnstons—and settled in the Carolinas, mostly around Pineville and Fort Mill, or across the Catawba River near Mount Holly.
 
 My Great-Grandfather Yandle was a storekeeper near Pineville. During the Civil War, when the wives and children of Confederate soldiers had no money for food, he could not bear to turn them away. He would say, "Well, I SAID they needed to eat!" and give them food from his store. Eventually, his generosity caused his bankruptcy, and his younger brother, Edward Yandle, helped him settle his debts. I never knew him, but I heard stories of his wife, my Great-Grandmother Sally Elizabeth. She lived to celebrate her fiftieth wedding anniversary, wearing a hand-sewn black silk dress that I later inherited.
+
+There is a funny story about that anniversary. A large crowd had gathered, and because the table couldn't seat everyone at once, the adults ate first. The children, including my father who was about twelve, had to wait. Hungry and bored, my father and his cousins found a box of cigars that had been a gift to Grandfather. They snitched one, went behind the barn, and took turns puffing on it. It made them all deathly sick. When they were finally called to the feast, the servers were baffled because these usually ravenous boys simply picked at their food. My Dad never smoked again.
+
+There was also a sadness in the family that was rarely spoken of. My Dad was the youngest boy, but he wasn't the youngest child. He once mentioned a sister named Stella who died as a toddler. He said only that she was a "beautiful child." I never knew she existed until I found a chipped gravestone in a storage shed on the farm. It read "Stella Yandle." In those days, doctors often couldn't help, and families just had to bear the loss.
 
 ## My Parents
 
@@ -42,6 +46,8 @@ I have two vivid memories from that time. One is of terror: I wandered into a sm
 
 Great-Uncle Edward and Great-Aunt Lizzie were unique characters. They were brother and sister, neither ever married. They had been born in England and spoke with a different vocabulary than our Southern drawl. Aunt Lizzie was terrified of germs; she would never touch a doorknob with her bare hand, always using her apron as a shield. Their house had both electric and gas lights—a marvel to me.
 
+My mother told me a story about living there when my sister, Ella Cornelia, was a baby. Mother put her in a high chair on the back porch while she hung laundry in the yard. She heard the baby cooing and laughing and thought she was happily entertaining herself. When Mother returned, she found that she had placed the high chair within reach of Aunt Lizzie's prized fern. Ella Cornelia had stripped the fronds, watching the leaves drift down like green snowflakes. Mother never said what Aunt Lizzie’s reaction was, but I imagine it wasn't mild.
+
 ## The Depression and Hard Times
 
 I was born into the Great Depression. Though I was too young to understand it at the time, it shaped our lives. My father had invested in rental houses, but when his tenants lost their jobs and couldn't pay rent, he couldn't make the mortgage payments. He lost the houses and his job at the lumber yard because no one was building. He reinvented himself as a painting contractor to survive.
@@ -58,7 +64,9 @@ I remember staying with Aunt Ola. She had no children and didn't run her house l
 
 ## Life on West Eleventh Street
 
-When I was about three, we moved to 407 West Eleventh Street, a duplex where we lived until I married. It was a different world then. Ice was delivered by a horse-drawn wagon for our icebox. We didn't have a telephone until I was older. 
+When I was about three, we moved to 407 West Eleventh Street, a duplex where we lived until I married. It was a different world then. Ice was delivered by a horse-drawn wagon for our icebox. We didn't have a telephone until I was older.
+
+The ice man was an elderly black man we called "Dad." He looked thin and poor, and my mother, who never let anyone go hungry, asked him one morning if he had eaten. He hadn't. From then on, she made him an egg sandwich and gave him coffee in a homemade thermos (a jar wrapped in newspaper inside a tin can) every time he delivered ice. He was always grateful and returned the jar clean the next day. 
 
 I attended Bethune School, walking the few blocks alone from the first grade. After school, I would walk uptown to "The Square" (Trade and Tryon Streets) where my mother worked in a sewing shop. I would spend my afternoons there, playing with spools of thread or watching the traffic.
 
@@ -76,9 +84,15 @@ Later, tragedy struck the Parks family. My Grandfather Parks was deaf. One day, 
 
 ## The War Years
 
-World War II changed everything. I was ten when Pearl Harbor was bombed. Suddenly, there were shortages of sugar, shoes, and gasoline. My father worked away from home for weeks at a time, painting oil tanks in Savannah and other coastal cities. My sister worked as a nurse's aide and later in a doctor's office.
+World War II changed everything. I was ten when Pearl Harbor was bombed. Suddenly, there were shortages of sugar, shoes, and gasoline. My father worked away from home for weeks at a time, painting oil tanks in Savannah and other coastal cities.
+
+My Dad actually "invented" a device for that work. The huge oil tanks had floating tops that moved up and down with the oil level to prevent fumes from gathering. Dad created a rig that allowed a painter to move horizontally around the tank, then lower the board and go around again. It was dangerous work—a spark could cause an explosion—but he was proud of his solution.
+
+My sister worked as a nurse's aide and later in a doctor's office. Toward the end of the war, we learned that German prisoners of war were being kept in camps in the US and sometimes "loaned" to farmers. My sister eventually met and married Harry May, who was one of the Army guards watching over these German POWs on a local dairy farm.
 
 I remember the polio epidemic one summer. Schools closed early, and children were confined to their yards. I couldn't go to the library or the movies. It was a lonely time.
+
+That was also the summer of my orthodontic ordeal. My teeth had grown in crooked—my "eye teeth" stuck out like tusks. My parents, despite the cost, sent me to one of the few orthodontists in Charlotte. The treatment took eight years. At one point, after four years of little progress, the doctor convinced my Dad (who distrusted doctors after what happened to his sisters) to let him pull four teeth. Finally, the braces came off. I walked home that day weeping with joy, smiling at everyone I passed, grateful to look "normal" at last.
 
 ## Growing Up
 
