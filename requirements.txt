@@ -1,7 +1,5 @@
-pelican
+pelican>=4.10,<5
 pelican-minification
-# pelican-neighbors
 pelican-webassets
-# pelican-sitemap
-markdown
+markdown>=3.7
 ghp-import
