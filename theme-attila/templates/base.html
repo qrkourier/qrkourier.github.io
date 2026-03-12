@@ -78,6 +78,54 @@
 
   <link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/style.css" type="text/css" rel="stylesheet" />
 
+  <style>
+    /* Mermaid inline diagram */
+    pre.mermaid svg {
+      max-width: 100%;
+      height: auto;
+      cursor: zoom-in;
+    }
+    pre.mermaid {
+      text-align: center;
+      background: transparent;
+      border: 1px solid rgba(128, 128, 128, 0.25);
+      border-radius: 6px;
+      padding: 1rem;
+      overflow: hidden;
+    }
+    /* Lightbox overlay */
+    .mermaid-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.85);
+      cursor: zoom-out;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .mermaid-lightbox.active { display: flex; align-items: center; justify-content: center; }
+    .mermaid-lightbox svg {
+      max-width: none;
+      max-height: none;
+      width: auto;
+      height: auto;
+      min-width: 90vw;
+      padding: 2rem;
+      cursor: grab;
+    }
+    .mermaid-lightbox svg:active { cursor: grabbing; }
+    .mermaid-lightbox-hint {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+  </style>
+
   {% if CSS_OVERRIDE %}
   <!-- CSS specified by the user -->
   {% for css in CSS_OVERRIDE %}
@@ -239,6 +287,48 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
   <script type="text/javascript" src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/jquery.fitvids.js"></script>
   <script type="text/javascript" src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/js/script.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+
+    // Lightbox for mermaid diagrams
+    document.addEventListener('DOMContentLoaded', function() {
+      // Wait for mermaid to finish rendering
+      setTimeout(function() {
+        // Create lightbox container
+        var lb = document.createElement('div');
+        lb.className = 'mermaid-lightbox';
+        lb.innerHTML = '<div class="mermaid-lightbox-hint">Click or press Escape to close</div>';
+        document.body.appendChild(lb);
+
+        function closeLightbox() {
+          lb.classList.remove('active');
+          document.body.style.overflow = '';
+          var old = lb.querySelector('svg');
+          if (old) lb.removeChild(old);
+        }
+
+        lb.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && lb.classList.contains('active')) closeLightbox();
+        });
+
+        // Attach click handler to each rendered mermaid SVG
+        document.querySelectorAll('pre.mermaid svg').forEach(function(svg) {
+          svg.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var clone = svg.cloneNode(true);
+            clone.style.cursor = 'zoom-out';
+            clone.addEventListener('click', closeLightbox);
+            lb.insertBefore(clone, lb.firstChild);
+            document.body.style.overflow = 'hidden';
+            lb.classList.add('active');
+          });
+        });
+      }, 500);
+    });
+  </script>
 
   {% if JS_OVERRIDE %}
   <!-- Script specified by the user -->
