@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Hella Labs — Architecture &amp; Trust Boundary</title>
+<link rel="stylesheet" href="dist/reset.css" />
+<link rel="stylesheet" href="dist/reveal.css" />
+<link rel="stylesheet" href="css/hella.css" id="theme" />
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ═══════════════ 1. TITLE ═══════════════ -->
+<section class="slide-hero" data-state="hero">
+  <aside class="notes">
+    <p>Framing: this is a personal lab, not a product. The interesting engineering
+    question is not "does it scale" but "how do you let an agent act freely inside
+    your own infrastructure without it being able to take the house with it".</p>
+    <p>Housekeeping: 12 slides, ~20 minutes. The architecture is the first half,
+    the trust boundary is the second half.</p>
+  </aside>
+  <div class="hero-rule"></div>
+  <h1>Hella Labs: <em>an agent in the walls</em></h1>
+  <p class="lede">A self-hosted lab where a delegated agent lives inside your
+  infrastructure — and the interesting part is the line it must not cross.</p>
+  <div class="hero-meta">
+    <span><b>3</b> servers</span>
+    <span><b>3</b> workstations</span>
+    <span><b>23</b> namespaces</span>
+    <span><b>2</b> trust zones</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 2. THE PROBLEM ═══════════════ -->
+<section>
+  <aside class="notes">
+    <p>Most home labs have one principal: you. This one has two.</p>
+    <p>The terminology here is owner-approved and deliberately precise. "Interactive
+agent" means an agent running as the human user - your POSIX account, your
+credentials, your authority. "Delegated agent" means a distinct service
+principal with bounded authority of its own.</p>
+    <p>These are authority classes, not product names. A delegated agent is not made
+interactive by running on a workstation, and an interactive agent is not
+delegated just because it is remote. The class label grants nothing by itself.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow">The premise</div>
+    <h2>Most home labs are run <em>by</em> one person.</h2>
+    <p class="lede lede--wide">This one is run by a person <em>and</em> an agent
+    that writes code, merges branches, and operates infrastructure.</p>
+  </div>
+
+  <div class="slide-body">
+    <div class="pillars">
+      <div class="pillar pillar--inside">
+        <span class="kicker">Interactive agent</span>
+        <h3>You, with tools</h3>
+        <p>Codex, Claude Code, DSH. Runs <b>as you</b> — your POSIX account, your
+        credentials, your authority. Expensive frontier models, private memory.
+        A wrong turn is <b>your</b> wrong turn.</p>
+      </div>
+      <div class="pillar pillar--outside">
+        <span class="kicker">Delegated agent</span>
+        <h3>Ember, as a service</h3>
+        <p>A distinct service principal with its <b>own bounded authority</b>.
+        Implemented in upstream Hermes. Merges its own work, runs unattended,
+        escalates when it should.</p>
+      </div>
+      <div class="pillar pillar--gate">
+        <span class="kicker">The actual problem</span>
+        <h3>Keeping them apart</h3>
+        <p>Both share hardware, a cluster, a network, and a forge. Separation has
+        to be <b>enforced by machinery</b>, not by good intentions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">Terminology: owner-approved in hella-core PLAN.md</span>
+    <span class="pageno">02</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 3. TOPOLOGY ═══════════════ -->
+<section class="slide--diagram">
+  <aside class="notes">
+    <p>The physical shape.</p>
+    <p>edge26 is the only node with a public IP: a VPS that runs the K3s control plane
+and holds the offsite Longhorn replica. It is also the WireGuard endpoint, so
+the homes are reachable from the edge without exposing them directly.</p>
+    <p>mg and av are always-on metal, each carrying SSD and HDD Longhorn pools and
+hosting the remote-exec VMs. Workstations are the operator and GPU tier, and
+because they sleep, they are deliberately NOT storage nodes - their replicas
+were rebuilt onto the always-on servers.</p>
+    <p>door and pocket are OpenWrt: door is the exit node, pocket is a mesh extender.
+Everything rides the Tailnet.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow">Topology</div>
+    <h2>One cluster, three sites, a private network</h2>
+    <div class="tag-row" style="margin-top:14px">
+      <span class="tag tag--observed">Observed</span>
+    </div>
+  </div>
+
+  <div class="slide-body">
+    <div class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  edge["<b>edge26</b> · VPS<br/>K3s + Longhorn SSD"]:::srv
+  mg["<b>mg</b> · server<br/>K3s + Longhorn"]:::srv
+  av["<b>av</b> · server<br/>K3s + Longhorn"]:::srv
+  mira["<b>mira</b> · desktop<br/>GPU + Ollama"]:::wks
+  oryp["<b>oryp</b> · laptop"]:::wks
+  pango["<b>pango</b> · laptop"]:::wks
+  door["<b>door</b> · OpenWrt<br/>WireGuard exit"]:::net
+  pocket["<b>pocket</b> · OpenWrt"]:::net
+
+  edge --- mg
+  edge --- av
+  door -.->|"WireGuard"| mg
+  pocket -.-> mg
+  mg --- av
+  mg --- mira
+  av --- oryp
+  mira --- pango
+
+  classDef srv fill:#12202A,stroke:#4FD1C5,stroke-width:1.5px,color:#E9EDF5
+  classDef wks fill:#1A1630,stroke:#A78BFA,stroke-width:1.5px,color:#E9EDF5
+  classDef net fill:#241A12,stroke:#F6AD55,stroke-width:1.5px,color:#E9EDF5
+      </pre>
+    </div>
+    <p class="diagram-caption">
+      <span class="lg lg--srv">Always-on servers</span> carry the cluster, storage and runners.
+      <span class="lg lg--wks">Workstations</span> sleep — they hold GPU and operator capacity, not replicas.
+      <span class="lg lg--net">OpenWrt</span> provides the edge and mesh.
+      Everything rides the Tailnet; WireGuard reaches the homes from the edge.
+    </p>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">bingnet/hella-nodes · inventory.yml</span>
+    <span class="pageno">03</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 4. WHAT RUNS ═══════════════ -->
+<section>
+  <aside class="notes">
+    <p>Twenty-three namespaces, but the grouping is what matters, not the count.</p>
+    <p>Agent plane - Ember, its Matrix control room, the model gateway.
+Home - the private applications that justify the whole thing.
+Platform - storage, observability, identity, and the reconciler.
+Operations - alerts, networking, cluster UI, runner coordination.</p>
+    <p>This is the surface the boundary has to be enforced over. Note that the agent
+plane and the home applications live in the same cluster. That is deliberate:
+Ember needs to see the home applications to support them. Which is exactly
+why the boundary cannot be a network perimeter.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow">Workloads</div>
+    <h2>What the cluster actually carries</h2>
+  </div>
+
+  <div class="slide-body">
+    <table class="tbl">
+      <thead>
+        <tr><th>Domain</th><th>Namespaces</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Agent plane</td>
+          <td class="mech"><code>hermes</code> <code>matrix</code> <code>model-gateway</code></td>
+          <td>Ember itself, its control room, and the model router it calls.</td>
+        </tr>
+        <tr>
+          <td>Home</td>
+          <td class="mech"><code>homeassistant</code> <code>immich</code> <code>jellyfin</code> <code>audiobookshelf</code></td>
+          <td>Private applications — the reason the lab exists.</td>
+        </tr>
+        <tr>
+          <td>Platform</td>
+          <td class="mech"><code>longhorn-system</code> <code>monitoring</code> <code>alertmanager</code> <code>keycloak</code> <code>flux-system</code></td>
+          <td>Storage, observability, identity, and the reconciler that applies desired state.</td>
+        </tr>
+        <tr>
+          <td>Operations</td>
+          <td class="mech"><code>hella-alerts</code> <code>tailscale</code> <code>headlamp</code> <code>forgejo-coordination</code> <code>ollama</code></td>
+          <td>Alert handling, private networking, cluster UI, runner coordination, local inference.</td>
+        </tr>
+        <tr>
+          <td>Extras</td>
+          <td class="mech"><code>loki</code> <code>open-webui</code> <code>wireguard</code> <code>birdnet-sound-id</code> <code>robinhood-trader</code> <code>nvidia-device-plugin</code></td>
+          <td>Log store, chat UI, tunnel, and the rest of the platform surface.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">bingnet/hella-k8s-yaml · clusters/hella/{apps,platform}</span>
+    <span class="pageno">04</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 5. THE BOUNDARY ═══════════════ -->
+<section class="slide--diagram">
+  <aside class="notes">
+    <p>This is the slide that matters.</p>
+    <p>One self-hosted Forgejo instance hosts three organizations. qrkourier and
+bingnet are inside the owner's authority. delegated is outside and is managed
+by Ember.</p>
+    <p>The asymmetry is the point. Ember can push branches and open PRs into owner
+zones, but it cannot merge there - owner approval is the boundary. Inside
+delegated it is admin, and it merges autonomously.</p>
+    <p>The delegated PRs often carry a readable history, but that is a byproduct of
+good practice, not a human gate. Do not let a pretty PR trail convince you the
+review happened.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow eyebrow--outside">The security boundary</div>
+    <h2>One forge, two zones, one line</h2>
+    <p class="lede lede--wide">The boundary is not a network perimeter. It is a
+    <b>set of permissions that only one of the two principals can cross.</b></p>
+  </div>
+
+  <div class="slide-body">
+    <div class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  h["<b>Interactive agent</b><br/>runs as you"]:::inside
+  q["<b>qrkourier</b><br/>owner repos"]:::inside
+  b["<b>bingnet</b><br/>infra"]:::inside
+  e["<b>Ember</b><br/>delegated agent"]:::ember
+  d["<b>delegated</b><br/>runtime repos"]:::ember
+  k[("<b>k3s cluster</b>")]:::cluster
+
+  h --> q
+  h --> b
+  e -->|"PR · owner approves"| b
+  e -->|"merges freely"| d
+  d -->|"rendered PR"| b
+  b -->|"Flux"| k
+
+  classDef inside fill:#12202A,stroke:#4FD1C5,stroke-width:1.5px,color:#E9EDF5
+  classDef ember fill:#1A1630,stroke:#A78BFA,stroke-width:2px,color:#E9EDF5
+  classDef cluster fill:#241A12,stroke:#F6AD55,stroke-width:1.5px,color:#E9EDF5
+      </pre>
+    </div>
+    <p class="diagram-caption">
+      Ember may open pull requests into owner zones but <b>cannot merge</b> there.
+      Inside <code>delegated</code> it is admin and merges autonomously.
+      The historical trail is a byproduct — <b>not</b> a human gate.
+    </p>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">Owner-confirmed trust zones · hella-core PLAN.md</span>
+    <span class="pageno">05</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 6. THE TWO AGENTS ═══════════════ -->
+<section>
+  <aside class="notes">
+    <p>The comparison that people usually get wrong.</p>
+    <p>The temptation is to frame this as "an AI versus a human" or "a cheap model
+versus an expensive one". It is neither. The difference is authority.</p>
+    <p>An interactive agent is you. If it deletes the wrong branch, you can undo it
+because you are the one holding the credentials. Ember is a service
+principal: if it does the wrong thing, undoing it is a remediation, not a
+keystroke.</p>
+    <p>Also note the last row of each column. The reversibility asymmetry is the
+entire reason the boundary is worth the engineering cost.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow">Principal comparison</div>
+    <h2>Not a product difference — an <em>authority</em> difference</h2>
+  </div>
+
+  <div class="slide-body">
+    <div class="compare">
+      <div class="col col--inside">
+        <div class="col-title"><span class="dot"></span>Interactive agent</div>
+        <div class="col-sub">Codex · Claude Code · DSH</div>
+        <ul class="checklist">
+          <li>Operates <b>as the human user</b> — <code>kbingham</code></li>
+          <li>Same credentials, same SSH agent, same reach</li>
+          <li>Owns private memory, frontier models</li>
+          <li>Can write owner repos directly</li>
+          <li>A mistake is <b>immediately reversible</b> by the owner</li>
+        </ul>
+      </div>
+      <div class="col col--outside">
+        <div class="col-title"><span class="dot"></span>Delegated agent — Ember</div>
+        <div class="col-sub">upstream Hermes · tailored in hermes-runtime</div>
+        <ul class="checklist">
+          <li>Its <b>own service principal</b>, not a login</li>
+          <li>Scoped tokens, scoped runner, scoped keys</li>
+          <li>Separate Honcho workspace, separate credentials</li>
+          <li>May merge autonomously <b>only</b> in <code>delegated</code></li>
+          <li>A mistake is <b>not</b> directly reversible by the owner</li>
+        </ul>
+      </div>
+    </div>
+    <p class="diagram-caption" style="margin-top:20px">
+      The class label grants <b>nothing</b>. The POSIX account, forge identity,
+      credential scope and actual enforcement are separate facts — each verified
+      on its own.
+    </p>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">Owner-approved terminology · hella-core PLAN.md §"Agent principal terminology"</span>
+    <span class="pageno">06</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 7. MECHANISMS ═══════════════ -->
+<section>
+  <aside class="notes">
+    <p>Here is where honesty matters, because this table is a mix of mechanism
+and evidence.</p>
+    <p>Each row names the mechanism that holds a particular crossing, and separately,
+what is still owed before you can claim the crossing is enforced.</p>
+    <p>Read the State column carefully. "Partial" and "Unproven" are not hedges -
+they are the honest reading of a source tree that declares enforcement which
+has not yet been independently verified.</p>
+    <p>In particular the last row: separate Honcho workspaces with scoped credentials
+is the documented design. A negative cross-workspace test - proving one
+workspace cannot read the other - has not been run.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow eyebrow--gate">Enforcement</div>
+    <h2>How the boundary is actually held</h2>
+    <p class="lede lede--wide">Each crossing has a named mechanism and a named
+    piece of evidence still owed.</p>
+  </div>
+
+  <div class="slide-body">
+    <table class="tbl">
+      <thead>
+        <tr><th>Crossing</th><th>Mechanism</th><th>State</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Delegated source → privileged state</td>
+          <td class="mech">Runtime CI renders and <b>proposes</b> a PR into the GitOps repo. Branch protection + approvers gate the merge.</td>
+          <td><span class="pill pill--warn">Partial</span></td>
+        </tr>
+        <tr>
+          <td>Ordinary K8s changes</td>
+          <td class="mech">Flux reconciles the GitOps repo. Runtime and platform source are owned separately.</td>
+          <td><span class="pill pill--ok">In place</span></td>
+        </tr>
+        <tr>
+          <td>Conservative host changes</td>
+          <td class="mech">Root-owned dispatcher, fixed profile only. Forgejo OIDC verifies repo + workflow + protected ref + current SHA. Replay rejected.</td>
+          <td><span class="pill pill--warn">Partial</span></td>
+        </tr>
+        <tr>
+          <td>Cluster credentials / day-2</td>
+          <td class="mech">Separate lane, separate runner identity, separate Vault inputs, independent host approval.</td>
+          <td><span class="pill pill--ok">In place</span></td>
+        </tr>
+        <tr>
+          <td>Delegated command execution</td>
+          <td class="mech">Ansible owns VM lifecycle. <code>remote-exec-lxc</code> converges guest contents with root <b>inside the sandbox only</b>.</td>
+          <td><span class="pill pill--ok">In place</span></td>
+        </tr>
+        <tr>
+          <td>Interactive vs. Ember memory</td>
+          <td class="mech">Separate Honcho workspaces, scoped client credentials. A different workspace name alone is not proof.</td>
+          <td><span class="pill pill--open">Unproven</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">hella-nodes/docs/automation-horizons.md · hella-core PLAN.md §"How the trust boundary is expressed and enforced"</span>
+    <span class="pageno">07</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 8. CHANGE CONTROL ═══════════════ -->
+<section class="slide--diagram">
+  <aside class="notes">
+    <p>This is the change-control model, and it is the part most self-hosted
+labs do not have at all.</p>
+    <p>Three horizons. The node day-2 lane runs a fixed profile after a protected
+merge. Flux reconciles ordinary Kubernetes resources. A separate cluster day-2
+lane handles credential staging and alert declarations with its own runner
+identity and its own Vault inputs.</p>
+    <p>And a human floor: bootstrap, recovery, runner provisioning, and Forgejo
+failover stay human-executed. Always.</p>
+    <p>The dispatcher itself is worth pointing at. It is a root-owned entry point
+that rejects caller-supplied playbooks, limits, tags, inventories, and
+variables, and verifies a signed Forgejo OIDC token against the repository,
+workflow, protected ref, and current SHA before Ansible starts. A workflow
+cannot smuggle in an arbitrary playbook.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow">Change control</div>
+    <h2>Three horizons of automation, one human floor</h2>
+  </div>
+
+  <div class="slide-body">
+    <div class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  p["<b>Approved merge</b>"]:::gate
+  a1["<b>Node day-2</b>"]:::auto
+  a2["<b>Flux</b>"]:::auto
+  a3["<b>Cluster day-2</b>"]:::auto
+  d["<b>Root-owned dispatcher</b><br/>rejects caller playbooks"]:::mech
+
+  h1["<b>Bootstrap</b>"]:::human
+  h2["<b>Recovery</b>"]:::human
+  h3["<b>Runner provisioning</b>"]:::human
+  h4["<b>Forgejo failover</b>"]:::human
+
+  p --> a1
+  p --> a2
+  p --> a3
+  a1 --> d
+  a3 --> d
+  h1 --- h2 --- h3 --- h4
+
+  classDef gate fill:#241A12,stroke:#F6AD55,stroke-width:1.5px,color:#E9EDF5
+  classDef mech fill:#12202A,stroke:#4FD1C5,stroke-width:1.5px,color:#E9EDF5
+  classDef auto fill:#12202A,stroke:#4FD1C5,stroke-width:1.5px,color:#E9EDF5
+  classDef human fill:#1A1630,stroke:#A78BFA,stroke-width:1.5px,color:#E9EDF5
+      </pre>
+    </div>
+    <p class="diagram-caption">
+      Neither automatic lane may invoke cluster bootstrap, kubeconfig
+      provisioning, Flux installation, Longhorn, or Forgejo failover.
+      <b>Neither lane accepts a caller-supplied playbook.</b>
+    </p>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">hella-nodes/docs/automation-horizons.md</span>
+    <span class="pageno">08</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 9. MEMORY & CONTROL ═══════════════ -->
+<section class="slide--diagram">
+  <aside class="notes">
+    <p>Two independent memory spaces, and the control channel that reaches them.</p>
+    <p>The interactive agent uses the user-agent Honcho workspace. Ember's runtime
+currently declares hella-samus - a name left over from a decommissioned host -
+with hella-ember-memory planned as the successor.</p>
+    <p>The dashed line is the thing that matters: no cross-read, by design. But
+"by design" is a declaration, not a measurement. The negative authorization
+test is still owed, and until it runs, a different workspace name is not
+proof of isolation.</p>
+    <p>The Matrix control room is the intended primary surface for talking to Ember,
+with matrix.org as a non-E2EE fallback.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow eyebrow--outside">Memory &amp; control</div>
+    <h2>Separate minds, separate channels</h2>
+  </div>
+
+  <div class="slide-body">
+    <div class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  iu["<b>Interactive client</b><br/>Codex · Claude Code"]:::client
+  ih["<b>Honcho: user-agent</b><br/>private context, owner-only"]:::inside
+  eu["<b>Matrix account @ember</b>"]:::client
+  im["<b>Matrix control room</b><br/>matrix.akita-spica.ts.net"]:::chan
+  eh["<b>Honcho: hella-samus</b><br/>→ hella-ember-memory"]:::outside
+
+  iu --> ih
+  eu --> im
+  im --> eh
+  ih -.->|"no cross-read<br/>by design"| eh
+
+  classDef inside fill:#12202A,stroke:#4FD1C5,stroke-width:1.5px,color:#E9EDF5
+  classDef outside fill:#1A1630,stroke:#A78BFA,stroke-width:1.5px,color:#E9EDF5
+  classDef chan fill:#241A12,stroke:#F6AD55,stroke-width:1.5px,color:#E9EDF5
+  classDef client fill:#141A29,stroke:#2C3750,stroke-width:1.5px,color:#A6B1C6
+      </pre>
+    </div>
+    <p class="diagram-caption">
+      Two workspaces, two credential sets, two control surfaces.
+      <b>The isolation between them is declared, not yet proven</b> — the
+      negative cross-workspace test is still owed.
+    </p>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">delegated/hermes-runtime/docs · hella-core PLAN.md §"Control channels, memory and naming"</span>
+    <span class="pageno">09</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 10. MODEL GATEWAY ═══════════════ -->
+<section class="slide--diagram">
+  <aside class="notes">
+    <p>LiteLLM owns routing for Ember, the workstations, and Open WebUI. It is
+the single routing owner.</p>
+    <p>The parent agent elects auto-frontier. Bounded implementation and PR workers
+elect auto-implementation, which is allowed to start on a budget model and
+escalate. Everything else - planning, review, diagnosis, synthesis - stays on
+frontier.</p>
+    <p>Two rules make this safe rather than merely clever. Risk floors override cost,
+so a risky task goes frontier regardless of what the classifier thinks. And
+uncertain classification defaults to frontier rather than to cheap.</p>
+    <p>The last line of the caption is the one to stress: a routing decision picks a
+model. It grants no tool-execution authority. Classification is data, and
+supplied content is data - it cannot talk its way into permissions.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow">Model gateway</div>
+    <h2>One router, two working styles</h2>
+    <p class="lede lede--wide">LiteLLM owns routing for Ember, the
+    workstations, and Open WebUI.</p>
+  </div>
+
+  <div class="slide-body">
+    <div class="diagram">
+      <pre class="mermaid">
+flowchart LR
+  c1["Ember<br/>parent"]:::c
+  c2["Ember<br/>bounded workers"]:::c
+  c3["Workstations<br/>Open WebUI"]:::c
+
+  g["LiteLLM<br/>sole routing owner"]:::gw
+
+  f["frontier<br/>gpt-6.1-sol"]:::front
+  b["budget<br/>deepseek-v4.1-flash:cloud"]:::bud
+  e["emergency<br/>glm-5.3:cloud"]:::emerg
+
+  c1 -->|"auto-frontier"| g
+  c2 -->|"auto-implementation"| g
+  c3 -->|"auto"| g
+  g --> f
+  g --> b
+  g --> e
+
+  classDef c fill:#141A29,stroke:#2C3750,stroke-width:1.5px,color:#A6B1C6
+  classDef gw fill:#241A12,stroke:#F6AD55,stroke-width:2px,color:#E9EDF5
+  classDef front fill:#12202A,stroke:#4FD1C5,stroke-width:1.5px,color:#E9EDF5
+  classDef bud fill:#1A1630,stroke:#A78BFA,stroke-width:1.5px,color:#E9EDF5
+  classDef emerg fill:#141A29,stroke:#6C788D,stroke-width:1.5px,color:#A6B1C6
+      </pre>
+    </div>
+    <p class="diagram-caption">
+      Risk floors override cost. Uncertain classification stays on frontier.
+      A routing decision <b>grants no tool-execution authority</b> — it only
+      picks a model.
+    </p>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">hella-core/docs/policy/frontier-hermes-routing.md · owner-directed, 2026-10-20</span>
+    <span class="pageno">10</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 11. WHAT'S PROVEN ═══════════════ -->
+<section>
+  <aside class="notes">
+    <p>The honesty slide. PLAN.md separates observed, source-declared, and
+proposed, and the deck carries that distinction deliberately.</p>
+    <p>Observed means a bounded read-only check with stated limits. Declared means
+stated in source or config - which does not prove deployment. Proposed means
+intended policy, not yet built.</p>
+    <p>The bottom box is the one I would not cut. Two privileged runners are
+registered organization-scoped rather than repository-scoped, so their
+scheduling scope is broader than the intended hella-nodes-only boundary. Both
+lanes currently share one VM, and the two lane Vault password files compare
+byte-identical, so independent decryption capability is not established. Root
+inside that shared VM can reach both lanes.</p>
+    <p>The boundaries are real. They are also not yet independently verifiable, and
+the owner has an open issue for it. That is a better story than a green
+checkmark, because it is true.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow eyebrow--gate">Honesty slide</div>
+    <h2>What is actually proven</h2>
+  </div>
+
+  <div class="slide-body">
+    <div class="classes">
+      <div class="class">
+        <h3><span class="swatch" style="background:var(--inside)"></span>Observed</h3>
+        <p>Verified by a bounded, read-only check with stated limits.</p>
+        <div class="eg">Branch protection requires one qrkourier approval ·<br>
+        Both privileged lanes were active at observation time ·<br>
+        Runner users are denied Vault file reads</div>
+      </div>
+      <div class="class">
+        <h3><span class="swatch" style="background:var(--text-2)"></span>Declared</h3>
+        <p>Stated in source, config, or a workflow. Does not prove deployment
+        or enforcement.</p>
+        <div class="eg">Dispatcher rejects caller-supplied playbooks ·<br>
+        Separate Honcho workspaces ·<br>
+        Per-lane Vault inputs and runner identity</div>
+      </div>
+      <div class="class">
+        <h3><span class="swatch" style="background:var(--gate)"></span>Proposed</h3>
+        <p>Intended policy, not yet built, deployed, or accepted.</p>
+        <div class="eg">Learned routing stays in shadow ·<br>
+        One-lane-per-VM credential separation ·<br>
+        Matrix control room and E2EE recovery</div>
+      </div>
+    </div>
+
+    <div class="open-item">
+      <h3>The uncomfortable one</h3>
+      <p>Runners are registered <b>organization-scoped</b>, not repository-scoped,
+      and both lanes currently share one VM with a shared Vault. Root inside that
+      VM can read both. The boundaries are real; they are not yet independently
+      verifiable.</p>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span class="src">hella-core PLAN.md §"Privileged runners: evidence collected 2026-09-10"</span>
+    <span class="pageno">11</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 12. CLOSING ═══════════════ -->
+<section>
+  <aside class="notes">
+    <p>The closing thought.</p>
+    <p>A delegated agent is only useful if it can act. It is only safe if it cannot
+overstep. Those two are in tension, and the whole architecture is the
+resolution of that tension.</p>
+    <p>The distinctive part of this lab is not the automation - it is that the
+boundaries are written down, named, and tracked against the evidence still
+needed to prove them. Building verifiable edges, and knowing which ones are
+still unproven, is the actual work.</p>
+    <p>Questions.</p>
+  </aside>
+
+  <div class="slide-head">
+    <div class="eyebrow">In closing</div>
+  </div>
+
+  <div class="slide-body" style="justify-content:center">
+    <p class="closing-line">
+      A delegated agent is only useful if it can act — and only safe if it
+      <em>cannot overstep.</em><br><br>
+      The work here is not building a wall around it. It is building
+      <em>verifiable</em> edges, and knowing which ones are still unproven.
+    </p>
+  </div>
+
+  <div class="slide-foot">
+    <span class="refs">
+      <span class="ref"><span class="k">Architecture</span>git.ts.bingnet.cloud/bingnet/hella-core</span>
+      <span class="ref"><span class="k">Nodes</span>git.ts.bingnet.cloud/bingnet/hella-nodes</span>
+      <span class="ref"><span class="k">GitOps</span>git.ts.bingnet.cloud/bingnet/hella-k8s-yaml</span>
+      <span class="ref"><span class="k">Ember</span>git.ts.bingnet.cloud/delegated/hermes-runtime</span>
+    </span>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="vendor/mermaid.min.js"></script>
+<script>
+  /* --- Mermaid: render every diagram, then hand control to reveal --- */
+  (async function () {
+    const theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'default' : 'dark';
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        darkMode: true,
+        background: 'transparent',
+        primaryColor: '#141A29',
+        primaryTextColor: '#E9EDF5',
+        primaryBorderColor: '#2C3750',
+        secondaryColor: '#1A1630',
+        tertiaryColor: '#12202A',
+        lineColor: '#6C788D',
+        textColor: '#E9EDF5',
+        mainBkg: '#141A29',
+        nodeBorder: '#2C3750',
+        clusterBkg: '#0E1320',
+        clusterBorder: '#212A3D',
+        edgeLabelBackground: '#0E1320',
+        fontFamily: 'Inter, system-ui, sans-serif',
+        fontSize: '15px',
+      },
+      flowchart: { curve: 'basis', htmlLabels: true, padding: 14, nodeSpacing: 42, rankSpacing: 52 },
+      sequence: { useMaxWidth: true },
+    });
+
+    const nodes = document.querySelectorAll('.mermaid');
+    for (const node of nodes) {
+      const source = node.textContent.trim();
+      try {
+        const { svg } = await mermaid.render('m-' + Math.random().toString(36).slice(2), source);
+        node.innerHTML = svg;
+        /* Mermaid stamps an inline max-width on the SVG sized for the
+           unconstrained flow. Drop it so the diagram can be scaled to the
+           space it actually has, and re-fit the viewBox. */
+        const el = node.querySelector('svg');
+        if (el) {
+          el.removeAttribute('style');
+          const vb = el.getAttribute('viewBox');
+          if (vb) {
+            const [, , w, h] = vb.split(/[\s,]+/).map(Number);
+            el.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+            if (w && h) el.setAttribute('data-ratio', (w / h).toFixed(4));
+          }
+        }
+      } catch (err) {
+        const box = document.createElement('div');
+        box.className = 'diagram__error';
+        box.textContent = 'Diagram failed to render: ' + (err && err.message ? err.message : String(err));
+        node.replaceWith(box);
+        console.error('mermaid render failed', err, source);
+      }
+    }
+
+    Reveal.initialize({
+      width: 1280,
+      height: 720,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 1.6,
+      controls: true,
+      controlsLayout: 'bottom-right',
+      progress: true,
+      slideNumber: false,
+      history: true,
+      center: false,
+      transition: 'fade',
+      transitionSpeed: 'fast',
+      hash: true,
+      plugins: [RevealNotes],
+    });
+  })();
+</script>
+</body>
+</html>

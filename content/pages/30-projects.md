@@ -33,6 +33,29 @@ This Djanjo app is also an example of using zrok's Python SDK instead of listeni
 
 ## Decks
 
+### Hella Labs
+
+*Architecture of a self-hosted lab with a delegated agent inside it*
+
+<iframe src="/blob/hella-lab/" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+
+- [view slide deck](/blob/hella-lab/)
+- [slide sources in GitHub](https://github.com/qrkourier/qrkourier.github.io/tree/main/content/blob/hella-lab)
+
+<details>
+
+<summary>Click for talk description</summary>
+
+Hella Labs is a self-hosted lab for learning Kubernetes, AI/ML and LLMs, and for running useful private applications. It is also agent-assisted: an interactive agent works as me, inside my own trust boundary, while a delegated agent — Ember, implemented on upstream Hermes — operates as a distinct service principal with bounded authority of its own.
+
+Both share hardware, a cluster, a network and a git forge. The interesting part of running an agent inside your own infrastructure is not what it can do; it is keeping it from overstepping.
+
+This talk walks the physical and platform topology, then the trust boundary: the forge trust zones, the three automation horizons with their human floor, the separate memory workspaces, and the model gateway that picks a backend without ever granting tool authority.
+
+It also spends a slide on what is *not* yet proven. Two privileged runners are still registered organization-scoped rather than repository-scoped, and both automation lanes currently share a VM with a shared Vault, so the boundaries are real but not yet independently verifiable. Naming which edges are still unproven is part of the work.
+
+</details>
+
 ### Patch v. Proxy
 
 *Southeast Linuxfest 2024 in Charlotte, NC*
