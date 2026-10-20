@@ -212,9 +212,13 @@ why the boundary cannot be a network perimeter.</p>
 <section class="slide--diagram">
   <aside class="notes">
     <p>This is the slide that matters.</p>
-    <p>One self-hosted Forgejo instance hosts three organizations. qrkourier and
-bingnet are inside the owner's authority. delegated is outside and is managed
-by Ember.</p>
+    <p>A self-hosted Forgejo hosts three organizations. qrkourier and bingnet
+    are inside the owner's authority. delegated is outside and is managed by
+    Ember.</p>
+    <p>One logical forge, though: it runs on a workstation with a manual
+    primary/standby failover model, not on the servers. The zone boundary is
+    about who holds which credentials, and that is independent of which
+    workstation is currently primary.</p>
     <p>The asymmetry is the point. Ember can push branches and open PRs into owner
 zones, but it cannot merge there - owner approval is the boundary. Inside
 delegated it is admin, and it merges autonomously.</p>
